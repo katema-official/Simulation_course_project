@@ -193,7 +193,7 @@ if __name__ == '__main__':
     #arrives per minute, in this interval of time, is 40/270 (approx. 0.148)
     #let's try to generate the instants in time in which the customers arrive with an algorithm for
     #simulating a poisson process.
-    lambda_served_customers = 40/270
+    lambda_served_customers = 0.15
     T = 60*13       #13:00
     i = 0
     t = 60*8 + 30   #8:30
@@ -210,7 +210,7 @@ if __name__ == '__main__':
     #Experience showed that in a solar day (so, from 00:00 to 00:00 of the following day), an average
     #of 300 customers show up to use one of the ATMs. Also in this case, we can model their arrival
     #times with a poisson process.
-    lambda_atm_customers = 300 / 1440
+    lambda_atm_customers = 0.21
     T = 1440    #00:00 of the following day
     i = 0
     t = 0       #00:00 of the current day
