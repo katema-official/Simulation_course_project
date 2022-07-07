@@ -11,6 +11,40 @@
 	<EngineVersion>6</EngineVersion>
 	<JavaPackageName><![CDATA[bankbranch]]></JavaPackageName>
 	<ModelTimeUnit><![CDATA[Minute]]></ModelTimeUnit>
+	<OptionLists>
+		<OptionList>
+			<Id>1657191587374</Id>
+			<Name><![CDATA[OptionListSpecialRegisterDeposit]]></Name>
+			<Option>
+				<Id>1657191587375</Id>
+				<Name><![CDATA[b5]]></Name>
+			</Option>
+			<Option>
+				<Id>1657191587376</Id>
+				<Name><![CDATA[b10]]></Name>
+			</Option>
+			<Option>
+				<Id>1657191587377</Id>
+				<Name><![CDATA[b20]]></Name>
+			</Option>
+			<Option>
+				<Id>1657191587378</Id>
+				<Name><![CDATA[b50]]></Name>
+			</Option>
+			<Option>
+				<Id>1657191587379</Id>
+				<Name><![CDATA[b100]]></Name>
+			</Option>
+			<Option>
+				<Id>1657191587380</Id>
+				<Name><![CDATA[b200]]></Name>
+			</Option>
+			<Option>
+				<Id>1657191587381</Id>
+				<Name><![CDATA[b500]]></Name>
+			</Option>
+		</OptionList>
+	</OptionLists>
 	<ActiveObjectClasses>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
@@ -109,6 +143,28 @@
 			</ScaleRuler>
 			<CurrentLevel>1657029304703</CurrentLevel>
 			<ConnectionsId>1657029304696</ConnectionsId>
+			<Outputs>
+				<Output>
+					<Id>1657178495378</Id>
+					<Name><![CDATA[w_balance]]></Name>
+					<X>-240</X><Y>590</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Type><![CDATA[int]]></Type>
+					<UnitType><![CDATA[NONE]]></UnitType>
+					<Value Class="CodeValue">
+						<Code><![CDATA[withdrawalRegister.balance()]]></Code>
+					</Value>
+					<ComputationMoment>AT_MODEL_TIME</ComputationMoment>
+					<ComputationTimeCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+					</ComputationTimeCode>
+					<ComputationDate>1657180800000</ComputationDate>
+				</Output>
+			</Outputs>
 			<Variables>
 				<Variable Class="PlainVariable">
 					<Id>1657117465855</Id>
@@ -214,6 +270,37 @@ if(currTime >= 510 && currTime < 780){
 	add_servedCustomers();
 	servedCustomersCount++;
 }]]></Action>
+				</Event>
+				<Event>
+					<Id>1657179517670</Id>
+					<Name><![CDATA[show_w_balance]]></Name>
+					<X>-240</X><Y>620</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="cyclic">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1657180800000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[update_w_balance();]]></Action>
 				</Event>
 			</Events>
 			<AgentLinks>
@@ -1935,6 +2022,67 @@ if(currTime >= 510 && currTime < 780){
 
 					<Z>0</Z>
 				</Network>
+    			<TimeStackChart>
+					<Id>1657179094011</Id>
+					<Name><![CDATA[chart1]]></Name>
+					<X>-280</X><Y>380</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1657180800000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>260</Width>
+					<Height>210</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>180</Width>
+						<Height>120</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
+					<DatasetExpression>
+					<Id>0</Id>
+					<Expression><![CDATA[my_dataset]]></Expression>
+					<Color>-4343957</Color>
+					<Expression2><![CDATA[withdrawalRegister.balance()]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>  
+							<Title><![CDATA[Withdrawal Register balance]]></Title>
+					</DatasetExpression>
+					<SamplesToKeep>100</SamplesToKeep>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimeStackChart>
 			</Presentation>
 
 				</Level>
@@ -2152,12 +2300,26 @@ if(currTime >= 510 && currTime < 780){
 			</ScaleRuler>
 			<CurrentLevel>1657102630979</CurrentLevel>
 			<ConnectionsId>1657102630975</ConnectionsId>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1657187932996</Id>
+					<Name><![CDATA[chosenCashier]]></Name>
+					<X>100</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[Cashier]]></Type>        
+					</Properties>
+				</Variable>
+			</Variables>
 			<StatechartElements>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
 					<Id>1657102663177</Id>
 					<Name><![CDATA[init]]></Name>
 					<X>350</X><Y>90</Y>
-					<Label><X>10</X><Y>10</Y></Label>
+					<Label><X>35</X><Y>15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -2168,8 +2330,10 @@ setLocation(main.nodeSpawnServedCustomers);
 //chosen
 if(randomTrue(0.5)){
 	moveToInTime(main.nodeCashier1, 2);
+	chosenCashier = main.cashier1;
 }else{
 	moveToInTime(main.nodeCashier2, 2);
+	chosenCashier = main.cashier2;
 }
 
 ]]></EntryAction>
@@ -2192,7 +2356,7 @@ if(randomTrue(0.5)){
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
 					<Id>1657116911071</Id>
 					<Name><![CDATA[exiting]]></Name>
-					<X>350</X><Y>330</Y>
+					<X>270</X><Y>530</Y>
 					<Label><X>110</X><Y>15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2205,7 +2369,7 @@ if(randomTrue(0.5)){
 				<StatechartElement Class="FinalState" ParentState="ROOT_NODE">
 					<Id>1657116973830</Id>
 					<Name><![CDATA[finalState]]></Name>
-					<X>400</X><Y>430</Y>
+					<X>340</X><Y>720</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2213,6 +2377,126 @@ if(randomTrue(0.5)){
 					<Properties>	
 						<Action><![CDATA[main.remove_servedCustomers(this);]]></Action>
 					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657187612575</Id>
+					<Name><![CDATA[withdraw]]></Name>
+					<X>220</X><Y>360</Y>
+					<Label><X>-85</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="120" Height="30">
+						<EntryAction><![CDATA[int toWithdraw = new Double(normal(0, 200000, 918.2, 606.6)).intValue();
+RegisterGeneralRequest req = new RegisterGeneralRequest();
+
+if(toWithdraw < 40){
+	toWithdraw = 40;
+}else{
+	
+	//the generated value needs
+	//to be expressed as a sum
+	//of x bills of 20 euros
+	//and y bills of 50 euros (also
+	//100, but it comes as a natural
+	//consequence)
+	int bills_50 = toWithdraw / 50;
+	int tmp1 = toWithdraw % 50;
+	int bills_20 = tmp1 / 20;
+	toWithdraw = bills_50 * 50 + 
+		bills_20 * 20;	
+}
+req.kind = "withdraw";
+req.amountToWithdraw = toWithdraw;
+send(req, chosenCashier);]]></EntryAction>
+						<FillColor>-16777216</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="Branch" ParentState="ROOT_NODE">
+					<Id>1657187612577</Id>
+					<Name><![CDATA[branch]]></Name>
+					<X>400</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Properties>	
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657187680681</Id>
+					<Name><![CDATA[deposit]]></Name>
+					<X>470</X><Y>360</Y>
+					<Label><X>110</X><Y>15</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="100" Height="30">
+						<EntryAction><![CDATA[int toDeposit = new Double(normal(0, 400000, 1801, 1765.5)).intValue();
+RegisterGeneralRequest req = new RegisterGeneralRequest();
+
+if(toDeposit < 5){
+	req.bills5 = 1;
+}else{
+	toDeposit = toDeposit - (toDeposit % 5);
+	int[] bills = new int[501];	//inefficient, but effective.
+	int x = 0;
+	while(toDeposit>=500){
+		x = depositDistribution();
+		bills[x]++;
+		toDeposit -= x;
+	}
+	while(toDeposit>=200){
+		x = 201;
+		while(x>200){
+			x = depositDistribution();
+		}
+		bills[x]++;
+		toDeposit -= x;
+		
+	}
+	while(toDeposit>=100){
+		x = 101;
+		while(x>100){
+			x = depositDistribution();
+		}		
+		bills[x]++;
+		toDeposit -= x;
+	}
+	while(toDeposit>=50){
+		x = 51;
+		while(x>50){
+			x = depositDistribution();
+		}
+		bills[x]++;
+		toDeposit -= x;
+	}
+	switch(toDeposit){
+		case 45: bills[20] += 2; bills[5]++; break;
+		case 40: bills[20] += 2; break;
+		case 35: bills[20]++; bills[10]++; bills[5]++; break;
+		case 30: bills[20]++; bills[10]++; break;
+		case 25: bills[20]++; bills[5]++; break;
+		case 20: bills[20]++; break;
+		case 15: bills[10]++; bills[5]++; break;
+		case 10: bills[10]++; break;
+		case 5: bills[5]++; break;
+	}
+	
+	req.bills5 = bills[5];
+	req.bills10 = bills[10];
+	req.bills20 = bills[20];
+	req.bills50 = bills[50];
+	req.bills100 = bills[100];
+	req.bills200 = bills[200];
+	req.bills500 = bills[500];
+}
+req.kind = "deposit";
+send(req, chosenCashier);
+
+]]></EntryAction>
+						<FillColor>-16777216</FillColor>
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="EntryPoint" ParentState="ROOT_NODE">
 					<Id>1657102660382</Id>
@@ -2260,46 +2544,16 @@ if(randomTrue(0.5)){
 					</Properties>	
 				</StatechartElement>
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
-					<Id>1657116916777</Id>
-					<Name><![CDATA[transition1]]></Name>
-					<X>400</X><Y>250</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<Points>
-						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>0</X><Y>80</Y></Point>
-					</Points>
-					<IconOffset>20.0</IconOffset>
-					<Properties Source="1657102832943" Target="1657116911071" Trigger="timeout">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[3]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-						</Timeout>
-						<Condition><![CDATA[true]]></Condition>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
-						</Rate>
-						<MessageType><![CDATA[Object]]></MessageType>
-						<DefaultTransition>true</DefaultTransition>
-						<FilterType><![CDATA[unconditionally]]></FilterType>
-						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
-						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
-					</Properties>	
-				</StatechartElement>
-				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
 					<Id>1657116977672</Id>
 					<Name><![CDATA[transition2]]></Name>
-					<X>400</X><Y>360</Y>
+					<X>340</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>0</X><Y>62</Y></Point>
+						<Point><X>0</X><Y>152</Y></Point>
 					</Points>
 					<IconOffset>20.0</IconOffset>
 					<Properties Source="1657116911071" Target="1657116973830" Trigger="arrival">
@@ -2319,7 +2573,243 @@ if(randomTrue(0.5)){
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
 					</Properties>	
 				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657187612579</Id>
+					<Name><![CDATA[transition3]]></Name>
+					<X>400</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657102832943" Target="1657187612577" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657187612583</Id>
+					<Name><![CDATA[transition4]]></Name>
+					<X>388</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>-108</X><Y>0</Y></Point>
+						<Point><X>-108</X><Y>40</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657187612577" Target="1657187612575" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[randomTrue(0.7)]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>false</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657187688652</Id>
+					<Name><![CDATA[transition1]]></Name>
+					<X>412</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>108</X><Y>0</Y></Point>
+						<Point><X>108</X><Y>40</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657187612577" Target="1657187680681" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657188068070</Id>
+					<Name><![CDATA[transition5]]></Name>
+					<X>280</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>50</X><Y>140</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657187612575" Target="1657116911071" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657189864664</Id>
+					<Name><![CDATA[transition6]]></Name>
+					<X>500</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>-140</X><Y>140</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657187680681" Target="1657116911071" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
 			</StatechartElements>
+			<CustomDistributions>
+				<CustomDistribution>
+					<Id>1657188938643</Id>
+					<Name><![CDATA[depositDistribution]]></Name>
+					<X>550</X><Y>340</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<InterpolationMethod>NONE</InterpolationMethod>
+					<Type>DISCRETE</Type>
+					<DefinitionType>SAMPLE</DefinitionType>
+					<Static>false</Static>
+					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<RangesQuery>
+					<TableReference>
+					</TableReference>
+						<StartColumnReference>
+						</StartColumnReference>
+						<EndColumnReference>
+						</EndColumnReference>
+						<NumberOfObservationColumnReference>
+						</NumberOfObservationColumnReference>
+					</RangesQuery>
+					<FrequencyQuery>
+					<TableReference>
+					</TableReference>
+						<ValueColumnReference>
+						</ValueColumnReference>
+						<WeightColumnReference>
+						</WeightColumnReference>
+					</FrequencyQuery>
+					<SampleQuery>
+					<TableReference>
+						<PackageName><![CDATA[bankbranch]]></PackageName>
+						<ClassName><![CDATA[pdf_deposits_bills_served]]></ClassName>
+					</TableReference>
+						<ValueColumnReference>
+							<PackageName><![CDATA[bankbranch]]></PackageName>
+							<ClassName><![CDATA[pdf_deposits_bills_served]]></ClassName>
+							<ItemName><![CDATA[db_column]]></ItemName>
+						</ValueColumnReference>
+					</SampleQuery>
+					<OptionQuery>
+					<TableReference>
+					</TableReference>
+						<OptionColumnReference>
+						</OptionColumnReference>
+						<NumberOfObservationColumnReference>
+						</NumberOfObservationColumnReference>
+					</OptionQuery>					
+					<Argument><![CDATA[5.0]]></Argument>
+					<Argument><![CDATA[10.0]]></Argument>
+					<Argument><![CDATA[20.0]]></Argument>
+					<Argument><![CDATA[50.0]]></Argument>
+					<Argument><![CDATA[100.0]]></Argument>
+					<Argument><![CDATA[200.0]]></Argument>
+					<Argument><![CDATA[201.0]]></Argument>
+					<Argument><![CDATA[501.0]]></Argument>
+					<Value><![CDATA[3.0]]></Value>
+					<Value><![CDATA[4.0]]></Value>
+					<Value><![CDATA[34.0]]></Value>
+					<Value><![CDATA[50.0]]></Value>
+					<Value><![CDATA[5.0]]></Value>
+					<Value><![CDATA[3.0]]></Value>
+					<Value><![CDATA[1.0]]></Value>
+					<Value><![CDATA[0.0]]></Value>					
+					<OptionListID><![CDATA[0]]></OptionListID>
+					<OptionValues>				
+					</OptionValues>
+					<Argument><![CDATA[5.0]]></Argument>
+					<Argument><![CDATA[10.0]]></Argument>
+					<Argument><![CDATA[20.0]]></Argument>
+					<Argument><![CDATA[50.0]]></Argument>
+					<Argument><![CDATA[100.0]]></Argument>
+					<Argument><![CDATA[200.0]]></Argument>
+					<Argument><![CDATA[201.0]]></Argument>
+					<Argument><![CDATA[501.0]]></Argument>
+					<SampleEntry>500.0</SampleEntry>
+					<SampleEntry>200.0</SampleEntry>
+					<SampleEntry>200.0</SampleEntry>
+					<SampleEntry>200.0</SampleEntry>				
+				</CustomDistribution>		
+			</CustomDistributions>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1657102630975</Id>
@@ -2547,6 +3037,25 @@ if(randomTrue(0.5)){
 			</ScaleRuler>
 			<CurrentLevel>1657118173118</CurrentLevel>
 			<ConnectionsId>1657118173114</ConnectionsId>
+			<Outputs>
+				<Output>
+					<Id>1657130811114</Id>
+					<Name><![CDATA[withdrawed]]></Name>
+					<X>30</X><Y>450</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Type><![CDATA[int]]></Type>
+					<UnitType><![CDATA[NONE]]></UnitType>
+					<ComputationMoment>ON_SIMULATION_END</ComputationMoment>
+					<ComputationTimeCode Class="CodeUnitValue">
+						<Code><![CDATA[]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</ComputationTimeCode>
+					<ComputationDate>1657180800000</ComputationDate>
+				</Output>
+			</Outputs>
 			<StatechartElements>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
 					<Id>1657118234048</Id>
@@ -2576,13 +3085,13 @@ setLocation(main.nodeSpawnATMCustomers);
 				</StatechartElement>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
 					<Id>1657118364395</Id>
-					<Name><![CDATA[withdrawal]]></Name>
+					<Name><![CDATA[withdrawal_w]]></Name>
 					<X>120</X><Y>260</Y>
 					<Label><X>5</X><Y>15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Properties Width="100" Height="30">
+					<Properties Width="120" Height="30">
 						<EntryAction><![CDATA[shapeBody.setFillColor(cyan);
 moveToInTime(main.nodeWithdrawalRegister, 1);
 ]]></EntryAction>
@@ -2592,8 +3101,8 @@ moveToInTime(main.nodeWithdrawalRegister, 1);
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
 					<Id>1657118366662</Id>
 					<Name><![CDATA[special]]></Name>
-					<X>290</X><Y>260</Y>
-					<Label><X>20</X><Y>15</Y></Label>
+					<X>380</X><Y>170</Y>
+					<Label><X>25</X><Y>15</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
@@ -2607,7 +3116,7 @@ moveToInTime(main.nodeSpecialRegister, 1);
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
 					<Id>1657118540759</Id>
 					<Name><![CDATA[exiting]]></Name>
-					<X>210</X><Y>390</Y>
+					<X>250</X><Y>440</Y>
 					<Label><X>20</X><Y>10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2620,7 +3129,7 @@ moveToInTime(main.nodeSpecialRegister, 1);
 				<StatechartElement Class="FinalState" ParentState="ROOT_NODE">
 					<Id>1657118636293</Id>
 					<Name><![CDATA[finalState]]></Name>
-					<X>260</X><Y>490</Y>
+					<X>300</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2628,6 +3137,168 @@ moveToInTime(main.nodeSpecialRegister, 1);
 					<Properties>	
 						<Action><![CDATA[main.remove_aTMCustomers(this);]]></Action>
 					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657128489873</Id>
+					<Name><![CDATA[chooseWithdrawal]]></Name>
+					<X>80</X><Y>340</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="170" Height="40">
+						<EntryAction><![CDATA[int toWithdraw = new Double(normal(0, 200000, 357.8, 476.3)).intValue();
+
+//if the generated value is lower
+//than 20, let's rescale it
+//to 20
+if(toWithdraw < 20){
+	toWithdraw = 20;
+}else{
+	
+	//the generated value needs
+	//to be expressed as a sum
+	//of x bills of 20 euros
+	//and y bills of 50 euros
+	int bills_50 = toWithdraw / 50;
+	int tmp1 = toWithdraw % 50;
+	int bills_20 = tmp1 / 20;
+	toWithdraw = bills_50 * 50 + 
+		bills_20 * 20;
+	
+	send(toWithdraw, main.withdrawalRegister);
+}
+withdrawed = toWithdraw;
+]]></EntryAction>
+						<FillColor>-16711681</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="Branch" ParentState="ROOT_NODE">
+					<Id>1657131011200</Id>
+					<Name><![CDATA[branch1]]></Name>
+					<X>430</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Properties>	
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657131078973</Id>
+					<Name><![CDATA[chooseWithdrawal2]]></Name>
+					<X>370</X><Y>310</Y>
+					<Label><X>15</X><Y>25</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="190" Height="50">
+						<EntryAction><![CDATA[int toWithdraw = new Double(normal(0, 200000, 329.9, 287.4)).intValue();
+
+//if the generated value is lower
+//than 20, let's rescale it
+//to 20
+if(toWithdraw < 20){
+	toWithdraw = 20;
+}else{
+	
+	//the generated value needs
+	//to be expressed as a sum
+	//of x bills of 20 euros
+	//and y bills of 50 euros
+	int bills_50 = toWithdraw / 50;
+	int tmp1 = toWithdraw % 50;
+	int bills_20 = tmp1 / 20;
+	toWithdraw = bills_50 * 50 + 
+		bills_20 * 20;
+	
+	RegisterGeneralRequest req = new RegisterGeneralRequest();
+	req.kind = "withdraw";
+	req.amountToWithdraw = toWithdraw;
+	
+	send(req, main.specialRegister);
+}
+withdrawed = toWithdraw;]]></EntryAction>
+						<FillColor>-16776961</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657131231239</Id>
+					<Name><![CDATA[chooseDeposit]]></Name>
+					<X>530</X><Y>240</Y>
+					<Label><X>20</X><Y>25</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="50">
+						<EntryAction><![CDATA[int toDeposit = new Double(normal(0, 400000, 1705.5, 2841.4)).intValue();
+//conversion from optionList to values
+
+if(toDeposit < 5){
+	RegisterGeneralRequest req = new RegisterGeneralRequest();
+	req.bills5 = 1;
+	send(req, main.specialRegister);
+}else{
+	toDeposit = toDeposit - (toDeposit % 5);
+	int[] bills = new int[501];	//inefficient, but effective.
+	int x = 0;
+	while(toDeposit>=500){
+		x = convert(depositDistribution());
+		System.out.println("x = " + x );
+		bills[x]++;
+		toDeposit -= x;
+	}
+	while(toDeposit>=200){
+		x = 201;
+		while(x>200){
+			x = convert(depositDistribution());
+		}
+		bills[x]++;
+		toDeposit -= x;
+		
+	}
+	while(toDeposit>=100){
+		x = 101;
+		while(x>100){
+			x = convert(depositDistribution());
+		}		
+		bills[x]++;
+		toDeposit -= x;
+	}
+	while(toDeposit>=50){
+		x = 51;
+		while(x>50){
+			x = convert(depositDistribution());
+		}
+		bills[x]++;
+		toDeposit -= x;
+	}
+	switch(toDeposit){
+		case 45: bills[20] += 2; bills[5]++; break;
+		case 40: bills[20] += 2; break;
+		case 35: bills[20]++; bills[10]++; bills[5]++; break;
+		case 30: bills[20]++; bills[10]++; break;
+		case 25: bills[20]++; bills[5]++; break;
+		case 20: bills[20]++; break;
+		case 15: bills[10]++; bills[5]++; break;
+		case 10: bills[10]++; break;
+		case 5: bills[5]++; break;
+	}
+	
+	RegisterGeneralRequest req = new RegisterGeneralRequest();
+	req.kind = "deposit";
+	req.bills5 = bills[5];
+	req.bills10 = bills[10];
+	req.bills20 = bills[20];
+	req.bills50 = bills[50];
+	req.bills100 = bills[100];
+	req.bills200 = bills[200];
+	req.bills500 = bills[500];
+	send(req, main.specialRegister);
+}
+]]></EntryAction>
+						<FillColor>-16776961</FillColor>
+					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="EntryPoint" ParentState="ROOT_NODE">
 					<Id>1657118225134</Id>
@@ -2716,7 +3387,7 @@ moveToInTime(main.nodeSpecialRegister, 1);
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
 						<Point><X>78</X><Y>0</Y></Point>
-						<Point><X>78</X><Y>80</Y></Point>
+						<Point><X>118</X><Y>0</Y></Point>
 					</Points>
 					<IconOffset>20.0</IconOffset>
 					<Properties Source="1657118340708" Target="1657118366662" Trigger="timeout">
@@ -2746,12 +3417,12 @@ moveToInTime(main.nodeSpecialRegister, 1);
 					<ShowLabel>false</ShowLabel>
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>50</X><Y>100</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
 					</Points>
 					<IconOffset>20.0</IconOffset>
-					<Properties Source="1657118364395" Target="1657118540759" Trigger="timeout">
+					<Properties Source="1657118364395" Target="1657128489873" Trigger="timeout">
 						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[2]]></Code>
+							<Code><![CDATA[0]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</Timeout>
 						<Condition><![CDATA[true]]></Condition>
@@ -2769,19 +3440,19 @@ moveToInTime(main.nodeSpecialRegister, 1);
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
 					<Id>1657118559553</Id>
 					<Name><![CDATA[transition4]]></Name>
-					<X>340</X><Y>290</Y>
+					<X>430</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>-50</X><Y>100</Y></Point>
+						<Point><X>0</X><Y>40</Y></Point>
 					</Points>
 					<IconOffset>20.0</IconOffset>
-					<Properties Source="1657118366662" Target="1657118540759" Trigger="timeout">
+					<Properties Source="1657118366662" Target="1657131011200" Trigger="timeout">
 						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[2]]></Code>
+							<Code><![CDATA[0]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</Timeout>
 						<Condition><![CDATA[true]]></Condition>
@@ -2799,17 +3470,17 @@ moveToInTime(main.nodeSpecialRegister, 1);
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
 					<Id>1657118639734</Id>
 					<Name><![CDATA[transition5]]></Name>
-					<X>260</X><Y>420</Y>
+					<X>300</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<Points>
 						<Point><X>0</X><Y>0</Y></Point>
-						<Point><X>0</X><Y>62</Y></Point>
+						<Point><X>0</X><Y>72</Y></Point>
 					</Points>
 					<IconOffset>20.0</IconOffset>
-					<Properties Source="1657118540759" Target="1657118636293" Trigger="timeout">
+					<Properties Source="1657118540759" Target="1657118636293" Trigger="arrival">
 						<Timeout Class="CodeUnitValue">
 							<Code><![CDATA[1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
@@ -2826,7 +3497,306 @@ moveToInTime(main.nodeSpecialRegister, 1);
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
 					</Properties>	
 				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657130732983</Id>
+					<Name><![CDATA[transition6]]></Name>
+					<X>170</X><Y>380</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>80</Y></Point>
+						<Point><X>80</X><Y>80</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657128489873" Target="1657118540759" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[2]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657131111326</Id>
+					<Name><![CDATA[transition7]]></Name>
+					<X>430</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657131011200" Target="1657131078973" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[bernoulli(0.65) == 1]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>false</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657131225043</Id>
+					<Name><![CDATA[transition8]]></Name>
+					<X>442</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>88</X><Y>0</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657131011200" Target="1657131231239" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657183571817</Id>
+					<Name><![CDATA[transition9]]></Name>
+					<X>460</X><Y>360</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>30</Y></Point>
+						<Point><X>-140</X><Y>30</Y></Point>
+						<Point><X>-140</X><Y>80</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657131078973" Target="1657118540759" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[2]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657183585384</Id>
+					<Name><![CDATA[transition10]]></Name>
+					<X>620</X><Y>290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>170</Y></Point>
+						<Point><X>-270</X><Y>170</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657131231239" Target="1657118540759" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[2]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
 			</StatechartElements>
+			<Functions>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[int]]></ReturnType>
+					<Id>1657191804772</Id>
+					<Name><![CDATA[convert]]></Name>
+					<X>620</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[option]]></Name>
+						<Type><![CDATA[OptionListSpecialRegisterDeposit]]></Type>
+					</Parameter>
+					<Body><![CDATA[switch(option){
+	case b5: return 5;
+	case b10: return 10;
+	case b20: return 20;
+	case b50: return 50;
+	case b100: return 100;
+	case b200: return 200;
+	case b500: return 500;
+}]]></Body>
+				</Function>
+			</Functions>
+			<CustomDistributions>
+				<CustomDistribution>
+					<Id>1657182050481</Id>
+					<Name><![CDATA[depositDistribution]]></Name>
+					<X>550</X><Y>210</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<InterpolationMethod>NONE</InterpolationMethod>
+					<Type>OPTIONS</Type>
+					<DefinitionType>SAMPLE</DefinitionType>
+					<Static>false</Static>
+					<LoadFromDatabase><![CDATA[false]]></LoadFromDatabase>
+					<RangesQuery>
+					<TableReference>
+					</TableReference>
+						<StartColumnReference>
+						</StartColumnReference>
+						<EndColumnReference>
+						</EndColumnReference>
+						<NumberOfObservationColumnReference>
+						</NumberOfObservationColumnReference>
+					</RangesQuery>
+					<FrequencyQuery>
+					<TableReference>
+					</TableReference>
+						<ValueColumnReference>
+						</ValueColumnReference>
+						<WeightColumnReference>
+						</WeightColumnReference>
+					</FrequencyQuery>
+					<SampleQuery>
+					<TableReference>
+						<PackageName><![CDATA[bankbranch]]></PackageName>
+						<ClassName><![CDATA[pdf_deposit_bills_special]]></ClassName>
+					</TableReference>
+						<ValueColumnReference>
+							<PackageName><![CDATA[bankbranch]]></PackageName>
+							<ClassName><![CDATA[pdf_deposit_bills_special]]></ClassName>
+							<ItemName><![CDATA[db_column]]></ItemName>
+						</ValueColumnReference>
+					</SampleQuery>
+					<OptionQuery>
+					<TableReference>
+						<PackageName><![CDATA[bankbranch]]></PackageName>
+						<ClassName><![CDATA[pdf_deposit_bills_special]]></ClassName>
+					</TableReference>
+					<Condition>
+						<ColumnReference>
+						</ColumnReference>
+						<Operator>EQUALS</Operator>
+					</Condition>
+						<OptionColumnReference>
+						</OptionColumnReference>
+						<NumberOfObservationColumnReference>
+						</NumberOfObservationColumnReference>
+					</OptionQuery>					
+					<Argument><![CDATA[5.0]]></Argument>
+					<Argument><![CDATA[10.0]]></Argument>
+					<Argument><![CDATA[20.0]]></Argument>
+					<Argument><![CDATA[50.0]]></Argument>
+					<Argument><![CDATA[100.0]]></Argument>
+					<Argument><![CDATA[200.0]]></Argument>
+					<Argument><![CDATA[201.0]]></Argument>
+					<Argument><![CDATA[501.0]]></Argument>
+					<Value><![CDATA[3.0]]></Value>
+					<Value><![CDATA[4.0]]></Value>
+					<Value><![CDATA[34.0]]></Value>
+					<Value><![CDATA[50.0]]></Value>
+					<Value><![CDATA[5.0]]></Value>
+					<Value><![CDATA[3.0]]></Value>
+					<Value><![CDATA[1.0]]></Value>
+					<Value><![CDATA[0.0]]></Value>					
+					<OptionListID><![CDATA[1657191587374]]></OptionListID>
+					<OptionValues>
+						<OptionValue>						
+							<OptionID><![CDATA[1657191587375]]></OptionID>
+							<Value><![CDATA[10.0]]></Value>
+						</OptionValue>
+						<OptionValue>						
+							<OptionID><![CDATA[1657191587376]]></OptionID>
+							<Value><![CDATA[10.0]]></Value>
+						</OptionValue>
+						<OptionValue>						
+							<OptionID><![CDATA[1657191587377]]></OptionID>
+							<Value><![CDATA[30.0]]></Value>
+						</OptionValue>
+						<OptionValue>						
+							<OptionID><![CDATA[1657191587378]]></OptionID>
+							<Value><![CDATA[30.0]]></Value>
+						</OptionValue>
+						<OptionValue>						
+							<OptionID><![CDATA[1657191587379]]></OptionID>
+							<Value><![CDATA[10.0]]></Value>
+						</OptionValue>
+						<OptionValue>						
+							<OptionID><![CDATA[1657191587380]]></OptionID>
+							<Value><![CDATA[5.0]]></Value>
+						</OptionValue>
+						<OptionValue>						
+							<OptionID><![CDATA[1657191587381]]></OptionID>
+							<Value><![CDATA[5.0]]></Value>
+						</OptionValue>				
+					</OptionValues>
+					<Argument><![CDATA[5.0]]></Argument>
+					<Argument><![CDATA[10.0]]></Argument>
+					<Argument><![CDATA[20.0]]></Argument>
+					<Argument><![CDATA[50.0]]></Argument>
+					<Argument><![CDATA[100.0]]></Argument>
+					<Argument><![CDATA[200.0]]></Argument>
+					<Argument><![CDATA[201.0]]></Argument>
+					<Argument><![CDATA[501.0]]></Argument>
+					<SampleEntry>500.0</SampleEntry>
+					<SampleEntry>200.0</SampleEntry>
+					<SampleEntry>200.0</SampleEntry>
+					<SampleEntry>200.0</SampleEntry>				
+				</CustomDistribution>		
+			</CustomDistributions>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1657118173114</Id>
@@ -3311,6 +4281,35 @@ moveToInTime(main.nodeSpecialRegister, 1);
 			</ScaleRuler>
 			<CurrentLevel>1657122620530</CurrentLevel>
 			<ConnectionsId>1657122620526</ConnectionsId>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1657188352024</Id>
+					<Name><![CDATA[currentRequest]]></Name>
+					<X>470</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1657188214607</Id>
+					<Name><![CDATA[pendingCashierRequests]]></Name>
+					<X>30</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[RegisterGeneralRequest]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+			</Variables>
 			<StatechartElements>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
 					<Id>1657122924818</Id>
@@ -3322,6 +4321,21 @@ moveToInTime(main.nodeSpecialRegister, 1);
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="100" Height="30">
 						<EntryAction><![CDATA[shapeBody.setFillColor(lime);]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657188284112</Id>
+					<Name><![CDATA[sendRequestToServedRegister]]></Name>
+					<X>160</X><Y>170</Y>
+					<Label><X>10</X><Y>25</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="270" Height="50">
+						<EntryAction><![CDATA[RegisterGeneralRequest req = pendingCashierRequests.get(0);
+pendingCashierRequests.remove(0);
+send(req, main.servedRegister);]]></EntryAction>
 						<FillColor>-16711936</FillColor>
 					</Properties>
 				</StatechartElement>
@@ -3340,6 +4354,67 @@ moveToInTime(main.nodeSpecialRegister, 1);
 					<Properties Target="1657122924818">
 					</Properties>	
 				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657188245177</Id>
+					<Name><![CDATA[transition]]></Name>
+					<X>300</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657122924818" Target="1657188284112" Trigger="condition">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[pendingCashierRequests.size() > 0]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657188484977</Id>
+					<Name><![CDATA[transition1]]></Name>
+					<X>390</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>-60</Y></Point>
+						<Point><X>-40</X><Y>-60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657188284112" Target="1657122924818" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
 			</StatechartElements>
 			<AgentLinks>
 				<AgentLink>
@@ -3350,10 +4425,11 @@ moveToInTime(main.nodeSpecialRegister, 1);
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<OnReceive><![CDATA[pendingCashierRequests.add(msg);]]></OnReceive>
 					<HandleReceiveInConnections>false</HandleReceiveInConnections>
 					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
 					<AgentLinkBidirectional>true</AgentLinkBidirectional>
-					<MessageType><![CDATA[Object]]></MessageType>
+					<MessageType><![CDATA[RegisterGeneralRequest]]></MessageType>
 					<StatechartReference>
 						<PackageName><![CDATA[bankbranch]]></PackageName>
 						<ClassName><![CDATA[Cashier]]></ClassName>
@@ -3653,6 +4729,21 @@ moveToInTime(main.nodeSpecialRegister, 1);
 						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657188539261</Id>
+					<Name><![CDATA[currentRequest]]></Name>
+					<X>740</X><Y>70</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[RegisterGeneralRequest]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[null]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1657124347872</Id>
 					<Name><![CDATA[min_served]]></Name>
@@ -3705,7 +4796,293 @@ must be present in the served register.]]></Description>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1657188560274</Id>
+					<Name><![CDATA[pendingServedRequests]]></Name>
+					<X>50</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[RegisterGeneralRequest]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
+			<StatechartElements>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657188539263</Id>
+					<Name><![CDATA[init]]></Name>
+					<X>460</X><Y>70</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="100" Height="30">
+						<EntryAction><![CDATA[bills50 = 1600;
+bills20 = 1000;]]></EntryAction>
+						<FillColor>-16777216</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657188539265</Id>
+					<Name><![CDATA[understandRequest]]></Name>
+					<X>420</X><Y>150</Y>
+					<Label><X>95</X><Y>65</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="180" Height="50">
+						<EntryAction><![CDATA[RegisterGeneralRequest req = pendingServedRequests.get(0);
+pendingServedRequests.remove(0);
+currentRequest = req;]]></EntryAction>
+						<FillColor>-16777216</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="Branch" ParentState="ROOT_NODE">
+					<Id>1657188539267</Id>
+					<Name><![CDATA[branch1]]></Name>
+					<X>510</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Properties>	
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657188539269</Id>
+					<Name><![CDATA[satisfyWithdraw]]></Name>
+					<X>340</X><Y>320</Y>
+					<Label><X>25</X><Y>75</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="190" Height="60">
+						<EntryAction><![CDATA[int toWithdraw = currentRequest.amountToWithdraw;
+withdraw(toWithdraw);]]></EntryAction>
+						<FillColor>-16777216</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657188539271</Id>
+					<Name><![CDATA[satisfyDeposit]]></Name>
+					<X>570</X><Y>320</Y>
+					<Label><X>20</X><Y>75</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="60">
+						<EntryAction><![CDATA[RegisterGeneralRequest r = currentRequest;
+deposit(r.bills500, r.bills200,
+	r.bills100, r.bills50,
+	r.bills20, r.bills10, r.bills5);]]></EntryAction>
+						<FillColor>-16777216</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="EntryPoint" ParentState="ROOT_NODE">
+					<Id>1657188539273</Id>
+					<Name><![CDATA[statechart1]]></Name>
+					<X>510</X><Y>30</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>40</Y></Point>
+					</Points>
+					<Properties Target="1657188539263">
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657188539275</Id>
+					<Name><![CDATA[transition2]]></Name>
+					<X>510</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657188539263" Target="1657188539265" Trigger="condition">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[pendingServedRequests.size() > 0]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657188539277</Id>
+					<Name><![CDATA[transition3]]></Name>
+					<X>510</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657188539265" Target="1657188539267" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657188539279</Id>
+					<Name><![CDATA[transition4]]></Name>
+					<X>498</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>-68</X><Y>0</Y></Point>
+						<Point><X>-68</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657188539267" Target="1657188539269" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[currentRequest.kind == "withdraw"]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>false</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657188539281</Id>
+					<Name><![CDATA[transition5]]></Name>
+					<X>370</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>-240</Y></Point>
+						<Point><X>90</X><Y>-240</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657188539269" Target="1657188539263" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[pendingSpecialRequests.size() > 0]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657188539283</Id>
+					<Name><![CDATA[transition6]]></Name>
+					<X>522</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>128</X><Y>0</Y></Point>
+						<Point><X>128</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657188539267" Target="1657188539271" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657188539285</Id>
+					<Name><![CDATA[transition7]]></Name>
+					<X>700</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>-240</Y></Point>
+						<Point><X>-140</X><Y>-240</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657188539271" Target="1657188539263" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+			</StatechartElements>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -3725,7 +5102,157 @@ must be present in the served register.]]></Description>
 		bills10 * 10 +
 		bills5 *5;]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1657188874446</Id>
+					<Name><![CDATA[withdraw]]></Name>
+					<X>130</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[amount]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[int w_bills50 = 0;
+int w_bills20 = 0;
+int w_bills100 = 0;
+int x = 0;
+while(amount >= 140){
+	//x = withdrawDistribution();
+	System.out.println("w = " + x);
+	if(x == 100){
+		w_bills100 += 1;
+	}else if(x == 50){
+		w_bills50 += 1;
+	}else{
+		w_bills20 += 1;
+	}
+	amount -= x;
+}
+switch(amount){
+	case 130: w_bills50 += 1; w_bills20 += 4; break;
+	case 120: w_bills50 += 2; w_bills20 += 1; break;
+	case 110: w_bills50 += 1; w_bills20 += 3; break;
+	case 100: w_bills50 += 2; break;
+	case 90: w_bills50 += 1; w_bills20 += 2; break;
+	case 80: w_bills20 += 4; break;
+	case 70: w_bills50 += 1; w_bills20 += 1; break;
+	case 60: w_bills20 += 3; break;
+	case 50: w_bills50 += 1; break;
+	case 40: w_bills20 += 2; break;
+}
+bills50 -= w_bills50;
+bills20 -= w_bills20;
+bills100 -= w_bills100;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1657188874448</Id>
+					<Name><![CDATA[deposit]]></Name>
+					<X>130</X><Y>440</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[b500]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b200]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b100]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b50]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b20]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b10]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b5]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[bills500 += b500;
+bills200 += b200;
+bills100 += b100;
+bills50 += b50;
+bills20 += b20;
+bills10 += b10;
+bills5 += b5;]]></Body>
+				</Function>
 			</Functions>
+			<CustomDistributions>
+				<CustomDistribution>
+					<Id>1657189895909</Id>
+					<Name><![CDATA[withdrawDistribution]]></Name>
+					<X>130</X><Y>390</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<InterpolationMethod>NONE</InterpolationMethod>
+					<Type>DISCRETE</Type>
+					<DefinitionType>SAMPLE</DefinitionType>
+					<Static>false</Static>
+					<LoadFromDatabase><![CDATA[true]]></LoadFromDatabase>
+					<RangesQuery>
+					<TableReference>
+						<PackageName><![CDATA[bankbranch]]></PackageName>
+						<ClassName><![CDATA[pdf_withdraw_bills_served]]></ClassName>
+					</TableReference>
+						<StartColumnReference>
+						</StartColumnReference>
+						<EndColumnReference>
+						</EndColumnReference>
+						<NumberOfObservationColumnReference>
+						</NumberOfObservationColumnReference>
+					</RangesQuery>
+					<FrequencyQuery>
+					<TableReference>
+					</TableReference>
+						<ValueColumnReference>
+						</ValueColumnReference>
+						<WeightColumnReference>
+						</WeightColumnReference>
+					</FrequencyQuery>
+					<SampleQuery>
+					<TableReference>
+						<PackageName><![CDATA[bankbranch]]></PackageName>
+						<ClassName><![CDATA[pdf_withdraw_bills_served]]></ClassName>
+					</TableReference>
+						<ValueColumnReference>
+							<PackageName><![CDATA[bankbranch]]></PackageName>
+							<ClassName><![CDATA[pdf_withdraw_bills_served]]></ClassName>
+							<ItemName><![CDATA[db_column]]></ItemName>
+						</ValueColumnReference>
+					</SampleQuery>
+					<OptionQuery>
+					<TableReference>
+					</TableReference>
+						<OptionColumnReference>
+						</OptionColumnReference>
+						<NumberOfObservationColumnReference>
+						</NumberOfObservationColumnReference>
+					</OptionQuery>										
+					<OptionListID><![CDATA[0]]></OptionListID>
+					<OptionValues>				
+					</OptionValues>				
+				</CustomDistribution>		
+			</CustomDistributions>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1657123443808</Id>
@@ -3735,10 +5262,16 @@ must be present in the served register.]]></Description>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<OnReceive><![CDATA[pendingServedRequests.add(msg);]]></OnReceive>
 					<HandleReceiveInConnections>false</HandleReceiveInConnections>
 					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
 					<AgentLinkBidirectional>true</AgentLinkBidirectional>
-					<MessageType><![CDATA[Object]]></MessageType>
+					<MessageType><![CDATA[RegisterGeneralRequest]]></MessageType>
+					<StatechartReference>
+						<PackageName><![CDATA[bankbranch]]></PackageName>
+						<ClassName><![CDATA[ServedRegister]]></ClassName>
+						<ItemName><![CDATA[statechart1]]></ItemName>
+					</StatechartReference>
 					<LineStyle>SOLID</LineStyle>
 					<LineWidth>1</LineWidth>
 					<LineColor>-16777216</LineColor>
@@ -4215,6 +5748,21 @@ must be present in the served register.]]></Description>
 						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657180737413</Id>
+					<Name><![CDATA[currentRequest]]></Name>
+					<X>630</X><Y>90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[RegisterGeneralRequest]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[null]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1657124653255</Id>
 					<Name><![CDATA[max_special]]></Name>
@@ -4238,6 +5786,21 @@ can be present in the served register.]]></Description>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1657180492368</Id>
+					<Name><![CDATA[pendingSpecialRequests]]></Name>
+					<X>20</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[RegisterGeneralRequest]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<StatechartElements>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
@@ -4249,6 +5812,62 @@ can be present in the served register.]]></Description>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="100" Height="30">
+						<FillColor>-16776961</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657180566888</Id>
+					<Name><![CDATA[understandRequest]]></Name>
+					<X>310</X><Y>170</Y>
+					<Label><X>10</X><Y>25</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="180" Height="50">
+						<EntryAction><![CDATA[RegisterGeneralRequest req = pendingSpecialRequests.get(0);
+pendingSpecialRequests.remove(0);
+currentRequest = req;]]></EntryAction>
+						<FillColor>-16776961</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="Branch" ParentState="ROOT_NODE">
+					<Id>1657180718037</Id>
+					<Name><![CDATA[branch]]></Name>
+					<X>400</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Properties>	
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657180817087</Id>
+					<Name><![CDATA[satisfyWithdraw]]></Name>
+					<X>230</X><Y>340</Y>
+					<Label><X>25</X><Y>30</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="190" Height="60">
+						<EntryAction><![CDATA[int toWithdraw = currentRequest.amountToWithdraw;
+withdraw(toWithdraw);]]></EntryAction>
+						<FillColor>-16776961</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657181287466</Id>
+					<Name><![CDATA[satisfyDeposit]]></Name>
+					<X>460</X><Y>340</Y>
+					<Label><X>25</X><Y>30</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="60">
+						<EntryAction><![CDATA[RegisterGeneralRequest r = currentRequest;
+deposit(r.bills500, r.bills200,
+	r.bills100, r.bills50,
+	r.bills20, r.bills10, r.bills5);]]></EntryAction>
 						<FillColor>-16776961</FillColor>
 					</Properties>
 				</StatechartElement>
@@ -4265,6 +5884,190 @@ can be present in the served register.]]></Description>
 						<Point><X>0</X><Y>40</Y></Point>
 					</Points>
 					<Properties Target="1657123538899">
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657180610988</Id>
+					<Name><![CDATA[transition]]></Name>
+					<X>400</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657123538899" Target="1657180566888" Trigger="condition">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[pendingSpecialRequests.size() > 0]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657180727758</Id>
+					<Name><![CDATA[transition1]]></Name>
+					<X>400</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657180566888" Target="1657180718037" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657180779960</Id>
+					<Name><![CDATA[transition2]]></Name>
+					<X>388</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>-68</X><Y>0</Y></Point>
+						<Point><X>-68</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657180718037" Target="1657180817087" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[currentRequest.kind == "withdraw"]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>false</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657181241096</Id>
+					<Name><![CDATA[transition3]]></Name>
+					<X>260</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>-240</Y></Point>
+						<Point><X>90</X><Y>-240</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657180817087" Target="1657123538899" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[pendingSpecialRequests.size() > 0]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657181269032</Id>
+					<Name><![CDATA[transition4]]></Name>
+					<X>412</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>128</X><Y>0</Y></Point>
+						<Point><X>128</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657180718037" Target="1657181287466" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657181534339</Id>
+					<Name><![CDATA[transition5]]></Name>
+					<X>590</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>-240</Y></Point>
+						<Point><X>-140</X><Y>-240</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657181287466" Target="1657123538899" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
 					</Properties>	
 				</StatechartElement>
 			</StatechartElements>
@@ -4301,6 +6104,90 @@ can be present in the served register.]]></Description>
 		bills50 + bills20 + bills10 + 
 		bills5;]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1657181028633</Id>
+					<Name><![CDATA[withdraw]]></Name>
+					<X>50</X><Y>370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[amount]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[int w_bills50 = 0;
+int w_bills20 = 0;
+int x = 0;
+while(amount > 80){
+	int b = bernoulli(0.6);
+	if(b==1){
+		x = 50;
+		w_bills50 += 1;
+	}else{
+		x = 20;
+		w_bills20 += 1;
+	}
+	amount -= x;
+}
+switch(amount){
+	case 80: w_bills20 += 4; break;
+	case 70: w_bills50 += 1; w_bills20 += 1; break;
+	case 60: w_bills20 += 3; break;
+	case 50: w_bills50 += 1; break;
+	case 40: w_bills20 += 2; break;
+}
+bills50 -= w_bills50;
+bills20 -= w_bills20;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1657181321058</Id>
+					<Name><![CDATA[deposit]]></Name>
+					<X>50</X><Y>400</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[b500]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b200]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b100]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b50]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b20]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b10]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[b5]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[bills500 += b500;
+bills200 += b200;
+bills100 += b100;
+bills50 += b50;
+bills20 += b20;
+bills10 += b10;
+bills5 += b5;]]></Body>
+				</Function>
 			</Functions>
 			<AgentLinks>
 				<AgentLink>
@@ -4311,10 +6198,11 @@ can be present in the served register.]]></Description>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<OnReceive><![CDATA[pendingSpecialRequests.add(msg);]]></OnReceive>
 					<HandleReceiveInConnections>false</HandleReceiveInConnections>
 					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
 					<AgentLinkBidirectional>true</AgentLinkBidirectional>
-					<MessageType><![CDATA[Object]]></MessageType>
+					<MessageType><![CDATA[RegisterGeneralRequest]]></MessageType>
 					<StatechartReference>
 						<PackageName><![CDATA[bankbranch]]></PackageName>
 						<ClassName><![CDATA[SpecialRegister]]></ClassName>
@@ -4722,6 +6610,9 @@ can be present in the served register.]]></Description>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[2880]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -4734,6 +6625,9 @@ can be present in the served register.]]></Description>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[1800]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -4788,7 +6682,126 @@ can be present in the withdrawal register.]]></Description>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1657129299784</Id>
+					<Name><![CDATA[pendingWithdrawalRequests]]></Name>
+					<X>190</X><Y>120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Integer]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
+			<StatechartElements>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657129479692</Id>
+					<Name><![CDATA[init]]></Name>
+					<X>530</X><Y>80</Y>
+					<Label><X>35</X><Y>15</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="100" Height="30">
+						<FillColor>-16711681</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657129524347</Id>
+					<Name><![CDATA[serveRequest]]></Name>
+					<X>500</X><Y>160</Y>
+					<Label><X>20</X><Y>25</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="150" Height="50">
+						<EntryAction><![CDATA[int amount = pendingWithdrawalRequests.get(0);
+pendingWithdrawalRequests.remove(0);
+withdraw(amount);]]></EntryAction>
+						<FillColor>-16711681</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="EntryPoint" ParentState="ROOT_NODE">
+					<Id>1657129477431</Id>
+					<Name><![CDATA[statechart]]></Name>
+					<X>580</X><Y>40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>40</Y></Point>
+					</Points>
+					<Properties Target="1657129479692">
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657129540004</Id>
+					<Name><![CDATA[transition]]></Name>
+					<X>550</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657129479692" Target="1657129524347" Trigger="condition">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[pendingWithdrawalRequests.size() > 0]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657130432131</Id>
+					<Name><![CDATA[transition1]]></Name>
+					<X>610</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>-50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657129524347" Target="1657129479692" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+			</StatechartElements>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
@@ -4800,13 +6813,45 @@ can be present in the withdrawal register.]]></Description>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[return bills500 * 500 +
-		bills200 * 200 +
-		bills100 * 100 + 
-		bills50 * 50 +
-		bills20 * 20 +
-		bills10 * 10 +
-		bills5 *5;]]></Body>
+					<Body><![CDATA[return bills50 * 50 + bills20 * 20;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1657129655068</Id>
+					<Name><![CDATA[withdraw]]></Name>
+					<X>60</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[amount]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[int w_bills50 = 0;
+int w_bills20 = 0;
+int x = 0;
+while(amount > 80){
+	int b = bernoulli(0.6);
+	if(b==1){
+		x = 50;
+		w_bills50 += 1;
+	}else{
+		x = 20;
+		w_bills20 += 1;
+	}
+	amount -= x;
+}
+switch(amount){
+	case 80: w_bills20 += 4; break;
+	case 70: w_bills50 += 1; w_bills20 += 1; break;
+	case 60: w_bills20 += 3; break;
+	case 50: w_bills50 += 1; break;
+	case 40: w_bills20 += 2; break;
+}
+bills50 -= w_bills50;
+bills20 -= w_bills20;]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -4818,10 +6863,16 @@ can be present in the withdrawal register.]]></Description>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<OnReceive><![CDATA[pendingWithdrawalRequests.add(msg);]]></OnReceive>
 					<HandleReceiveInConnections>false</HandleReceiveInConnections>
 					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
 					<AgentLinkBidirectional>true</AgentLinkBidirectional>
-					<MessageType><![CDATA[Object]]></MessageType>
+					<MessageType><![CDATA[Integer]]></MessageType>
+					<StatechartReference>
+						<PackageName><![CDATA[bankbranch]]></PackageName>
+						<ClassName><![CDATA[WithdrawalRegister]]></ClassName>
+						<ItemName><![CDATA[statechart]]></ItemName>
+					</StatechartReference>
 					<LineStyle>SOLID</LineStyle>
 					<LineWidth>1</LineWidth>
 					<LineColor>-16777216</LineColor>
@@ -5107,6 +7158,461 @@ can be present in the withdrawal register.]]></Description>
 					</Points>
 					<Closed>true</Closed>
 				</Polyline>
+			</Presentation>
+
+				</Group>
+			</Presentation>
+
+				</Level>
+			</Presentation>
+
+		</ActiveObjectClass>
+		<!--   =========   Active Object Class   ========  -->
+		<ActiveObjectClass>
+			<Id>1657180096344</Id>
+			<Name><![CDATA[RegisterGeneralRequest]]></Name>
+			<Description><![CDATA[Agent (actually, a class) that represents the messages that a 
+customers sends to either the Special register or the Served
+register in order to specify which kind of operation he/she wants
+to perform (withdrawal, deposit) and the quantities involved
+(cash he wants to withdraw, the bills he wants to deposit).]]></Description>
+			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
+			<Generic>false</Generic>
+			<GenericParameter>
+				<Id>1657180096342</Id>
+				<Name><![CDATA[1657180096342]]></Name>
+				<GenericParameterValue Class="CodeValue">
+					<Code><![CDATA[T extends Agent]]></Code>
+				</GenericParameterValue>
+				<GenericParameterLabel><![CDATA[Generic parameter:]]></GenericParameterLabel>
+			</GenericParameter>
+			<FlowChartsUsage>ENTITY</FlowChartsUsage>
+			<SamplesToKeep>100</SamplesToKeep>
+			<LimitNumberOfArrayElements>false</LimitNumberOfArrayElements>
+			<ElementsLimitValue>100</ElementsLimitValue>
+			<MakeDefaultViewArea>true</MakeDefaultViewArea>
+			<SceneGridColor/>
+			<SceneBackgroundColor/>
+			<SceneSkybox>null</SceneSkybox>
+			<AgentProperties>
+	 			<SpaceType>CONTINUOUS</SpaceType>			
+				<EnvironmentDefinesInitialLocation>true</EnvironmentDefinesInitialLocation>
+				<RotateAnimationTowardsMovement>true</RotateAnimationTowardsMovement>
+				<RotateAnimationVertically>false</RotateAnimationVertically>
+				<VelocityCode Class="CodeUnitValue">
+					<Code><![CDATA[10]]></Code>
+					<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
+				</VelocityCode>
+				<PhysicalLength Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalLength>
+				<PhysicalWidth Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalWidth>
+				<PhysicalHeight Class="CodeUnitValue">
+					<Code><![CDATA[1]]></Code>
+					<Unit Class="LengthUnits"><![CDATA[METER]]></Unit>
+				</PhysicalHeight>
+			</AgentProperties>
+			<EnvironmentProperties>
+					<EnableSteps>false</EnableSteps>
+					<StepDurationCode Class="CodeUnitValue">
+						<Code><![CDATA[1.0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</StepDurationCode>
+					<SpaceType>CONTINUOUS</SpaceType>
+					<WidthCode><![CDATA[500]]></WidthCode>
+					<HeightCode><![CDATA[500]]></HeightCode>
+					<ZHeightCode><![CDATA[0]]></ZHeightCode>
+					<ColumnsCountCode><![CDATA[100]]></ColumnsCountCode>
+					<RowsCountCode><![CDATA[100]]></RowsCountCode>
+					<NeigborhoodType>MOORE</NeigborhoodType>
+					<LayoutType>USER_DEF</LayoutType>
+					<LayoutTypeApplyOnStartup>true</LayoutTypeApplyOnStartup>
+					<NetworkType>USER_DEF</NetworkType>
+					<NetworkTypeApplyOnStartup>true</NetworkTypeApplyOnStartup>
+					<ConnectionsPerAgentCode><![CDATA[2]]></ConnectionsPerAgentCode>
+					<ConnectionsRangeCode><![CDATA[50]]></ConnectionsRangeCode>
+					<NeighborLinkFractionCode><![CDATA[0.95]]></NeighborLinkFractionCode>
+					<MCode><![CDATA[10]]></MCode>
+			</EnvironmentProperties>
+			<DatasetsCreationProperties>
+				<AutoCreate>true</AutoCreate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1657180800000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+					</RecurrenceCode>
+			</DatasetsCreationProperties>
+			<ScaleRuler>
+				<Id>1657180096340</Id>
+				<Name><![CDATA[scale]]></Name>
+				<X>0</X><Y>-150</Y>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>false</PresentationFlag>
+				<ShowLabel>false</ShowLabel>
+				<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+				<Length>100</Length>
+				<Rotation>0</Rotation>
+				<ScaleType>BASED_ON_LENGTH</ScaleType>
+				<ModelLength>10</ModelLength>
+				<LengthUnits>METER</LengthUnits>
+				<Scale>10</Scale>
+				<InheritedFromParentAgentType>true</InheritedFromParentAgentType>
+			</ScaleRuler>
+			<CurrentLevel>1657180096343</CurrentLevel>
+			<ConnectionsId>1657180096339</ConnectionsId>
+			<Variables>
+				<Variable Class="PlainVariable">
+					<Id>1657180227602</Id>
+					<Name><![CDATA[kind]]></Name>
+					<Description><![CDATA[This operation is about withdrawal or deposit?]]></Description>
+					<X>200</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[String]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657180254171</Id>
+					<Name><![CDATA[amountToWithdraw]]></Name>
+					<Description><![CDATA[If the operation is about withdrawing, this describes how much
+money need to be withdrawed]]></Description>
+					<X>50</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657180320227</Id>
+					<Name><![CDATA[bills500]]></Name>
+					<Description><![CDATA[If the operation is a deposit one, this describes how many bills
+of this type he wants to deposit (same goes for all the following
+ones).]]></Description>
+					<X>270</X><Y>100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657180320229</Id>
+					<Name><![CDATA[bills200]]></Name>
+					<X>270</X><Y>125</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657180320231</Id>
+					<Name><![CDATA[bills100]]></Name>
+					<X>270</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657180320233</Id>
+					<Name><![CDATA[bills50]]></Name>
+					<X>270</X><Y>175</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657180320235</Id>
+					<Name><![CDATA[bills20]]></Name>
+					<X>270</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657180320237</Id>
+					<Name><![CDATA[bills10]]></Name>
+					<X>270</X><Y>225</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657180320239</Id>
+					<Name><![CDATA[bills5]]></Name>
+					<X>270</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+			</Variables>
+			<AgentLinks>
+				<AgentLink>
+					<Id>1657180096339</Id>
+					<Name><![CDATA[connections]]></Name>
+					<X>50</X><Y>-50</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<HandleReceiveInConnections>false</HandleReceiveInConnections>
+					<AgentLinkType>COLLECTION_OF_LINKS</AgentLinkType>
+					<AgentLinkBidirectional>true</AgentLinkBidirectional>
+					<MessageType><![CDATA[Object]]></MessageType>
+					<LineStyle>SOLID</LineStyle>
+					<LineWidth>1</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineZOrder>UNDER_AGENTS</LineZOrder>
+					<LineArrow>NONE</LineArrow>
+					<LineArrowPosition>END</LineArrowPosition>
+				</AgentLink>
+			</AgentLinks>
+
+
+			<Presentation>
+				<Level>
+					<Id>1657180096343</Id>
+					<Name><![CDATA[level]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<Z>0</Z>
+					<LevelVisibility>DIM_NON_CURRENT</LevelVisibility>
+
+			<Presentation>
+				<Group>
+					<Id>1657180096346</Id>
+					<Name><![CDATA[message]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+
+			<Presentation>
+				<Rectangle>
+					<Id>1657180096348</Id>
+					<Name><![CDATA[_ps310]]></Name>
+					<X>-8</X><Y>-6</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>16</Width>
+					<Height>12</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>-10496</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Polyline>
+					<Id>1657180096350</Id>
+					<Name><![CDATA[_ps311]]></Name>
+					<X>-8</X><Y>-3</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor/>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor>-3564522</FillColor>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>8</X><Y>8</Y><Z>0</Z></Point>
+					   <Point><X>16</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>16</X><Y>-1</Y><Z>0</Z></Point>
+					   <Point><X>8</X><Y>5</Y><Z>0</Z></Point>
+					   <Point><X>0</X><Y>-1</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>true</Closed>
+				</Polyline>
+				<Polyline>
+					<Id>1657180096352</Id>
+					<Name><![CDATA[_ps312]]></Name>
+					<X>8</X><Y>-4</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-12108506</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<FillColor/>
+					<FillMaterial>null</FillMaterial>
+					<Points>
+					   <Point><X>0</X><Y>0</Y><Z>0</Z></Point>
+					   <Point><X>-8</X><Y>6</Y><Z>0</Z></Point>
+					   <Point><X>-16</X><Y>0</Y><Z>0</Z></Point>
+					</Points>
+					<Closed>false</Closed>
+				</Polyline>
+				<Rectangle>
+					<Id>1657180096354</Id>
+					<Name><![CDATA[_ps313]]></Name>
+					<X>-8</X><Y>-6</Y>
+					<Label><X>10</X><Y>10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-12108506</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<Width>16</Width>
+					<Height>12</Height>
+					<Rotation>0.0</Rotation>
+					<FillColor>7035432</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Rectangle>
+				<Line>
+					<Id>1657180096356</Id>
+					<Name><![CDATA[_ps314]]></Name>
+					<X>-8</X><Y>5</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-12108506</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>6</Dx>
+					<Dy>-5</Dy>
+					<Dz>0</Dz>
+				</Line>
+				<Line>
+					<Id>1657180096358</Id>
+					<Name><![CDATA[_ps315]]></Name>
+					<X>8</X><Y>6</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>1</LineWidth>
+					<LineColor>-12108506</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<BeginArrowSize>1</BeginArrowSize>
+					<BeginArrowStyle>0</BeginArrowStyle>
+					<EndArrowSize>1</EndArrowSize>
+					<EndArrowStyle>0</EndArrowStyle>
+					<Dx>-6</Dx>
+					<Dy>-6</Dy>
+					<Dz>0</Dz>
+				</Line>
 			</Presentation>
 
 				</Group>
