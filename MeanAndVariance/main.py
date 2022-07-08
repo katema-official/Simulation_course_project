@@ -66,12 +66,27 @@ if __name__ == '__main__':
 
     samples_withdrawals_register = "100 - 100 - 50 - 200 - 250 - 250 - 500 - 200 - 250 - 500 - 50 - 100 - 2000 - 500 - 100 - 200 - 100 - 150 - 50 - 500 - 150 - 250 - 500 - 250 - 500 - 500 - 500 - 50 - 100 - 300 - 400 - 350 - 100 - 1000 - 50 - 250 - 500 - 100 - 500 - 250 - 200 - 500 - 500 - 50 - 100 - 50 - 150 - 500 - 250 - 40 - 440 - 210 - 420 - 150 - 600 - 150 - 250 - 250 - 500 - 500 - 500 - 500 - 500 - 500 - 500 - 370 - 150 - 500 - 40 - 900 - 200 - 300 - 50 - 150 - 950 - 100 - 700 - 100 - 250 - 250 - 1000 - 150 - 5000 - 1000 - 200 - 50 - 50 - 250 - 500 - 100 - 150 - 500 - 150 - 500 - 100 - 250 - 400 - 350 - 250 - 150 - 100 - 1000 - 1000 - 650 - 250 - 200 - 50 - 300 - 800 - 200 - 200 - 200 - 150 - 1000 - 150 - 150 - 250 - 250 - 500 - 250 - 1000 - 200 - 250 - 800 - 200 - 250 - 250 - 200 - 150 - 300 - 150 - 500 - 500 - 500 - 250 - 1000 - 250 - 50 - 150 - 150 - 100 - 250 - 150 - 50 - 350 - 150 - 250 - 50 - 50"
     n = len([int(x) for x in samples_withdrawals_register.split(" - ")])
+    print("M = " + str(sum([int(x) for x in samples_withdrawals_register.split(" - ")])))
     print("Customers that used the withdrawals register in a day: " + str(n))
+
     X_signed = sample_mean(samples_withdrawals_register)
-    print("sample mean of withdrawals = " + str(X_signed))
     S_squared = sample_variance(samples_withdrawals_register, X_signed)
     S = math.sqrt(S_squared)
+
+    my_sum = 0
+    for i in range(150):
+        x = -1
+        while x <= 0:
+            x = random.normal(X_signed, S)
+        my_sum += x
+    print("A 2 = " + str(my_sum))
+
+    X_signed = sample_mean(samples_withdrawals_register) -30#- 60
+    print("sample mean of withdrawals = " + str(X_signed))
+    S_squared = sample_variance(samples_withdrawals_register, X_signed)
+    S = math.sqrt(S_squared) -190#- 240
     print("sample variance of deposits = " + str(S_squared) + ", standard deviation = " + str(S))
+    print("M 2 = " + str(sum([random.normal(X_signed, S) for i in range(150)])))
     #show_normal(X_signed, S)
 
     # -------------------------------------------------------------------------------------
@@ -81,7 +96,17 @@ if __name__ == '__main__':
     #the following data are all from a solar day
 
     #study of the samples given by observing withdrawals from the special register
-    samples_special_register_withdrawals = "100 - 300 - 160 - 270 - 250 - 140 - 70 - 40 - 20 - 40 - 150 - 500 - 500 - 210 - 300 - 20 - 300 - 1000 - 1000 - 500 - 90 - 600 - 150 - 600 - 350 - 210 - 80 - 150 - 150 - 150 - 500 - 500 - 1000 - 80 - 150 - 500 - 250 - 100 - 800 - 150 - 150 - 60 - 1000 - 200 - 100 - 150 - 500 - 500 - 500 - 950 - 420 - 100 - 250 - 200 - 100 - 600 - 40 - 50 - 100 - 1000 - 1000 - 60 - 350 - 420 - 420 - 300 - 500 - 500 - 40 - 500 - 950 - 1000 - 1000 - 150 - 250 - 500 - 250 - 500 - 50 - 250 - 140 - 140 - 210 - 140 - 350 - 900 - 140 - 250 - 250 - 40 - 40 - 250 - 20 - 40 - 20 - 120 - 100 - 500 - 500 - 500 - 280"
+    samples_special_register_withdrawals = "100 - 300 - 160 - 270 - 250 - 140 - 70 - 40 - 20 - " \
+                                           "40 - 150 - 500 - 500 - 210 - 300 - 20 - 300 - 1000 - " \
+                                           "1000 - 500 - 90 - 600 - 150 - 600 - 350 - 210 - 80 - " \
+                                           "150 - 150 - 150 - 500 - 500 - 1000 - 80 - 150 - 500 - " \
+                                           "250 - 100 - 800 - 150 - 150 - 60 - 1000 - 200 - 100 - " \
+                                           "150 - 500 - 500 - 500 - 950 - 420 - 100 - 250 - 200 - " \
+                                           "100 - 600 - 40 - 50 - 100 - 1000 - 1000 - 60 - 350 - " \
+                                           "420 - 420 - 300 - 500 - 500 - 40 - 500 - 950 - 1000 - " \
+                                           "1000 - 150 - 250 - 500 - 250 - 500 - 50 - 250 - 140 - " \
+                                           "140 - 210 - 140 - 350 - 900 - 140 - 250 - 250 - 40 - " \
+                                           "40 - 250 - 20 - 40 - 20 - 120 - 100 - 500 - 500 - 500 - 280"
     n = len([int(x) for x in samples_special_register_withdrawals.split(" - ")])
     print("Customers that used the special register (for withdrawals) in a day: " + str(n))
     X_signed = sample_mean(samples_special_register_withdrawals)
