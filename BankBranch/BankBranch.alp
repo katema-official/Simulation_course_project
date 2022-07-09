@@ -5192,24 +5192,29 @@ if(difference > 0){
 money_count_served = main.servedRegister.balance(); 
 
 //when there are too much money
-if(money_count_served + mean_gain > 
+if(money_count_served + mean_gain() > 
 	main.servedRegister.max_served){
 		must_open_served_today_to_remove = true;
 }else{
 	must_open_served_today_to_remove = false;
 	
 	//when there are too little money
-	if(money_count_served + mean_loss <
+	if(money_count_served + mean_loss() <
 		main.servedRegister.min_served){
 			must_open_served_tomorrow_to_add = true;
 	}else{
 		
 		//when the money are ok, but the bills of
 		//50 or 20 euros are not
-		int c = ((8 * mean_loss)/10)/50;
+		int c1 = ((8 * mean_loss())/10)/50;
 		if(main.servedRegister.bills50 +
-			c <= (3*mean_loss)/2){
-				
+			c1*2 <= (3*mean_loss())/2){
+				must_open_served_tomorrow_to_add = true;
+		}
+		int c2 = (mean_loss()/10)/20;
+		if(main.servedRegister.bills20 + 
+			c2*2 <= (3*mean_loss())/2){
+				must_open_served_tomorrow_to_add = true;
 		}
 	}
 }
@@ -5401,9 +5406,9 @@ if(money_count_served + mean_gain >
 						<Point><X>0</X><Y>40</Y></Point>
 					</Points>
 					<IconOffset>20.0</IconOffset>
-					<Properties Source="1657375760360" Target="1657376307772" Trigger="condition">
+					<Properties Source="1657375760360" Target="1657376307772" Trigger="timeout">
 						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
+							<Code><![CDATA[509]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</Timeout>
 						<Condition><![CDATA[_hour() == 8 && _minute() == 29]]></Condition>
@@ -5431,9 +5436,9 @@ if(money_count_served + mean_gain >
 						<Point><X>0</X><Y>40</Y></Point>
 					</Points>
 					<IconOffset>25.0</IconOffset>
-					<Properties Source="1657375840744" Target="1657376355271" Trigger="condition">
+					<Properties Source="1657375840744" Target="1657376355271" Trigger="timeout">
 						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
+							<Code><![CDATA[509]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</Timeout>
 						<Condition><![CDATA[_hour() == 8 && _minute() == 29]]></Condition>
@@ -5461,9 +5466,9 @@ if(money_count_served + mean_gain >
 						<Point><X>0</X><Y>40</Y></Point>
 					</Points>
 					<IconOffset>20.0</IconOffset>
-					<Properties Source="1657375888499" Target="1657376406214" Trigger="condition">
+					<Properties Source="1657375888499" Target="1657376406214" Trigger="timeout">
 						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
+							<Code><![CDATA[509]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</Timeout>
 						<Condition><![CDATA[_hour() == 8 && _minute() == 29]]></Condition>
@@ -5616,7 +5621,7 @@ if(money_count_served + mean_gain >
 					<IconOffset>20.0</IconOffset>
 					<Properties Source="1657382624113" Target="1657386349477" Trigger="timeout">
 						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
+							<Code><![CDATA[0]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</Timeout>
 						<Condition><![CDATA[true]]></Condition>
@@ -5646,7 +5651,7 @@ if(money_count_served + mean_gain >
 					<IconOffset>20.0</IconOffset>
 					<Properties Source="1657382650303" Target="1657386349477" Trigger="timeout">
 						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
+							<Code><![CDATA[0]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</Timeout>
 						<Condition><![CDATA[true]]></Condition>
@@ -5678,7 +5683,7 @@ if(money_count_served + mean_gain >
 					<IconOffset>20.0</IconOffset>
 					<Properties Source="1657382684212" Target="1657386349477" Trigger="timeout">
 						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
+							<Code><![CDATA[0]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</Timeout>
 						<Condition><![CDATA[true]]></Condition>
