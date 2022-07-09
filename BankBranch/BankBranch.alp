@@ -4578,7 +4578,7 @@ send(req, main.specialRegister);]]></EntryAction>
 				<Variable Class="PlainVariable">
 					<Id>1657376733659</Id>
 					<Name><![CDATA[wit_bills50]]></Name>
-					<X>-210</X><Y>420</Y>
+					<X>-210</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4590,7 +4590,7 @@ send(req, main.specialRegister);]]></EntryAction>
 				<Variable Class="PlainVariable">
 					<Id>1657376743494</Id>
 					<Name><![CDATA[wit_bills20]]></Name>
-					<X>-210</X><Y>450</Y>
+					<X>-210</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4608,7 +4608,7 @@ send(req, main.specialRegister);]]></EntryAction>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -4623,10 +4623,199 @@ send(req, main.specialRegister);]]></EntryAction>
 						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657382849481</Id>
+					<Name><![CDATA[money_count_withdrawal]]></Name>
+					<X>-400</X><Y>500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657382873928</Id>
+					<Name><![CDATA[must_open_withdrawal_tomorrow]]></Name>
+					<X>-480</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657386445754</Id>
+					<Name><![CDATA[ser_bills500]]></Name>
+					<X>-210</X><Y>640</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657386459280</Id>
+					<Name><![CDATA[ser_bills200]]></Name>
+					<X>-210</X><Y>670</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657386465691</Id>
+					<Name><![CDATA[ser_bills5]]></Name>
+					<X>-210</X><Y>700</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657386475124</Id>
+					<Name><![CDATA[ser_bills50_out]]></Name>
+					<X>-280</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657386491045</Id>
+					<Name><![CDATA[ser_bills50_in]]></Name>
+					<X>-130</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657386501524</Id>
+					<Name><![CDATA[ser_bills20_out]]></Name>
+					<X>-280</X><Y>770</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657386510015</Id>
+					<Name><![CDATA[ser_bills20_in]]></Name>
+					<X>-130</X><Y>770</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657386584922</Id>
+					<Name><![CDATA[money_count_served]]></Name>
+					<X>-470</X><Y>700</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657386595216</Id>
+					<Name><![CDATA[must_open_served_today_to_remove]]></Name>
+					<X>-650</X><Y>750</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657387687372</Id>
+					<Name><![CDATA[must_open_served_tomorrow_to_add]]></Name>
+					<X>-650</X><Y>790</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1657376789618</Id>
 					<Name><![CDATA[list_special]]></Name>
 					<X>-400</X><Y>230</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Integer]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1657382823920</Id>
+					<Name><![CDATA[list_withdrawal]]></Name>
+					<X>-400</X><Y>440</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Integer]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1657386535183</Id>
+					<Name><![CDATA[list_gain]]></Name>
+					<X>-490</X><Y>630</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[Integer]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1657386568197</Id>
+					<Name><![CDATA[list_loss]]></Name>
+					<X>-370</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4651,7 +4840,16 @@ send(req, main.specialRegister);]]></EntryAction>
 					<Properties Width="100" Height="30">
 						<EntryAction><![CDATA[shapeBody.setFillColor(purple);]]></EntryAction>
 						<ExitAction><![CDATA[list_special.add(500);
-bills_count_special = main.specialRegister.totalBills();]]></ExitAction>
+bills_count_special = main.specialRegister.totalBills();
+
+list_withdrawal.add(40000);
+money_count_withdrawal = main.withdrawalRegister.balance();
+
+list_gain.add(10000);
+list_loss.add(-10000);
+money_count_served = main.servedRegister.balance();
+
+]]></ExitAction>
 						<FillColor>-8388480</FillColor>
 					</Properties>
 				</StatechartElement>
@@ -4740,8 +4938,7 @@ if(day_month() == 0){
 //1°: if it's not monday, update the current value
 //of the mean
 if(day_week() != 0){
-	int difference = 
-		main.specialRegister.totalBills() -
+	int difference = main.specialRegister.totalBills() -
 		bills_count_special;
 	if(difference > 0){
 		list_special.add(difference);
@@ -4752,7 +4949,7 @@ if(day_week() != 0){
 //tomorrow, will there be too many bills for the Special
 //register to work properly?
 int bills_balance_tomorrow = bills_count_special + 
-	mean_special + mean_special/2;
+	mean_special() + mean_special()/2;
 
 if(bills_balance_tomorrow > main.specialRegister.max_special){
 	must_open_special_today = true;
@@ -4763,7 +4960,7 @@ if(bills_balance_tomorrow > main.specialRegister.max_special){
 
 
 ]]></EntryAction>
-						<FillColor>-8388480</FillColor>
+						<FillColor>-16776961</FillColor>
 					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
@@ -4775,7 +4972,36 @@ if(bills_balance_tomorrow > main.specialRegister.max_special){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="150" Height="50">
-						<FillColor>-8388480</FillColor>
+						<EntryAction><![CDATA[//here, we'll do all the computations
+//regarding the special register
+
+int difference = main.specialRegister.totalBills() -
+		bills_count_special;
+if(difference > 0){
+	list_special.add(difference);
+}
+bills_count_special = main.specialRegister.totalBills();
+
+//tomorrow, will there be too many bills for the Special
+//register to work properly?
+int bills_balance_tomorrow = bills_count_special + 
+	mean_special() + mean_special()/2;
+
+if(bills_balance_tomorrow > main.specialRegister.max_special){
+	must_open_special_today = true;
+}else{
+	must_open_special_today = false;
+	
+	//if tomorrow we don't have any problem, could we have
+	//some on monday?
+	int bills_balance_monday = bills_count_special + 
+	4*mean_special();
+	
+	if(bills_balance_monday > main.specialRegister.max_special){
+		must_open_special_today = true;
+	}
+}]]></EntryAction>
+						<FillColor>-16776961</FillColor>
 					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="State" ParentState="ROOT_NODE">
@@ -4787,7 +5013,208 @@ if(bills_balance_tomorrow > main.specialRegister.max_special){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="150" Height="50">
-						<FillColor>-8388480</FillColor>
+						<EntryAction><![CDATA[//here, we'll do all the computations
+//regarding the special register
+
+int difference = main.specialRegister.totalBills() -
+		bills_count_special;
+if(difference > 0){
+	list_special.add(difference);
+}
+bills_count_special = main.specialRegister.totalBills();
+
+//on monday, will there be too many bills for the Special
+//register to work properly?
+int bills_balance_monday = bills_count_special + 
+	3*mean_special();
+	
+if(bills_balance_monday > main.specialRegister.max_special){
+	must_open_special_today = true;
+}else{
+	must_open_special_today = false;
+}]]></EntryAction>
+						<FillColor>-16776961</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657382624113</Id>
+					<Name><![CDATA[reason_withdrawal_1]]></Name>
+					<X>10</X><Y>510</Y>
+					<Label><X>50</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="260" Height="40">
+						<EntryAction><![CDATA[//here, we'll do all the computations
+//regarding the withdrawal register
+
+//0°: if a month has passed, clear the list
+//of withdrawal money count
+if(day_month() == 0){
+	int mean = mean_withdrawal();
+	list_withdrawal.clear();
+	list_withdrawal.add(mean);
+}
+
+//1°: if it's not monday, update the current value
+//of the mean
+if(day_week() != 0){
+	int difference = -(main.withdrawalRegister.balance() -
+		money_count_withdrawal);
+	if(difference > 0){
+		list_withdrawal.add(difference);
+	}
+	money_count_withdrawal = main.withdrawalRegister.balance();
+}
+
+//tomorrow, will there be too little money for the Withdrawal
+//register to work properly?
+int money_balance_tomorrow = money_count_withdrawal - 
+	mean_withdrawal() - mean_withdrawal()/2;
+
+if(money_balance_tomorrow < main.withdrawalRegister.min_withdrawal + 
+	mean_withdrawal()){
+	must_open_withdrawal_tomorrow = true;
+}else{
+	must_open_withdrawal_tomorrow = false;
+}
+]]></EntryAction>
+						<FillColor>-16711681</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657382650303</Id>
+					<Name><![CDATA[reason_withdrawal_2]]></Name>
+					<X>290</X><Y>510</Y>
+					<Label><X>5</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="170" Height="40">
+						<EntryAction><![CDATA[//here, we'll do all the computations
+//regarding the withdrawal register
+
+int difference = -(main.withdrawalRegister.balance() -
+		money_count_withdrawal);
+if(difference > 0){
+	list_withdrawal.add(difference);
+}
+money_count_withdrawal = main.withdrawalRegister.balance();
+
+//tomorrow, will there be too little money for the Withdrawal
+//register to work properly?
+int money_balance_tomorrow = money_count_withdrawal - 
+	mean_withdrawal() - mean_withdrawal()/2;
+
+if(money_balance_tomorrow < main.withdrawalRegister.min_withdrawal + 
+	mean_withdrawal()){
+		must_open_withdrawal_tomorrow = true;
+}else{
+	must_open_withdrawal_tomorrow = false;
+	
+	//if tomorrow we don't have any problem, could we have
+	//some on monday?
+	int money_balance_monday = money_count_withdrawal - 
+	4*mean_withdrawal();
+	
+	if(money_balance_monday < main.withdrawalRegister.min_withdrawal + 
+	mean_withdrawal()){
+		must_open_withdrawal_tomorrow = true;
+	}
+}
+]]></EntryAction>
+						<FillColor>-16711681</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657382684212</Id>
+					<Name><![CDATA[reason_withdrawal_3]]></Name>
+					<X>470</X><Y>510</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="180" Height="40">
+						<EntryAction><![CDATA[//here, we'll do all the computations
+//regarding the withdrawal register
+
+int difference = -(main.withdrawalRegister.balance() -
+		money_count_withdrawal);
+if(difference > 0){
+	list_withdrawal.add(difference);
+}
+money_count_withdrawal = main.withdrawalRegister.balance();
+
+//on monday, will there be too many bills for the Special
+//register to work properly?
+int money_balance_monday = money_count_withdrawal - 
+	3*mean_withdrawal();
+	
+if(money_balance_monday < main.withdrawalRegister.min_withdrawal + 
+	mean_withdrawal()){
+		must_open_withdrawal_tomorrow = true;
+}else{
+	must_open_withdrawal_tomorrow = false;
+}]]></EntryAction>
+						<FillColor>-16711681</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657386349477</Id>
+					<Name><![CDATA[reason_served]]></Name>
+					<X>270</X><Y>690</Y>
+					<Label><X>165</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//here, we'll do all the computations
+//regarding the served register
+
+//0°: if a month has passed, clear the lists
+//of gain and loss
+if(day_month() == 0){
+	int mean_g = mean_gain();
+	list_gain.clear();
+	list_gain.add(mean_g);
+	int mean_l = mean_loss();
+	list_loss.clear();
+	list_loss.add(mean_l);
+}
+
+int difference = main.servedRegister.balance() -
+	money_count_served;
+if(difference > 0){
+	list_gain.add(difference);
+}else{
+	list_loss.add(difference);
+}
+money_count_served = main.servedRegister.balance(); 
+
+//when there are too much money
+if(money_count_served + mean_gain > 
+	main.servedRegister.max_served){
+		must_open_served_today_to_remove = true;
+}else{
+	must_open_served_today_to_remove = false;
+	
+	//when there are too little money
+	if(money_count_served + mean_loss <
+		main.servedRegister.min_served){
+			must_open_served_tomorrow_to_add = true;
+	}else{
+		
+		//when the money are ok, but the bills of
+		//50 or 20 euros are not
+		int c = ((8 * mean_loss)/10)/50;
+		if(main.servedRegister.bills50 +
+			c <= (3*mean_loss)/2){
+				
+		}
+	}
+}
+]]></EntryAction>
+						<FillColor>-16777216</FillColor>
 					</Properties>
 				</StatechartElement>
 				<StatechartElement Class="EntryPoint" ParentState="ROOT_NODE">
@@ -5082,6 +5509,190 @@ if(bills_balance_tomorrow > main.specialRegister.max_special){
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
 					</Properties>	
 				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657382716257</Id>
+					<Name><![CDATA[transition9]]></Name>
+					<X>140</X><Y>400</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>110</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657376307772" Target="1657382624113" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657382732983</Id>
+					<Name><![CDATA[transition10]]></Name>
+					<X>360</X><Y>400</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>110</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657376355271" Target="1657382650303" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657382738058</Id>
+					<Name><![CDATA[transition11]]></Name>
+					<X>560</X><Y>400</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>110</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657376406214" Target="1657382684212" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657386379483</Id>
+					<Name><![CDATA[transition12]]></Name>
+					<X>140</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>70</Y></Point>
+						<Point><X>170</X><Y>70</Y></Point>
+						<Point><X>170</X><Y>140</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657382624113" Target="1657386349477" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657386385403</Id>
+					<Name><![CDATA[transition13]]></Name>
+					<X>360</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>140</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657382650303" Target="1657386349477" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657386394036</Id>
+					<Name><![CDATA[transition14]]></Name>
+					<X>560</X><Y>550</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>70</Y></Point>
+						<Point><X>-160</X><Y>70</Y></Point>
+						<Point><X>-160</X><Y>140</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657382684212" Target="1657386349477" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
 			</StatechartElements>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
@@ -5154,6 +5765,57 @@ for(int i = 0; i < list_special.size(); i++){
 	sum += list_special.get(i);
 }
 int avg = sum/list_special.size();
+return avg;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[int]]></ReturnType>
+					<Id>1657382835155</Id>
+					<Name><![CDATA[mean_withdrawal]]></Name>
+					<X>-400</X><Y>470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int sum = 0;
+for(int i = 0; i < list_withdrawal.size(); i++){
+	sum += list_withdrawal.get(i);
+}
+int avg = sum/list_withdrawal.size();
+return avg;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[int]]></ReturnType>
+					<Id>1657386550666</Id>
+					<Name><![CDATA[mean_gain]]></Name>
+					<X>-490</X><Y>670</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int sum = 0;
+for(int i = 0; i < list_gain.size(); i++){
+	sum += list_gain.get(i);
+}
+int avg = sum/list_gain.size();
+return avg;]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[int]]></ReturnType>
+					<Id>1657386558534</Id>
+					<Name><![CDATA[mean_loss]]></Name>
+					<X>-370</X><Y>670</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int sum = 0;
+for(int i = 0; i < list_loss.size(); i++){
+	sum += list_loss.get(i);
+}
+int avg = sum/list_loss.size();
 return avg;]]></Body>
 				</Function>
 			</Functions>
@@ -5858,7 +6520,7 @@ must be present in the served register.]]></Description>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[int]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
@@ -5884,7 +6546,7 @@ must be present in the served register.]]></Description>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[int]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
@@ -8044,7 +8706,7 @@ any eithdrawal operation.]]></Description>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[int]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
@@ -8070,7 +8732,7 @@ can be present in the withdrawal register.]]></Description>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
+						<Type><![CDATA[int]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
