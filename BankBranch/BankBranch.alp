@@ -4656,7 +4656,7 @@ send(req, main.specialRegister);]]></EntryAction>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -4668,7 +4668,7 @@ send(req, main.specialRegister);]]></EntryAction>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -4680,7 +4680,7 @@ send(req, main.specialRegister);]]></EntryAction>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -6929,7 +6929,7 @@ return avg;]]></Body>
 				<Variable Class="PlainVariable">
 					<Id>1657475580826</Id>
 					<Name><![CDATA[special_to_remove]]></Name>
-					<X>30</X><Y>540</Y>
+					<X>30</X><Y>550</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7000,6 +7000,111 @@ in the served one]]></Description>
 						<Type><![CDATA[boolean]]></Type>        
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657482614707</Id>
+					<Name><![CDATA[spe_b500]]></Name>
+					<X>150</X><Y>850</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657482626285</Id>
+					<Name><![CDATA[spe_b200]]></Name>
+					<X>150</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657482632712</Id>
+					<Name><![CDATA[spe_b100]]></Name>
+					<X>150</X><Y>910</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657482638707</Id>
+					<Name><![CDATA[spe_b50]]></Name>
+					<X>150</X><Y>940</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657482643699</Id>
+					<Name><![CDATA[spe_b20]]></Name>
+					<X>150</X><Y>970</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657482648979</Id>
+					<Name><![CDATA[spe_b10]]></Name>
+					<X>150</X><Y>1000</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1657482653837</Id>
+					<Name><![CDATA[spe_b5]]></Name>
+					<X>150</X><Y>1030</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -7098,7 +7203,7 @@ if(r.open_special){
 }
 if(r.open_withdrawal){
 	withdrawal_open_1 = true;
-	withdrawal_to_add = r.money_to_add_withdrawal;
+	withdraw_to_add = r.money_to_add_withdrawal;
 }
 if(r.open_served == 1){
 	served_open_0 = 1;
@@ -7140,7 +7245,7 @@ if(r.open_special){
 }
 if(r.open_withdrawal){
 	withdrawal_open_2 = true;
-	withdrawal_to_add = r.money_to_add_withdrawal;
+	withdraw_to_add = r.money_to_add_withdrawal;
 }
 if(r.open_served == 1){
 	served_open_1 = 1;
@@ -7171,7 +7276,7 @@ if(r.open_special){
 }
 if(r.open_withdrawal){
 	withdrawal_open_3 = true;
-	withdrawal_to_add = r.money_to_add_withdrawal;
+	withdraw_to_add = r.money_to_add_withdrawal;
 }
 if(r.open_served == 1){
 	served_open_2 = 1;
@@ -7202,7 +7307,7 @@ if(r.open_special){
 }
 if(r.open_withdrawal){
 	withdrawal_open_4 = true;
-	withdrawal_to_add = r.money_to_add_withdrawal;
+	withdraw_to_add = r.money_to_add_withdrawal;
 }
 if(r.open_served == 1){
 	served_open_3 = 1;
@@ -7233,7 +7338,7 @@ if(r.open_special){
 }
 if(r.open_withdrawal){
 	withdrawal_open_0 = true;
-	withdrawal_to_add = r.money_to_add_withdrawal;
+	withdraw_to_add = r.money_to_add_withdrawal;
 }
 if(r.open_served == 1){
 	served_open_4 = 1;
@@ -7258,8 +7363,7 @@ if(r.open_served == 1){
 						<EntryAction><![CDATA[//if both the Special and the Withdrawal
 //register have to be opened, let's NOW
 //open the Special register
-if(special_open_0 &&
-	withdrawal_open_0){
+if(special_open_0 && withdrawal_open_0){
 		//opening the special register means removing
 		//the bills, by trying to leave it in the initial
 		//configuration
@@ -7276,22 +7380,184 @@ if(special_open_0 &&
 		main.specialRegister.bills5 = 0;
 		
 		
-		
-		//We must give money_to_remove_special money to the
-		//SG. But the actual money present in the Special
-		//register could differ from this value. First of
-		//all, let's remove the bills we can remove.
-		while(special_to_remove > 0){
+		//We must give money_to_remove_special money to 
+		//either the SG or the Served register.
+		if(from_special_to_served == true){
+			//we move the ("useless") bills collected from
+			//the Special register to the Served one.
+			main.servedRegister.bills500 += b500;
+			main.servedRegister.bills200 += b200;
+			main.servedRegister.bills100 += b100;
+			main.servedRegister.bills10 += b10;
+			main.servedRegister.bills5 += b5;
+			//we would like to have this register in its
+			//initial configuration now, which is
+			//240 bills of 50 euros and 150 of 20 euros.
+			//If we have more bills than necessary, we
+			//simply move them to the Served register.
+			//In the opposite case, we move them from the
+			//Served one to this one.
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		}else{
+			//we prepare the ("useless") bills collected from
+			//the Special register for the SG (that technically
+			//would come the next day to take them. In our
+			//case, we simply remove them, as if they already
+			//came)
 			
-		
+			//But the actual money present in the Special
+			//register could differ from this value. First of
+			//all, let's remove the bills we can remove.
+			while(special_to_remove >= 500 && b500 > 0){
+				special_to_remove -= 500;
+				b500 -= 1;
+			}
+			while(special_to_remove >= 200 && b200 > 0){
+				special_to_remove -= 200;
+				b200 -= 1;
+			}
+			while(special_to_remove >= 100 && b100 > 0){
+				special_to_remove -= 100;
+				b100 -= 1;
+			}
+			
+			while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+				special_to_remove -= 50;
+				main.specialRegister.bills50 -= 1;
+			}
+			while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+				special_to_remove -= 20;
+				main.specialRegister.bills20 -= 1;
+			}
+			
+			while(special_to_remove >= 10 && b10 > 0){
+				special_to_remove -= 10;
+				b10 -= 1;
+			}
+			while(special_to_remove >= 5 && b5 > 0){
+				special_to_remove -= 5;
+				b5 -= 1;
+			}
+			
+			//now we have two scenarios:
+			//1) we have some bills left. In this case,
+			//we put them in the Served register.
+			//2) special_to_remove hasn't reached 0, so
+			//we'll have to take some bills from the Served
+			//register.
+			if(special_to_remove == 0){
+				main.servedRegister.bills500 += b500;
+				main.servedRegister.bills200 += b200;
+				main.servedRegister.bills100 += b100;
+				main.servedRegister.bills10 += b10;
+				main.servedRegister.bills5 += b5;
+				
+				//we don't just put the "useless" bills in the
+				//served register. We also put the ones of 50
+				//and 20 that remained in the Served register, or
+				//do the opposite if needed.
+				if(main.specialRegister.bills50 > 240){
+					int b50 = main.specialRegister.bills50 - 240;
+					main.specialRegister.bills50 = 240;
+					main.servedRegister.bills50 += b50;
+				}else{
+					int b50 = 240 - main.specialRegister.bills50;
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
+				if(main.specialRegister.bills20 > 150){
+					int b20 = main.specialRegister.bills20 - 150;
+					main.specialRegister.bills20 = 150;
+					main.servedRegister.bills20 += b20;
+				}else{
+					int b20 = 150 - main.specialRegister.bills20;
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
+				
+			}else{
+				//if possible, we take some bills of 50 and 20
+				//euros from the Special register
+				if(main.specialRegister.bills50 > 240){
+					int b50 = main.specialRegister.bills50 - 240;
+					while(special_to_remove >= 50 && b50 > 0){
+						special_to_remove -= 50;
+						b50 -= 1;
+					}
+					main.specialRegister.bills50 = 240;
+					main.servedRegister.bills50 += b50;
+				}else{
+					int b50 = 240 - main.specialRegister.bills50;
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
+				if(main.specialRegister.bills20 > 150){
+					int b20 = main.specialRegister.bills20 - 150;
+					while(special_to_remove >= 20 && b20 > 0){
+						special_to_remove -= 20;
+						b20 -= 1;
+					}
+					main.specialRegister.bills20 = 150;
+					main.servedRegister.bills20 += b20;
+				}else{
+					int b20 = 150 - main.specialRegister.bills20;
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
+			
+			
+				//take some bills from the Served register
+				while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+					special_to_remove -= 500;
+					main.servedRegister.bills500 -= 1;
+				}
+				while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
+					special_to_remove -= 200;
+					main.servedRegister.bills200 -= 1;
+				}
+				while(special_to_remove >= 100 && b100 > 0){
+					special_to_remove -= 100;
+					b100 -= 1;
+				}
+				
+				//to reach an equilibrium, since the bills
+				//of 50 and 20 are very important, we remove 
+				//some bills of 50 and some of 20 from the 
+				//Served register
+				while(special_to_remove >= 110){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
+				}
+				
+				while(special_to_remove >= 10 && b10 > 0){
+					special_to_remove -= 10;
+					b10 -= 1;
+				}
+				while(special_to_remove >= 5 && b5 > 0){
+					special_to_remove -= 5;
+					b5 -= 1;
+				}
+			}
 		}
-		
-		
-		
-		
 		special_open_0 = false;
-		
-		
 }
 
 ]]></EntryAction>
@@ -7343,6 +7609,11 @@ if(special_open_0 &&
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[if(special_open_0 && !withdrawal_open_0){
+
+
+	special_open_0 = false;
+}]]></EntryAction>
 						<FillColor>-16711936</FillColor>
 					</Properties>
 				</StatechartElement>
@@ -11846,7 +12117,7 @@ ones).]]></Description>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -11858,7 +12129,7 @@ ones).]]></Description>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -11870,7 +12141,7 @@ ones).]]></Description>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -11882,7 +12153,7 @@ ones).]]></Description>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
+						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
 			</Variables>
