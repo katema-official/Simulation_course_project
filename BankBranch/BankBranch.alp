@@ -224,6 +224,46 @@
 					</ComputationTimeCode>
 					<ComputationDate>1657267200000</ComputationDate>
 				</Output>
+				<Output>
+					<Id>1657555174477</Id>
+					<Name><![CDATA[day]]></Name>
+					<X>700</X><Y>430</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Type><![CDATA[String]]></Type>
+					<UnitType><![CDATA[NONE]]></UnitType>
+					<Value Class="CodeValue">
+						<Code><![CDATA[compute_day()]]></Code>
+					</Value>
+					<ComputationMoment>AT_MODEL_TIME</ComputationMoment>
+					<ComputationTimeCode Class="CodeUnitValue">
+						<Code><![CDATA[24]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</ComputationTimeCode>
+					<ComputationDate>1657612800000</ComputationDate>
+				</Output>
+				<Output>
+					<Id>1657556459030</Id>
+					<Name><![CDATA[hour_minute]]></Name>
+					<X>800</X><Y>430</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Type><![CDATA[String]]></Type>
+					<UnitType><![CDATA[NONE]]></UnitType>
+					<Value Class="CodeValue">
+						<Code><![CDATA[compute_hour_minutes()]]></Code>
+					</Value>
+					<ComputationMoment>AT_MODEL_TIME</ComputationMoment>
+					<ComputationTimeCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+					</ComputationTimeCode>
+					<ComputationDate>1657612800000</ComputationDate>
+				</Output>
 			</Outputs>
 			<Variables>
 				<Variable Class="PlainVariable">
@@ -371,7 +411,10 @@ if(day >= 0 && day <= 4 && currTime >= 510 && currTime < 780){
 					<Action><![CDATA[update_withdrawal_balance();
 update_special_bills();
 update_served_balance();
-update_special_balance();]]></Action>
+update_special_balance();
+
+update_day();
+update_hour_minute();]]></Action>
 				</Event>
 				<Event>
 					<Id>1657302483089</Id>
@@ -413,6 +456,50 @@ if(day>=5 && day<=6){
 }]]></Action>
 				</Event>
 			</Events>
+			<Functions>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1657555304606</Id>
+					<Name><![CDATA[compute_day]]></Name>
+					<X>700</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int t = new Double(time()).intValue();
+t = (t / 1440) % 7;
+switch(t){
+	case 0: return "monday";
+	case 1: return "tuesday";
+	case 2: return "wednesday";
+	case 3: return "thursday";
+	case 4: return "friday";
+	case 5: return "saturday";
+	case 6: return "sunday";
+	default: return "";
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
+					<ReturnType><![CDATA[String]]></ReturnType>
+					<Id>1657556459027</Id>
+					<Name><![CDATA[compute_hour_minutes]]></Name>
+					<X>850</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[int t = new Double(time()).intValue();
+int h = (t / 60) % 24;
+int m = t % 60;
+String hh = "";
+String mm = "";
+if(h <= 9){hh = "0" + h;}else{hh = "" + h;}
+if(m <= 9){mm = "0" + m;}else{mm = "" + m;}
+return hh + "." + mm;]]></Body>
+				</Function>
+			</Functions>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1657029304696</Id>
@@ -2182,7 +2269,7 @@ if(day>=5 && day<=6){
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
 					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
+					<TimeWindowExpression><![CDATA[1440]]></TimeWindowExpression>
 					<DatasetExpression>
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
@@ -2191,7 +2278,7 @@ if(day>=5 && day<=6){
 					<Expression2Flag>true</Expression2Flag>  
 							<Title><![CDATA[Withdrawal Register balance]]></Title>
 					</DatasetExpression>
-					<SamplesToKeep>100</SamplesToKeep>
+					<SamplesToKeep>1440</SamplesToKeep>
 					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
 					<VerScaleType>AUTO</VerScaleType>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
@@ -2243,7 +2330,7 @@ if(day>=5 && day<=6){
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
 					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
+					<TimeWindowExpression><![CDATA[1440]]></TimeWindowExpression>
 					<DatasetExpression>
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
@@ -2252,7 +2339,7 @@ if(day>=5 && day<=6){
 					<Expression2Flag>true</Expression2Flag>  
 							<Title><![CDATA[Special Register bills]]></Title>
 					</DatasetExpression>
-					<SamplesToKeep>100</SamplesToKeep>
+					<SamplesToKeep>1440</SamplesToKeep>
 					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
 					<VerScaleType>AUTO</VerScaleType>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
@@ -2304,7 +2391,7 @@ if(day>=5 && day<=6){
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
 					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
+					<TimeWindowExpression><![CDATA[1440]]></TimeWindowExpression>
 					<DatasetExpression>
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
@@ -2313,7 +2400,7 @@ if(day>=5 && day<=6){
 					<Expression2Flag>true</Expression2Flag>  
 							<Title><![CDATA[Served Register balance]]></Title>
 					</DatasetExpression>
-					<SamplesToKeep>100</SamplesToKeep>
+					<SamplesToKeep>1440</SamplesToKeep>
 					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
 					<VerScaleType>AUTO</VerScaleType>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
@@ -2365,7 +2452,7 @@ if(day>=5 && day<=6){
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
 					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
+					<TimeWindowExpression><![CDATA[1440]]></TimeWindowExpression>
 					<DatasetExpression>
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
@@ -2374,7 +2461,7 @@ if(day>=5 && day<=6){
 					<Expression2Flag>true</Expression2Flag>  
 							<Title><![CDATA[Special Register balance]]></Title>
 					</DatasetExpression>
-					<SamplesToKeep>100</SamplesToKeep>
+					<SamplesToKeep>1440</SamplesToKeep>
 					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
 					<VerScaleType>AUTO</VerScaleType>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
@@ -5236,15 +5323,18 @@ if(must_open_special_today){
 		main.specialRegister.bills5 * 5;
 	//let's also add the estimate of the
 	//new bills that will arrive during
-	//the day
+	//the day: from now to when the register
+	//will be opened, 7.30 hours will pass,
+	//that represent 0.3125 of a day.
 	//(I'll hard-code the values here for
 	//simplicity)
 	special_to_remove += 
-		mean_special() * (0.05) * 500 +
-		mean_special() * (0.05) * 200 +
-		mean_special() * (0.1) * 100 +
-		mean_special() * (0.1) * 10 +
-		mean_special() * (0.05) * 5;	
+		mean_special() * (0.3125) * (0.05) * 500 +
+		mean_special() * (0.3125) * (0.05) * 200 +
+		mean_special() * (0.3125) * (0.1) * 100 +
+		mean_special() * (0.3125) * (0.1) * 10 +
+		mean_special() * (0.3125) * (0.05) * 5;
+		System.out.println("Special to remove = " + special_to_remove);	
 }else{
 	special_to_remove = 0;
 }
@@ -5282,8 +5372,8 @@ if(must_open_withdrawal_tomorrow){
 	//withdrawal register?
 	withdrawal_to_add = 
 		main.withdrawalRegister.max_withdrawal -
-	 	money_count_withdrawal - mean_withdrawal() - 
-	 	mean_withdrawal()/2;
+	 	(money_count_withdrawal - mean_withdrawal() - 
+	 	mean_withdrawal()/2);
 }else{
 	withdrawal_to_add = 0;
 }]]></EntryAction>
@@ -5326,15 +5416,18 @@ if(must_open_special_today){
 		main.specialRegister.bills5 * 5;
 	//let's also add the estimate of the
 	//new bills that will arrive during
-	//the day
+	//the day: from now to when the register
+	//will be opened, 7.30 hours will pass,
+	//that represent 0.3125 of a day.
 	//(I'll hard-code the values here for
 	//simplicity)
 	special_to_remove += 
-		mean_special() * (0.05) * 500 +
-		mean_special() * (0.05) * 200 +
-		mean_special() * (0.1) * 100 +
-		mean_special() * (0.1) * 10 +
-		mean_special() * (0.05) * 5;	
+		mean_special() * (0.3125) * (0.05) * 500 +
+		mean_special() * (0.3125) * (0.05) * 200 +
+		mean_special() * (0.3125) * (0.1) * 100 +
+		mean_special() * (0.3125) * (0.1) * 10 +
+		mean_special() * (0.3125) * (0.05) * 5;
+		System.out.println("Special to remove = " + special_to_remove);	
 }else{
 	special_to_remove = 0;
 }
@@ -5363,7 +5456,7 @@ if(must_open_withdrawal_tomorrow){
 	//on monday)?
 	withdrawal_to_add = 
 		main.withdrawalRegister.max_withdrawal -
-	 	money_count_withdrawal - 3*mean_withdrawal();
+	 	(money_count_withdrawal - 3*mean_withdrawal());
 }else{
 	withdrawal_to_add = 0;
 }]]></EntryAction>
@@ -5497,8 +5590,8 @@ if(must_open_served_today_to_remove){
 }
 m.money_to_remove_special = special_to_remove;
 m.money_to_add_withdrawal = withdrawal_to_add;
-m.money_to_remove_served = served_to_remove;
-m.money_to_add_served = served_to_add;
+m.money_to_remove_served = (served_to_remove < 60000 ? 60000 : served_to_remove);
+m.money_to_add_served = (served_to_add < 60000 ? 60000 : served_to_add);
 send(m, main.cashier1);
 
 
@@ -7003,111 +7096,6 @@ in the served one]]></Description>
 						</InitialValue>
 					</Properties>
 				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1657482614707</Id>
-					<Name><![CDATA[spe_b500]]></Name>
-					<X>150</X><Y>850</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1657482626285</Id>
-					<Name><![CDATA[spe_b200]]></Name>
-					<X>150</X><Y>880</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1657482632712</Id>
-					<Name><![CDATA[spe_b100]]></Name>
-					<X>150</X><Y>910</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1657482638707</Id>
-					<Name><![CDATA[spe_b50]]></Name>
-					<X>150</X><Y>940</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1657482643699</Id>
-					<Name><![CDATA[spe_b20]]></Name>
-					<X>150</X><Y>970</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1657482648979</Id>
-					<Name><![CDATA[spe_b10]]></Name>
-					<X>150</X><Y>1000</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1657482653837</Id>
-					<Name><![CDATA[spe_b5]]></Name>
-					<X>150</X><Y>1030</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1657188214607</Id>
 					<Name><![CDATA[pendingCashierRequests]]></Name>
@@ -7363,40 +7351,121 @@ if(r.open_served == 1){
 						<EntryAction><![CDATA[//if both the Special and the Withdrawal
 //register have to be opened, let's NOW
 //open the Special register
+
 if(special_open_0 && withdrawal_open_0){
-		//opening the special register means removing
-		//the bills, by trying to leave it in the initial
-		//configuration
+	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	main.specialRegister.active = false;
+
+	//opening the special register means removing
+	//the bills, by trying to leave it in the initial
+	//configuration
+	
+	int b500 = main.specialRegister.bills500;
+	main.specialRegister.bills500 = 0;
+	int b200 = main.specialRegister.bills200;
+	main.specialRegister.bills200 = 0;
+	int b100 = main.specialRegister.bills100;
+	main.specialRegister.bills100 = 0;
+	int b10 = main.specialRegister.bills10;
+	main.specialRegister.bills10 = 0;
+	int b5 = main.specialRegister.bills5;
+	main.specialRegister.bills5 = 0;
+	
+	
+	//We must give the money to remove to 
+	//either the SG or the Served register.
+	if(from_special_to_served == true){
+		//we move the ("useless") bills collected from
+		//the Special register to the Served one.
+		main.servedRegister.bills500 += b500;
+		main.servedRegister.bills200 += b200;
+		main.servedRegister.bills100 += b100;
+		main.servedRegister.bills10 += b10;
+		main.servedRegister.bills5 += b5;
+		//we would like to have this register in its
+		//initial configuration now, which is
+		//240 bills of 50 euros and 150 of 20 euros.
+		//If we have more bills than necessary, we
+		//simply move them to the Served register.
+		//In the opposite case, we move them from the
+		//Served one to this one.
+		if(main.specialRegister.bills50 > 240){
+			int b50 = main.specialRegister.bills50 - 240;
+			main.specialRegister.bills50 = 240;
+			main.servedRegister.bills50 += b50;
+		}else{
+			int b50 = 240 - main.specialRegister.bills50;
+			main.servedRegister.bills50 -= b50;
+			main.specialRegister.bills50 = 240;
+		}
+		if(main.specialRegister.bills20 > 150){
+			int b20 = main.specialRegister.bills20 - 150;
+			main.specialRegister.bills20 = 150;
+			main.servedRegister.bills20 += b20;
+		}else{
+			int b20 = 150 - main.specialRegister.bills20;
+			main.servedRegister.bills20 -= b20;
+			main.specialRegister.bills20 = 150;
+		}
+	}else{
+		//we prepare the ("useless") bills collected from
+		//the Special register for the SG (that technically
+		//would come the next day to take them. In our
+		//case, we simply remove them, as if they already
+		//came, also because no interesting events happen
+		//between the 17.00 and the 8.28 of the next day)
 		
-		int b500 = main.specialRegister.bills500;
-		main.specialRegister.bills500 = 0;
-		int b200 = main.specialRegister.bills200;
-		main.specialRegister.bills200 = 0;
-		int b100 = main.specialRegister.bills100;
-		main.specialRegister.bills100 = 0;
-		int b10 = main.specialRegister.bills10;
-		main.specialRegister.bills10 = 0;
-		int b5 = main.specialRegister.bills5;
-		main.specialRegister.bills5 = 0;
+		//But the actual money present in the Special
+		//register could differ from special_to_remove. 
+		//First of all, let's remove the bills we can remove.
+		while(special_to_remove >= 500 && b500 > 0){
+			special_to_remove -= 500;
+			b500 -= 1;
+		}
+		while(special_to_remove >= 200 && b200 > 0){
+			special_to_remove -= 200;
+			b200 -= 1;
+		}
+		while(special_to_remove >= 100 && b100 > 0){
+			special_to_remove -= 100;
+			b100 -= 1;
+		}
 		
+		while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+			special_to_remove -= 50;
+			main.specialRegister.bills50 -= 1;
+		}
+		while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+			special_to_remove -= 20;
+			main.specialRegister.bills20 -= 1;
+		}
 		
-		//We must give money_to_remove_special money to 
-		//either the SG or the Served register.
-		if(from_special_to_served == true){
-			//we move the ("useless") bills collected from
-			//the Special register to the Served one.
+		while(special_to_remove >= 10 && b10 > 0){
+			special_to_remove -= 10;
+			b10 -= 1;
+		}
+		while(special_to_remove >= 5 && b5 > 0){
+			special_to_remove -= 5;
+			b5 -= 1;
+		}
+		
+		//now we have two scenarios:
+		//1) we have some bills left. In this case,
+		//we put them in the Served register.
+		//2) special_to_remove hasn't reached 0, so
+		//we'll have to take some bills from the Served
+		//register.
+		if(special_to_remove == 0){
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
 			main.servedRegister.bills10 += b10;
 			main.servedRegister.bills5 += b5;
-			//we would like to have this register in its
-			//initial configuration now, which is
-			//240 bills of 50 euros and 150 of 20 euros.
-			//If we have more bills than necessary, we
-			//simply move them to the Served register.
-			//In the opposite case, we move them from the
-			//Served one to this one.
+			
+			//we don't just put the "useless" bills in the
+			//served register. We also put the ones of 50
+			//and 20 that remained in the Served register, or
+			//do the opposite if needed.
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
@@ -7415,36 +7484,60 @@ if(special_open_0 && withdrawal_open_0){
 				main.servedRegister.bills20 -= b20;
 				main.specialRegister.bills20 = 150;
 			}
-		}else{
-			//we prepare the ("useless") bills collected from
-			//the Special register for the SG (that technically
-			//would come the next day to take them. In our
-			//case, we simply remove them, as if they already
-			//came)
 			
-			//But the actual money present in the Special
-			//register could differ from this value. First of
-			//all, let's remove the bills we can remove.
-			while(special_to_remove >= 500 && b500 > 0){
-				special_to_remove -= 500;
-				b500 -= 1;
+		}else{
+			//if possible, we take some bills of 50 and 20
+			//euros from the Special register
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				while(special_to_remove >= 50 && b50 > 0){
+					special_to_remove -= 50;
+					b50 -= 1;
+				}
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
 			}
-			while(special_to_remove >= 200 && b200 > 0){
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				while(special_to_remove >= 20 && b20 > 0){
+					special_to_remove -= 20;
+					b20 -= 1;
+				}
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		
+		
+			//take some bills from the Served register
+			while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+				special_to_remove -= 500;
+				main.servedRegister.bills500 -= 1;
+			}
+			while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
 				special_to_remove -= 200;
-				b200 -= 1;
+				main.servedRegister.bills200 -= 1;
 			}
 			while(special_to_remove >= 100 && b100 > 0){
 				special_to_remove -= 100;
 				b100 -= 1;
 			}
 			
-			while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
-				special_to_remove -= 50;
-				main.specialRegister.bills50 -= 1;
-			}
-			while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
-				special_to_remove -= 20;
-				main.specialRegister.bills20 -= 1;
+			//to reach an equilibrium, since the bills
+			//of 50 and 20 are very important, we remove 
+			//some bills of 50 and some of 20 from the 
+			//Served register
+			while(special_to_remove >= 110){
+				main.servedRegister.bills50 -= 1;
+				main.servedRegister.bills20 -= 3;
+				special_to_remove -= 110;
 			}
 			
 			while(special_to_remove >= 10 && b10 > 0){
@@ -7455,112 +7548,11 @@ if(special_open_0 && withdrawal_open_0){
 				special_to_remove -= 5;
 				b5 -= 1;
 			}
-			
-			//now we have two scenarios:
-			//1) we have some bills left. In this case,
-			//we put them in the Served register.
-			//2) special_to_remove hasn't reached 0, so
-			//we'll have to take some bills from the Served
-			//register.
-			if(special_to_remove == 0){
-				main.servedRegister.bills500 += b500;
-				main.servedRegister.bills200 += b200;
-				main.servedRegister.bills100 += b100;
-				main.servedRegister.bills10 += b10;
-				main.servedRegister.bills5 += b5;
-				
-				//we don't just put the "useless" bills in the
-				//served register. We also put the ones of 50
-				//and 20 that remained in the Served register, or
-				//do the opposite if needed.
-				if(main.specialRegister.bills50 > 240){
-					int b50 = main.specialRegister.bills50 - 240;
-					main.specialRegister.bills50 = 240;
-					main.servedRegister.bills50 += b50;
-				}else{
-					int b50 = 240 - main.specialRegister.bills50;
-					main.servedRegister.bills50 -= b50;
-					main.specialRegister.bills50 = 240;
-				}
-				if(main.specialRegister.bills20 > 150){
-					int b20 = main.specialRegister.bills20 - 150;
-					main.specialRegister.bills20 = 150;
-					main.servedRegister.bills20 += b20;
-				}else{
-					int b20 = 150 - main.specialRegister.bills20;
-					main.servedRegister.bills20 -= b20;
-					main.specialRegister.bills20 = 150;
-				}
-				
-			}else{
-				//if possible, we take some bills of 50 and 20
-				//euros from the Special register
-				if(main.specialRegister.bills50 > 240){
-					int b50 = main.specialRegister.bills50 - 240;
-					while(special_to_remove >= 50 && b50 > 0){
-						special_to_remove -= 50;
-						b50 -= 1;
-					}
-					main.specialRegister.bills50 = 240;
-					main.servedRegister.bills50 += b50;
-				}else{
-					int b50 = 240 - main.specialRegister.bills50;
-					main.servedRegister.bills50 -= b50;
-					main.specialRegister.bills50 = 240;
-				}
-				if(main.specialRegister.bills20 > 150){
-					int b20 = main.specialRegister.bills20 - 150;
-					while(special_to_remove >= 20 && b20 > 0){
-						special_to_remove -= 20;
-						b20 -= 1;
-					}
-					main.specialRegister.bills20 = 150;
-					main.servedRegister.bills20 += b20;
-				}else{
-					int b20 = 150 - main.specialRegister.bills20;
-					main.servedRegister.bills20 -= b20;
-					main.specialRegister.bills20 = 150;
-				}
-			
-			
-				//take some bills from the Served register
-				while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
-					special_to_remove -= 500;
-					main.servedRegister.bills500 -= 1;
-				}
-				while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
-					special_to_remove -= 200;
-					main.servedRegister.bills200 -= 1;
-				}
-				while(special_to_remove >= 100 && b100 > 0){
-					special_to_remove -= 100;
-					b100 -= 1;
-				}
-				
-				//to reach an equilibrium, since the bills
-				//of 50 and 20 are very important, we remove 
-				//some bills of 50 and some of 20 from the 
-				//Served register
-				while(special_to_remove >= 110){
-					main.servedRegister.bills50 -= 1;
-					main.servedRegister.bills20 -= 3;
-					special_to_remove -= 110;
-				}
-				
-				while(special_to_remove >= 10 && b10 > 0){
-					special_to_remove -= 10;
-					b10 -= 1;
-				}
-				while(special_to_remove >= 5 && b5 > 0){
-					special_to_remove -= 5;
-					b5 -= 1;
-				}
-			}
 		}
-		special_open_0 = false;
-}
-
-]]></EntryAction>
+	}
+	special_open_0 = false;
+	//special_to_remove = 0;
+}]]></EntryAction>
 						<FillColor>-16711936</FillColor>
 					</Properties>
 				</StatechartElement>
@@ -7597,6 +7589,7 @@ if(special_open_0 && withdrawal_open_0){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="100" Height="30">
+						<EntryAction><![CDATA[shapeBody.setFillColor(lime);]]></EntryAction>
 						<FillColor>-16711936</FillColor>
 					</Properties>
 				</StatechartElement>
@@ -7609,10 +7602,209 @@ if(special_open_0 && withdrawal_open_0){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="160" Height="40">
-						<EntryAction><![CDATA[if(special_open_0 && !withdrawal_open_0){
-
-
+						<EntryAction><![CDATA[//if the Special register needs to be opened but the withdrawal
+//one needs not, let's open the Special at 16.00. The way it
+//works is completely identical to the one shown in the previous
+//state
+if(special_open_0 && !withdrawal_open_0){
+	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	//opening the special register means removing
+	//the bills, by trying to leave it in the initial
+	//configuration
+	main.specialRegister.active = false;
+	
+	int b500 = main.specialRegister.bills500;
+	main.specialRegister.bills500 = 0;
+	int b200 = main.specialRegister.bills200;
+	main.specialRegister.bills200 = 0;
+	int b100 = main.specialRegister.bills100;
+	main.specialRegister.bills100 = 0;
+	int b10 = main.specialRegister.bills10;
+	main.specialRegister.bills10 = 0;
+	int b5 = main.specialRegister.bills5;
+	main.specialRegister.bills5 = 0;
+	
+	
+	//We must give the money to remove to 
+	//either the SG or the Served register.
+	if(from_special_to_served == true){
+		//we move the ("useless") bills collected from
+		//the Special register to the Served one.
+		main.servedRegister.bills500 += b500;
+		main.servedRegister.bills200 += b200;
+		main.servedRegister.bills100 += b100;
+		main.servedRegister.bills10 += b10;
+		main.servedRegister.bills5 += b5;
+		//we would like to have this register in its
+		//initial configuration now, which is
+		//240 bills of 50 euros and 150 of 20 euros.
+		//If we have more bills than necessary, we
+		//simply move them to the Served register.
+		//In the opposite case, we move them from the
+		//Served one to this one.
+		if(main.specialRegister.bills50 > 240){
+			int b50 = main.specialRegister.bills50 - 240;
+			main.specialRegister.bills50 = 240;
+			main.servedRegister.bills50 += b50;
+		}else{
+			int b50 = 240 - main.specialRegister.bills50;
+			main.servedRegister.bills50 -= b50;
+			main.specialRegister.bills50 = 240;
+		}
+		if(main.specialRegister.bills20 > 150){
+			int b20 = main.specialRegister.bills20 - 150;
+			main.specialRegister.bills20 = 150;
+			main.servedRegister.bills20 += b20;
+		}else{
+			int b20 = 150 - main.specialRegister.bills20;
+			main.servedRegister.bills20 -= b20;
+			main.specialRegister.bills20 = 150;
+		}
+	}else{
+		//we prepare the ("useless") bills collected from
+		//the Special register for the SG (that technically
+		//would come the next day to take them. In our
+		//case, we simply remove them, as if they already
+		//came, also because no interesting events happen
+		//between the 17.00 and the 8.28 of the next day)
+		
+		//But the actual money present in the Special
+		//register could differ from special_to_remove. 
+		//First of all, let's remove the bills we can remove.
+		while(special_to_remove >= 500 && b500 > 0){
+			special_to_remove -= 500;
+			b500 -= 1;
+		}
+		while(special_to_remove >= 200 && b200 > 0){
+			special_to_remove -= 200;
+			b200 -= 1;
+		}
+		while(special_to_remove >= 100 && b100 > 0){
+			special_to_remove -= 100;
+			b100 -= 1;
+		}
+		
+		while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+			special_to_remove -= 50;
+			main.specialRegister.bills50 -= 1;
+		}
+		while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+			special_to_remove -= 20;
+			main.specialRegister.bills20 -= 1;
+		}
+		
+		while(special_to_remove >= 10 && b10 > 0){
+			special_to_remove -= 10;
+			b10 -= 1;
+		}
+		while(special_to_remove >= 5 && b5 > 0){
+			special_to_remove -= 5;
+			b5 -= 1;
+		}
+		
+		//now we have two scenarios:
+		//1) we have some bills left. In this case,
+		//we put them in the Served register.
+		//2) special_to_remove hasn't reached 0, so
+		//we'll have to take some bills from the Served
+		//register.
+		if(special_to_remove == 0){
+			main.servedRegister.bills500 += b500;
+			main.servedRegister.bills200 += b200;
+			main.servedRegister.bills100 += b100;
+			main.servedRegister.bills10 += b10;
+			main.servedRegister.bills5 += b5;
+			
+			//we don't just put the "useless" bills in the
+			//served register. We also put the ones of 50
+			//and 20 that remained in the Served register, or
+			//do the opposite if needed.
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+			
+		}else{
+			//if possible, we take some bills of 50 and 20
+			//euros from the Special register
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				while(special_to_remove >= 50 && b50 > 0){
+					special_to_remove -= 50;
+					b50 -= 1;
+				}
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				while(special_to_remove >= 20 && b20 > 0){
+					special_to_remove -= 20;
+					b20 -= 1;
+				}
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		
+		
+			//take some bills from the Served register
+			while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+				special_to_remove -= 500;
+				main.servedRegister.bills500 -= 1;
+			}
+			while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
+				special_to_remove -= 200;
+				main.servedRegister.bills200 -= 1;
+			}
+			while(special_to_remove >= 100 && b100 > 0){
+				special_to_remove -= 100;
+				b100 -= 1;
+			}
+			
+			//to reach an equilibrium, since the bills
+			//of 50 and 20 are very important, we remove 
+			//some bills of 50 and some of 20 from the 
+			//Served register
+			while(special_to_remove >= 110){
+				main.servedRegister.bills50 -= 1;
+				main.servedRegister.bills20 -= 3;
+				special_to_remove -= 110;
+			}
+			
+			while(special_to_remove >= 10 && b10 > 0){
+				special_to_remove -= 10;
+				b10 -= 1;
+			}
+			while(special_to_remove >= 5 && b5 > 0){
+				special_to_remove -= 5;
+				b5 -= 1;
+			}
+		}
+	}
 	special_open_0 = false;
+	//special_to_remove = 0;
 }]]></EntryAction>
 						<FillColor>-16711936</FillColor>
 					</Properties>
@@ -7626,6 +7818,81 @@ if(special_open_0 && withdrawal_open_0){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if the Withdrawal register needs to be opened, let's open
+//it and put the money that the SG brought us during this morning.
+//We assume that the money brought by the SG are "spawned" by the
+//cashier, and they are the amount specified by the manager
+//(rounded to be the sum of bills of 50 and 20 euros). The
+//distribution of bills of 50 and 20 euros is:
+//80% of the bills are of 50 euros
+//20% of the bills are of 20 euros
+if(withdrawal_open_0){
+	moveToInTime(main.nodeWithdrawalRegisterBack, 2);
+	main.specialRegister.active = true;
+	main.withdrawalRegister.active = false;
+
+	int quantity_50 = ((withdraw_to_add * 8) / 10) / 50;
+	int quantity_20 = ((withdraw_to_add * 2) / 10) / 20;
+	
+	//the main objective is to have the Withdrawal register
+	//in its initial distribution: 80% of the bills of
+	//50 euros (2880 bills in total), 20% of the bills
+	//of 20 euros (1800 bills in total). We have, in front
+	//of us, two possible scenarios:
+	//1) we ordered too many bills. Let's put the leftover ones
+	//in the Served register.
+	//2) we ordered too little bills. If the total amount
+	//of the withdrawal register is below 170.000, let's take
+	//some bills from the served register.
+	
+	if(main.withdrawalRegister.bills50 + quantity_50 > 2880){
+		int diff = (main.withdrawalRegister.bills50 + quantity_50)
+			 - 2880;
+		main.withdrawalRegister.bills50 = 2880;
+		main.servedRegister.bills50 += diff;
+	}else{
+		//here main.withdrawalRegister.bills50 + quantity_50 <= 2880
+		//80% of 170.000 = 2720 bills of 50
+		if(main.withdrawalRegister.bills50 + quantity_50 > 2720){
+			//do nothing, we can tolerate. Just put the bills
+			//in the register
+			main.withdrawalRegister.bills50 += quantity_50;
+		}else{
+			//here main.withdrawalRegister.bills50 + quantity_50 <= 2720
+			//Let's take from the served register some bills and put
+			//them here
+			int necessary = 2720 - 
+				(main.withdrawalRegister.bills50 + quantity_50);
+			main.servedRegister.bills50 -= necessary;
+			main.withdrawalRegister.bills50 += quantity_50 + necessary;
+		}
+	}
+	
+	//same goes for 20 euro bills
+	if(main.withdrawalRegister.bills20 + quantity_20 > 1800){
+		int diff = (main.withdrawalRegister.bills20 + quantity_20)
+			 - 1800;
+		main.withdrawalRegister.bills20 = 1800;
+		main.servedRegister.bills20 += diff;
+	}else{
+		//here main.withdrawalRegister.bills20 + quantity_20 <= 1800
+		//20% of 170.000 = 1700 bills of 20
+		if(main.withdrawalRegister.bills20 + quantity_20 > 1700){
+			//do nothing, we can tolerate. Just put the bills
+			//in the register
+			main.withdrawalRegister.bills20 += quantity_20;
+		}else{
+			//here main.withdrawalRegister.bills20 + quantity_20 <= 1700
+			//Let's take from the served register some bills and put
+			//them here
+			int necessary = 1700 - 
+				(main.withdrawalRegister.bills20 + quantity_20);
+			main.servedRegister.bills20 -= necessary;
+			main.withdrawalRegister.bills20 += quantity_20 + necessary;
+		}
+	}
+	withdrawal_open_0 = false;
+}]]></EntryAction>
 						<FillColor>-16711936</FillColor>
 					</Properties>
 				</StatechartElement>
@@ -7638,6 +7905,92 @@ if(special_open_0 && withdrawal_open_0){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[main.specialRegister.active = true;
+main.withdrawalRegister.active = true;
+
+//all that's left at this point is the Served register.
+
+//this is the amount of money we'd like to reach
+int to_reach = 100000;
+	
+//if it needs to be emptied, let's try to leave it in the
+//initial configuration by removing some bills.
+if(served_open_0 == 1){
+	moveToInTime(main.nodeCashiersDesks, 2);
+	//let's first remove the bills we don't need for sure
+	while(served_to_remove >= 500 && main.specialRegister.bills500 > 0){
+		served_to_remove -= 500;
+		main.specialRegister.bills500 -= 1;
+	}
+	while(served_to_remove >= 200 && main.specialRegister.bills200 > 0){
+		served_to_remove -= 200;
+		main.specialRegister.bills200 -= 1;
+	}
+	while(served_to_remove >= 100 && main.specialRegister.bills100 > 0){
+		served_to_remove -= 100;
+		main.specialRegister.bills100 -= 1;
+	}
+	//we wanted at least 100 bills of 10 euros for emergencies
+	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+		served_to_remove -= 10;
+		main.specialRegister.bills10 -= 1;
+	}
+	//we leave a bit of 5 euros bills for emergencies
+	while(served_to_remove >= 5 && main.specialRegister.bills5 > 5){
+		served_to_remove -= 5;
+		main.specialRegister.bills5 -= 1;
+	}
+	
+	//at this point, we either removed all the money, or we
+	//still need to remove some. The initial configuration
+	//was: 1580 bills of 50, 1000 of 20 and 100 of 10.
+	//let's try to reach it
+	while(served_to_remove >= 50 && main.specialRegister.bills50 > 1580){
+		served_to_remove -= 50;
+		main.specialRegister.bills50 -= 1;
+	}
+	while(served_to_remove >= 20 && main.specialRegister.bills20 > 1000){
+		served_to_remove -= 20;
+		main.specialRegister.bills20 -= 1;
+	}
+	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+		served_to_remove -= 10;
+		main.specialRegister.bills10 -= 1;
+	}
+	
+	//still, we could have to remove some more money (we promised
+	//the SG served_to_remove moeny after all). Let's not
+	//remove too many bills anyway!
+	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 500){
+		served_to_remove -= 50;
+		main.servedRegister.bills50 -= 1;
+		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 400){
+			served_to_remove -= 40;
+			main.servedRegister.bills20 -= 2;
+		}
+	}
+	while(served_to_remove >= 20 && main.servedRegister.bills20 > 0){
+		served_to_remove -= 20;
+		main.servedRegister.bills20 -= 1;
+	}
+	while(served_to_remove >= 5 && main.servedRegister.bills5 > 0){
+		served_to_remove -= 5;
+		main.servedRegister.bills5 -= 1;
+	}
+	
+}else if(served_open_0 == 2){
+	moveToInTime(main.nodeCashiersDesks, 2);
+	//If instead it needs to be refilled, let's refill it
+	//in order to have it work properly.
+	//We assume that we ordered 80% of the bills as 50 and
+	//20% as 20.
+	int b50 = ((served_to_add * 8) / 10) / 50;
+	int b20 = ((served_to_add * 2) / 10) / 20;
+	main.servedRegister.bills50 += b50;
+	main.servedRegister.bills20 += b20;
+	
+}
+served_open_0 = 0;]]></EntryAction>
 						<FillColor>-16711936</FillColor>
 					</Properties>
 				</StatechartElement>
@@ -7666,10 +8019,2634 @@ if(special_open_0 && served_open_0 != 1){
 						<FillColor>-16711936</FillColor>
 					</Properties>
 				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657534294935</Id>
+					<Name><![CDATA[midnight]]></Name>
+					<X>720</X><Y>1300</Y>
+					<Label><X>10</X><Y>15</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="100" Height="30">
+						<EntryAction><![CDATA[moveToInTime(main.nodeWorkCashier1, 1);]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657537574019</Id>
+					<Name><![CDATA[tuesday_15_40]]></Name>
+					<X>680</X><Y>840</Y>
+					<Label><X>15</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if both the Special and the Withdrawal
+//register have to be opened, let's NOW
+//open the Special register
+
+if(special_open_1 && withdrawal_open_1){
+	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	main.specialRegister.active = false;
+
+	//opening the special register means removing
+	//the bills, by trying to leave it in the initial
+	//configuration
+	
+	int b500 = main.specialRegister.bills500;
+	main.specialRegister.bills500 = 0;
+	int b200 = main.specialRegister.bills200;
+	main.specialRegister.bills200 = 0;
+	int b100 = main.specialRegister.bills100;
+	main.specialRegister.bills100 = 0;
+	int b10 = main.specialRegister.bills10;
+	main.specialRegister.bills10 = 0;
+	int b5 = main.specialRegister.bills5;
+	main.specialRegister.bills5 = 0;
+	
+	
+	//We must give the money to remove to 
+	//either the SG or the Served register.
+	if(from_special_to_served == true){
+		//we move the ("useless") bills collected from
+		//the Special register to the Served one.
+		main.servedRegister.bills500 += b500;
+		main.servedRegister.bills200 += b200;
+		main.servedRegister.bills100 += b100;
+		main.servedRegister.bills10 += b10;
+		main.servedRegister.bills5 += b5;
+		//we would like to have this register in its
+		//initial configuration now, which is
+		//240 bills of 50 euros and 150 of 20 euros.
+		//If we have more bills than necessary, we
+		//simply move them to the Served register.
+		//In the opposite case, we move them from the
+		//Served one to this one.
+		if(main.specialRegister.bills50 > 240){
+			int b50 = main.specialRegister.bills50 - 240;
+			main.specialRegister.bills50 = 240;
+			main.servedRegister.bills50 += b50;
+		}else{
+			int b50 = 240 - main.specialRegister.bills50;
+			main.servedRegister.bills50 -= b50;
+			main.specialRegister.bills50 = 240;
+		}
+		if(main.specialRegister.bills20 > 150){
+			int b20 = main.specialRegister.bills20 - 150;
+			main.specialRegister.bills20 = 150;
+			main.servedRegister.bills20 += b20;
+		}else{
+			int b20 = 150 - main.specialRegister.bills20;
+			main.servedRegister.bills20 -= b20;
+			main.specialRegister.bills20 = 150;
+		}
+	}else{
+		//we prepare the ("useless") bills collected from
+		//the Special register for the SG (that technically
+		//would come the next day to take them. In our
+		//case, we simply remove them, as if they already
+		//came, also because no interesting events happen
+		//between the 17.00 and the 8.28 of the next day)
+		
+		//But the actual money present in the Special
+		//register could differ from special_to_remove. 
+		//First of all, let's remove the bills we can remove.
+		while(special_to_remove >= 500 && b500 > 0){
+			special_to_remove -= 500;
+			b500 -= 1;
+		}
+		while(special_to_remove >= 200 && b200 > 0){
+			special_to_remove -= 200;
+			b200 -= 1;
+		}
+		while(special_to_remove >= 100 && b100 > 0){
+			special_to_remove -= 100;
+			b100 -= 1;
+		}
+		
+		while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+			special_to_remove -= 50;
+			main.specialRegister.bills50 -= 1;
+		}
+		while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+			special_to_remove -= 20;
+			main.specialRegister.bills20 -= 1;
+		}
+		
+		while(special_to_remove >= 10 && b10 > 0){
+			special_to_remove -= 10;
+			b10 -= 1;
+		}
+		while(special_to_remove >= 5 && b5 > 0){
+			special_to_remove -= 5;
+			b5 -= 1;
+		}
+		
+		//now we have two scenarios:
+		//1) we have some bills left. In this case,
+		//we put them in the Served register.
+		//2) special_to_remove hasn't reached 0, so
+		//we'll have to take some bills from the Served
+		//register.
+		if(special_to_remove == 0){
+			main.servedRegister.bills500 += b500;
+			main.servedRegister.bills200 += b200;
+			main.servedRegister.bills100 += b100;
+			main.servedRegister.bills10 += b10;
+			main.servedRegister.bills5 += b5;
+			
+			//we don't just put the "useless" bills in the
+			//served register. We also put the ones of 50
+			//and 20 that remained in the Served register, or
+			//do the opposite if needed.
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+			
+		}else{
+			//if possible, we take some bills of 50 and 20
+			//euros from the Special register
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				while(special_to_remove >= 50 && b50 > 0){
+					special_to_remove -= 50;
+					b50 -= 1;
+				}
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				while(special_to_remove >= 20 && b20 > 0){
+					special_to_remove -= 20;
+					b20 -= 1;
+				}
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		
+		
+			//take some bills from the Served register
+			while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+				special_to_remove -= 500;
+				main.servedRegister.bills500 -= 1;
+			}
+			while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
+				special_to_remove -= 200;
+				main.servedRegister.bills200 -= 1;
+			}
+			while(special_to_remove >= 100 && b100 > 0){
+				special_to_remove -= 100;
+				b100 -= 1;
+			}
+			
+			//to reach an equilibrium, since the bills
+			//of 50 and 20 are very important, we remove 
+			//some bills of 50 and some of 20 from the 
+			//Served register
+			while(special_to_remove >= 110){
+				main.servedRegister.bills50 -= 1;
+				main.servedRegister.bills20 -= 3;
+				special_to_remove -= 110;
+			}
+			
+			while(special_to_remove >= 10 && b10 > 0){
+				special_to_remove -= 10;
+				b10 -= 1;
+			}
+			while(special_to_remove >= 5 && b5 > 0){
+				special_to_remove -= 5;
+				b5 -= 1;
+			}
+		}
+	}
+	special_open_1 = false;
+	//special_to_remove = 0;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657537574034</Id>
+					<Name><![CDATA[tuesday_16_00]]></Name>
+					<X>680</X><Y>940</Y>
+					<Label><X>20</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if the Special register needs to be opened but the withdrawal
+//one needs not, let's open the Special at 16.00. The way it
+//works is completely identical to the one shown in the previous
+//state
+if(special_open_1 && !withdrawal_open_1){
+	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	//opening the special register means removing
+	//the bills, by trying to leave it in the initial
+	//configuration
+	main.specialRegister.active = false;
+	
+	int b500 = main.specialRegister.bills500;
+	main.specialRegister.bills500 = 0;
+	int b200 = main.specialRegister.bills200;
+	main.specialRegister.bills200 = 0;
+	int b100 = main.specialRegister.bills100;
+	main.specialRegister.bills100 = 0;
+	int b10 = main.specialRegister.bills10;
+	main.specialRegister.bills10 = 0;
+	int b5 = main.specialRegister.bills5;
+	main.specialRegister.bills5 = 0;
+	
+	
+	//We must give the money to remove to 
+	//either the SG or the Served register.
+	if(from_special_to_served == true){
+		//we move the ("useless") bills collected from
+		//the Special register to the Served one.
+		main.servedRegister.bills500 += b500;
+		main.servedRegister.bills200 += b200;
+		main.servedRegister.bills100 += b100;
+		main.servedRegister.bills10 += b10;
+		main.servedRegister.bills5 += b5;
+		//we would like to have this register in its
+		//initial configuration now, which is
+		//240 bills of 50 euros and 150 of 20 euros.
+		//If we have more bills than necessary, we
+		//simply move them to the Served register.
+		//In the opposite case, we move them from the
+		//Served one to this one.
+		if(main.specialRegister.bills50 > 240){
+			int b50 = main.specialRegister.bills50 - 240;
+			main.specialRegister.bills50 = 240;
+			main.servedRegister.bills50 += b50;
+		}else{
+			int b50 = 240 - main.specialRegister.bills50;
+			main.servedRegister.bills50 -= b50;
+			main.specialRegister.bills50 = 240;
+		}
+		if(main.specialRegister.bills20 > 150){
+			int b20 = main.specialRegister.bills20 - 150;
+			main.specialRegister.bills20 = 150;
+			main.servedRegister.bills20 += b20;
+		}else{
+			int b20 = 150 - main.specialRegister.bills20;
+			main.servedRegister.bills20 -= b20;
+			main.specialRegister.bills20 = 150;
+		}
+	}else{
+		//we prepare the ("useless") bills collected from
+		//the Special register for the SG (that technically
+		//would come the next day to take them. In our
+		//case, we simply remove them, as if they already
+		//came, also because no interesting events happen
+		//between the 17.00 and the 8.28 of the next day)
+		
+		//But the actual money present in the Special
+		//register could differ from special_to_remove. 
+		//First of all, let's remove the bills we can remove.
+		while(special_to_remove >= 500 && b500 > 0){
+			special_to_remove -= 500;
+			b500 -= 1;
+		}
+		while(special_to_remove >= 200 && b200 > 0){
+			special_to_remove -= 200;
+			b200 -= 1;
+		}
+		while(special_to_remove >= 100 && b100 > 0){
+			special_to_remove -= 100;
+			b100 -= 1;
+		}
+		
+		while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+			special_to_remove -= 50;
+			main.specialRegister.bills50 -= 1;
+		}
+		while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+			special_to_remove -= 20;
+			main.specialRegister.bills20 -= 1;
+		}
+		
+		while(special_to_remove >= 10 && b10 > 0){
+			special_to_remove -= 10;
+			b10 -= 1;
+		}
+		while(special_to_remove >= 5 && b5 > 0){
+			special_to_remove -= 5;
+			b5 -= 1;
+		}
+		
+		//now we have two scenarios:
+		//1) we have some bills left. In this case,
+		//we put them in the Served register.
+		//2) special_to_remove hasn't reached 0, so
+		//we'll have to take some bills from the Served
+		//register.
+		if(special_to_remove == 0){
+			main.servedRegister.bills500 += b500;
+			main.servedRegister.bills200 += b200;
+			main.servedRegister.bills100 += b100;
+			main.servedRegister.bills10 += b10;
+			main.servedRegister.bills5 += b5;
+			
+			//we don't just put the "useless" bills in the
+			//served register. We also put the ones of 50
+			//and 20 that remained in the Served register, or
+			//do the opposite if needed.
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+			
+		}else{
+			//if possible, we take some bills of 50 and 20
+			//euros from the Special register
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				while(special_to_remove >= 50 && b50 > 0){
+					special_to_remove -= 50;
+					b50 -= 1;
+				}
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				while(special_to_remove >= 20 && b20 > 0){
+					special_to_remove -= 20;
+					b20 -= 1;
+				}
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		
+		
+			//take some bills from the Served register
+			while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+				special_to_remove -= 500;
+				main.servedRegister.bills500 -= 1;
+			}
+			while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
+				special_to_remove -= 200;
+				main.servedRegister.bills200 -= 1;
+			}
+			while(special_to_remove >= 100 && b100 > 0){
+				special_to_remove -= 100;
+				b100 -= 1;
+			}
+			
+			//to reach an equilibrium, since the bills
+			//of 50 and 20 are very important, we remove 
+			//some bills of 50 and some of 20 from the 
+			//Served register
+			while(special_to_remove >= 110){
+				main.servedRegister.bills50 -= 1;
+				main.servedRegister.bills20 -= 3;
+				special_to_remove -= 110;
+			}
+			
+			while(special_to_remove >= 10 && b10 > 0){
+				special_to_remove -= 10;
+				b10 -= 1;
+			}
+			while(special_to_remove >= 5 && b5 > 0){
+				special_to_remove -= 5;
+				b5 -= 1;
+			}
+		}
+	}
+	special_open_1 = false;
+	//special_to_remove = 0;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657537574036</Id>
+					<Name><![CDATA[tuesday_16_40]]></Name>
+					<X>680</X><Y>1040</Y>
+					<Label><X>20</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if the Withdrawal register needs to be opened, let's open
+//it and put the money that the SG brought us during this morning.
+//We assume that the money brought by the SG are "spawned" by the
+//cashier, and they are the amount specified by the manager
+//(rounded to be the sum of bills of 50 and 20 euros). The
+//distribution of bills of 50 and 20 euros is:
+//80% of the bills are of 50 euros
+//20% of the bills are of 20 euros
+if(withdrawal_open_1){
+	moveToInTime(main.nodeWithdrawalRegisterBack, 2);
+	main.specialRegister.active = true;
+	main.withdrawalRegister.active = false;
+
+	int quantity_50 = ((withdraw_to_add * 8) / 10) / 50;
+	int quantity_20 = ((withdraw_to_add * 2) / 10) / 20;
+	
+	//the main objective is to have the Withdrawal register
+	//in its initial distribution: 80% of the bills of
+	//50 euros (2880 bills in total), 20% of the bills
+	//of 20 euros (1800 bills in total). We have, in front
+	//of us, two possible scenarios:
+	//1) we ordered too many bills. Let's put the leftover ones
+	//in the Served register.
+	//2) we ordered too little bills. If the total amount
+	//of the withdrawal register is below 170.000, let's take
+	//some bills from the served register.
+	
+	if(main.withdrawalRegister.bills50 + quantity_50 > 2880){
+		int diff = (main.withdrawalRegister.bills50 + quantity_50)
+			 - 2880;
+		main.withdrawalRegister.bills50 = 2880;
+		main.servedRegister.bills50 += diff;
+	}else{
+		//here main.withdrawalRegister.bills50 + quantity_50 <= 2880
+		//80% of 170.000 = 2720 bills of 50
+		if(main.withdrawalRegister.bills50 + quantity_50 > 2720){
+			//do nothing, we can tolerate. Just put the bills
+			//in the register
+			main.withdrawalRegister.bills50 += quantity_50;
+		}else{
+			//here main.withdrawalRegister.bills50 + quantity_50 <= 2720
+			//Let's take from the served register some bills and put
+			//them here
+			int necessary = 2720 - 
+				(main.withdrawalRegister.bills50 + quantity_50);
+			main.servedRegister.bills50 -= necessary;
+			main.withdrawalRegister.bills50 += quantity_50 + necessary;
+		}
+	}
+	
+	//same goes for 20 euro bills
+	if(main.withdrawalRegister.bills20 + quantity_20 > 1800){
+		int diff = (main.withdrawalRegister.bills20 + quantity_20)
+			 - 1800;
+		main.withdrawalRegister.bills20 = 1800;
+		main.servedRegister.bills20 += diff;
+	}else{
+		//here main.withdrawalRegister.bills20 + quantity_20 <= 1800
+		//20% of 170.000 = 1700 bills of 20
+		if(main.withdrawalRegister.bills20 + quantity_20 > 1700){
+			//do nothing, we can tolerate. Just put the bills
+			//in the register
+			main.withdrawalRegister.bills20 += quantity_20;
+		}else{
+			//here main.withdrawalRegister.bills20 + quantity_20 <= 1700
+			//Let's take from the served register some bills and put
+			//them here
+			int necessary = 1700 - 
+				(main.withdrawalRegister.bills20 + quantity_20);
+			main.servedRegister.bills20 -= necessary;
+			main.withdrawalRegister.bills20 += quantity_20 + necessary;
+		}
+	}
+	withdrawal_open_1 = false;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657537574038</Id>
+					<Name><![CDATA[tuesday_17_00]]></Name>
+					<X>680</X><Y>1130</Y>
+					<Label><X>15</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[main.specialRegister.active = true;
+main.withdrawalRegister.active = true;
+
+//all that's left at this point is the Served register.
+
+//this is the amount of money we'd like to reach
+int to_reach = 100000;
+	
+//if it needs to be emptied, let's try to leave it in the
+//initial configuration by removing some bills.
+if(served_open_1 == 1){
+	moveToInTime(main.nodeCashiersDesks, 2);
+	//let's first remove the bills we don't need for sure
+	while(served_to_remove >= 500 && main.specialRegister.bills500 > 0){
+		served_to_remove -= 500;
+		main.specialRegister.bills500 -= 1;
+	}
+	while(served_to_remove >= 200 && main.specialRegister.bills200 > 0){
+		served_to_remove -= 200;
+		main.specialRegister.bills200 -= 1;
+	}
+	while(served_to_remove >= 100 && main.specialRegister.bills100 > 0){
+		served_to_remove -= 100;
+		main.specialRegister.bills100 -= 1;
+	}
+	//we wanted at least 100 bills of 10 euros for emergencies
+	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+		served_to_remove -= 10;
+		main.specialRegister.bills10 -= 1;
+	}
+	//we leave a bit of 5 euros bills for emergencies
+	while(served_to_remove >= 5 && main.specialRegister.bills5 > 5){
+		served_to_remove -= 5;
+		main.specialRegister.bills5 -= 1;
+	}
+	
+	//at this point, we either removed all the money, or we
+	//still need to remove some. The initial configuration
+	//was: 1580 bills of 50, 1000 of 20 and 100 of 10.
+	//let's try to reach it
+	while(served_to_remove >= 50 && main.specialRegister.bills50 > 1580){
+		served_to_remove -= 50;
+		main.specialRegister.bills50 -= 1;
+	}
+	while(served_to_remove >= 20 && main.specialRegister.bills20 > 1000){
+		served_to_remove -= 20;
+		main.specialRegister.bills20 -= 1;
+	}
+	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+		served_to_remove -= 10;
+		main.specialRegister.bills10 -= 1;
+	}
+	
+	//still, we could have to remove some more money (we promised
+	//the SG served_to_remove moeny after all). Let's not
+	//remove too many bills anyway!
+	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 500){
+		served_to_remove -= 50;
+		main.servedRegister.bills50 -= 1;
+		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 400){
+			served_to_remove -= 40;
+			main.servedRegister.bills20 -= 2;
+		}
+	}
+	while(served_to_remove >= 20 && main.servedRegister.bills20 > 0){
+		served_to_remove -= 20;
+		main.servedRegister.bills20 -= 1;
+	}
+	while(served_to_remove >= 5 && main.servedRegister.bills5 > 0){
+		served_to_remove -= 5;
+		main.servedRegister.bills5 -= 1;
+	}
+	
+}else if(served_open_1 == 2){
+	moveToInTime(main.nodeCashiersDesks, 2);
+	//If instead it needs to be refilled, let's refill it
+	//in order to have it work properly.
+	//We assume that we ordered 80% of the bills as 50 and
+	//20% as 20.
+	int b50 = ((served_to_add * 8) / 10) / 50;
+	int b20 = ((served_to_add * 2) / 10) / 20;
+	main.servedRegister.bills50 += b50;
+	main.servedRegister.bills20 += b20;
+	
+}
+served_open_1 = 0;]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657537574040</Id>
+					<Name><![CDATA[special_vs_served_1]]></Name>
+					<X>680</X><Y>770</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="170" Height="40">
+						<EntryAction><![CDATA[//the only case in which we can avoid to call the SG
+//to carry out some money is when the Special register needs
+//to be emptied even if it has less than 60.000 euros (to be
+//removed), but the Served one does not. Our cashier must
+//must understand this.
+if(special_open_1 && served_open_1 != 1){
+	if(special_to_remove <= 60.000){
+		from_special_to_served = true;
+	}
+}else{
+	from_special_to_served = false;
+}
+]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657544889283</Id>
+					<Name><![CDATA[wednesday_15_40]]></Name>
+					<X>870</X><Y>840</Y>
+					<Label><X>5</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if both the Special and the Withdrawal
+//register have to be opened, let's NOW
+//open the Special register
+
+if(special_open_2 && withdrawal_open_2){
+	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	main.specialRegister.active = false;
+
+	//opening the special register means removing
+	//the bills, by trying to leave it in the initial
+	//configuration
+	
+	int b500 = main.specialRegister.bills500;
+	main.specialRegister.bills500 = 0;
+	int b200 = main.specialRegister.bills200;
+	main.specialRegister.bills200 = 0;
+	int b100 = main.specialRegister.bills100;
+	main.specialRegister.bills100 = 0;
+	int b10 = main.specialRegister.bills10;
+	main.specialRegister.bills10 = 0;
+	int b5 = main.specialRegister.bills5;
+	main.specialRegister.bills5 = 0;
+	
+	
+	//We must give the money to remove to 
+	//either the SG or the Served register.
+	if(from_special_to_served == true){
+		//we move the ("useless") bills collected from
+		//the Special register to the Served one.
+		main.servedRegister.bills500 += b500;
+		main.servedRegister.bills200 += b200;
+		main.servedRegister.bills100 += b100;
+		main.servedRegister.bills10 += b10;
+		main.servedRegister.bills5 += b5;
+		//we would like to have this register in its
+		//initial configuration now, which is
+		//240 bills of 50 euros and 150 of 20 euros.
+		//If we have more bills than necessary, we
+		//simply move them to the Served register.
+		//In the opposite case, we move them from the
+		//Served one to this one.
+		if(main.specialRegister.bills50 > 240){
+			int b50 = main.specialRegister.bills50 - 240;
+			main.specialRegister.bills50 = 240;
+			main.servedRegister.bills50 += b50;
+		}else{
+			int b50 = 240 - main.specialRegister.bills50;
+			main.servedRegister.bills50 -= b50;
+			main.specialRegister.bills50 = 240;
+		}
+		if(main.specialRegister.bills20 > 150){
+			int b20 = main.specialRegister.bills20 - 150;
+			main.specialRegister.bills20 = 150;
+			main.servedRegister.bills20 += b20;
+		}else{
+			int b20 = 150 - main.specialRegister.bills20;
+			main.servedRegister.bills20 -= b20;
+			main.specialRegister.bills20 = 150;
+		}
+	}else{
+		//we prepare the ("useless") bills collected from
+		//the Special register for the SG (that technically
+		//would come the next day to take them. In our
+		//case, we simply remove them, as if they already
+		//came, also because no interesting events happen
+		//between the 17.00 and the 8.28 of the next day)
+		
+		//But the actual money present in the Special
+		//register could differ from special_to_remove. 
+		//First of all, let's remove the bills we can remove.
+		while(special_to_remove >= 500 && b500 > 0){
+			special_to_remove -= 500;
+			b500 -= 1;
+		}
+		while(special_to_remove >= 200 && b200 > 0){
+			special_to_remove -= 200;
+			b200 -= 1;
+		}
+		while(special_to_remove >= 100 && b100 > 0){
+			special_to_remove -= 100;
+			b100 -= 1;
+		}
+		
+		while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+			special_to_remove -= 50;
+			main.specialRegister.bills50 -= 1;
+		}
+		while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+			special_to_remove -= 20;
+			main.specialRegister.bills20 -= 1;
+		}
+		
+		while(special_to_remove >= 10 && b10 > 0){
+			special_to_remove -= 10;
+			b10 -= 1;
+		}
+		while(special_to_remove >= 5 && b5 > 0){
+			special_to_remove -= 5;
+			b5 -= 1;
+		}
+		
+		//now we have two scenarios:
+		//1) we have some bills left. In this case,
+		//we put them in the Served register.
+		//2) special_to_remove hasn't reached 0, so
+		//we'll have to take some bills from the Served
+		//register.
+		if(special_to_remove == 0){
+			main.servedRegister.bills500 += b500;
+			main.servedRegister.bills200 += b200;
+			main.servedRegister.bills100 += b100;
+			main.servedRegister.bills10 += b10;
+			main.servedRegister.bills5 += b5;
+			
+			//we don't just put the "useless" bills in the
+			//served register. We also put the ones of 50
+			//and 20 that remained in the Served register, or
+			//do the opposite if needed.
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+			
+		}else{
+			//if possible, we take some bills of 50 and 20
+			//euros from the Special register
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				while(special_to_remove >= 50 && b50 > 0){
+					special_to_remove -= 50;
+					b50 -= 1;
+				}
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				while(special_to_remove >= 20 && b20 > 0){
+					special_to_remove -= 20;
+					b20 -= 1;
+				}
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		
+		
+			//take some bills from the Served register
+			while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+				special_to_remove -= 500;
+				main.servedRegister.bills500 -= 1;
+			}
+			while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
+				special_to_remove -= 200;
+				main.servedRegister.bills200 -= 1;
+			}
+			while(special_to_remove >= 100 && b100 > 0){
+				special_to_remove -= 100;
+				b100 -= 1;
+			}
+			
+			//to reach an equilibrium, since the bills
+			//of 50 and 20 are very important, we remove 
+			//some bills of 50 and some of 20 from the 
+			//Served register
+			while(special_to_remove >= 110){
+				main.servedRegister.bills50 -= 1;
+				main.servedRegister.bills20 -= 3;
+				special_to_remove -= 110;
+			}
+			
+			while(special_to_remove >= 10 && b10 > 0){
+				special_to_remove -= 10;
+				b10 -= 1;
+			}
+			while(special_to_remove >= 5 && b5 > 0){
+				special_to_remove -= 5;
+				b5 -= 1;
+			}
+		}
+	}
+	special_open_2 = false;
+	//special_to_remove = 0;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657544889292</Id>
+					<Name><![CDATA[wednesday_16_00]]></Name>
+					<X>870</X><Y>940</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if the Special register needs to be opened but the withdrawal
+//one needs not, let's open the Special at 16.00. The way it
+//works is completely identical to the one shown in the previous
+//state
+if(special_open_2 && !withdrawal_open_2){
+	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	//opening the special register means removing
+	//the bills, by trying to leave it in the initial
+	//configuration
+	main.specialRegister.active = false;
+	
+	int b500 = main.specialRegister.bills500;
+	main.specialRegister.bills500 = 0;
+	int b200 = main.specialRegister.bills200;
+	main.specialRegister.bills200 = 0;
+	int b100 = main.specialRegister.bills100;
+	main.specialRegister.bills100 = 0;
+	int b10 = main.specialRegister.bills10;
+	main.specialRegister.bills10 = 0;
+	int b5 = main.specialRegister.bills5;
+	main.specialRegister.bills5 = 0;
+	
+	
+	//We must give the money to remove to 
+	//either the SG or the Served register.
+	if(from_special_to_served == true){
+		//we move the ("useless") bills collected from
+		//the Special register to the Served one.
+		main.servedRegister.bills500 += b500;
+		main.servedRegister.bills200 += b200;
+		main.servedRegister.bills100 += b100;
+		main.servedRegister.bills10 += b10;
+		main.servedRegister.bills5 += b5;
+		//we would like to have this register in its
+		//initial configuration now, which is
+		//240 bills of 50 euros and 150 of 20 euros.
+		//If we have more bills than necessary, we
+		//simply move them to the Served register.
+		//In the opposite case, we move them from the
+		//Served one to this one.
+		if(main.specialRegister.bills50 > 240){
+			int b50 = main.specialRegister.bills50 - 240;
+			main.specialRegister.bills50 = 240;
+			main.servedRegister.bills50 += b50;
+		}else{
+			int b50 = 240 - main.specialRegister.bills50;
+			main.servedRegister.bills50 -= b50;
+			main.specialRegister.bills50 = 240;
+		}
+		if(main.specialRegister.bills20 > 150){
+			int b20 = main.specialRegister.bills20 - 150;
+			main.specialRegister.bills20 = 150;
+			main.servedRegister.bills20 += b20;
+		}else{
+			int b20 = 150 - main.specialRegister.bills20;
+			main.servedRegister.bills20 -= b20;
+			main.specialRegister.bills20 = 150;
+		}
+	}else{
+		//we prepare the ("useless") bills collected from
+		//the Special register for the SG (that technically
+		//would come the next day to take them. In our
+		//case, we simply remove them, as if they already
+		//came, also because no interesting events happen
+		//between the 17.00 and the 8.28 of the next day)
+		
+		//But the actual money present in the Special
+		//register could differ from special_to_remove. 
+		//First of all, let's remove the bills we can remove.
+		while(special_to_remove >= 500 && b500 > 0){
+			special_to_remove -= 500;
+			b500 -= 1;
+		}
+		while(special_to_remove >= 200 && b200 > 0){
+			special_to_remove -= 200;
+			b200 -= 1;
+		}
+		while(special_to_remove >= 100 && b100 > 0){
+			special_to_remove -= 100;
+			b100 -= 1;
+		}
+		
+		while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+			special_to_remove -= 50;
+			main.specialRegister.bills50 -= 1;
+		}
+		while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+			special_to_remove -= 20;
+			main.specialRegister.bills20 -= 1;
+		}
+		
+		while(special_to_remove >= 10 && b10 > 0){
+			special_to_remove -= 10;
+			b10 -= 1;
+		}
+		while(special_to_remove >= 5 && b5 > 0){
+			special_to_remove -= 5;
+			b5 -= 1;
+		}
+		
+		//now we have two scenarios:
+		//1) we have some bills left. In this case,
+		//we put them in the Served register.
+		//2) special_to_remove hasn't reached 0, so
+		//we'll have to take some bills from the Served
+		//register.
+		if(special_to_remove == 0){
+			main.servedRegister.bills500 += b500;
+			main.servedRegister.bills200 += b200;
+			main.servedRegister.bills100 += b100;
+			main.servedRegister.bills10 += b10;
+			main.servedRegister.bills5 += b5;
+			
+			//we don't just put the "useless" bills in the
+			//served register. We also put the ones of 50
+			//and 20 that remained in the Served register, or
+			//do the opposite if needed.
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+			
+		}else{
+			//if possible, we take some bills of 50 and 20
+			//euros from the Special register
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				while(special_to_remove >= 50 && b50 > 0){
+					special_to_remove -= 50;
+					b50 -= 1;
+				}
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				while(special_to_remove >= 20 && b20 > 0){
+					special_to_remove -= 20;
+					b20 -= 1;
+				}
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		
+		
+			//take some bills from the Served register
+			while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+				special_to_remove -= 500;
+				main.servedRegister.bills500 -= 1;
+			}
+			while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
+				special_to_remove -= 200;
+				main.servedRegister.bills200 -= 1;
+			}
+			while(special_to_remove >= 100 && b100 > 0){
+				special_to_remove -= 100;
+				b100 -= 1;
+			}
+			
+			//to reach an equilibrium, since the bills
+			//of 50 and 20 are very important, we remove 
+			//some bills of 50 and some of 20 from the 
+			//Served register
+			while(special_to_remove >= 110){
+				main.servedRegister.bills50 -= 1;
+				main.servedRegister.bills20 -= 3;
+				special_to_remove -= 110;
+			}
+			
+			while(special_to_remove >= 10 && b10 > 0){
+				special_to_remove -= 10;
+				b10 -= 1;
+			}
+			while(special_to_remove >= 5 && b5 > 0){
+				special_to_remove -= 5;
+				b5 -= 1;
+			}
+		}
+	}
+	special_open_2 = false;
+	//special_to_remove = 0;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657544889294</Id>
+					<Name><![CDATA[wednesday_16_40]]></Name>
+					<X>870</X><Y>1040</Y>
+					<Label><X>5</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if the Withdrawal register needs to be opened, let's open
+//it and put the money that the SG brought us during this morning.
+//We assume that the money brought by the SG are "spawned" by the
+//cashier, and they are the amount specified by the manager
+//(rounded to be the sum of bills of 50 and 20 euros). The
+//distribution of bills of 50 and 20 euros is:
+//80% of the bills are of 50 euros
+//20% of the bills are of 20 euros
+if(withdrawal_open_2){
+	moveToInTime(main.nodeWithdrawalRegisterBack, 2);
+	main.specialRegister.active = true;
+	main.withdrawalRegister.active = false;
+
+	int quantity_50 = ((withdraw_to_add * 8) / 10) / 50;
+	int quantity_20 = ((withdraw_to_add * 2) / 10) / 20;
+	
+	//the main objective is to have the Withdrawal register
+	//in its initial distribution: 80% of the bills of
+	//50 euros (2880 bills in total), 20% of the bills
+	//of 20 euros (1800 bills in total). We have, in front
+	//of us, two possible scenarios:
+	//1) we ordered too many bills. Let's put the leftover ones
+	//in the Served register.
+	//2) we ordered too little bills. If the total amount
+	//of the withdrawal register is below 170.000, let's take
+	//some bills from the served register.
+	
+	if(main.withdrawalRegister.bills50 + quantity_50 > 2880){
+		int diff = (main.withdrawalRegister.bills50 + quantity_50)
+			 - 2880;
+		main.withdrawalRegister.bills50 = 2880;
+		main.servedRegister.bills50 += diff;
+	}else{
+		//here main.withdrawalRegister.bills50 + quantity_50 <= 2880
+		//80% of 170.000 = 2720 bills of 50
+		if(main.withdrawalRegister.bills50 + quantity_50 > 2720){
+			//do nothing, we can tolerate. Just put the bills
+			//in the register
+			main.withdrawalRegister.bills50 += quantity_50;
+		}else{
+			//here main.withdrawalRegister.bills50 + quantity_50 <= 2720
+			//Let's take from the served register some bills and put
+			//them here
+			int necessary = 2720 - 
+				(main.withdrawalRegister.bills50 + quantity_50);
+			main.servedRegister.bills50 -= necessary;
+			main.withdrawalRegister.bills50 += quantity_50 + necessary;
+		}
+	}
+	
+	//same goes for 20 euro bills
+	if(main.withdrawalRegister.bills20 + quantity_20 > 1800){
+		int diff = (main.withdrawalRegister.bills20 + quantity_20)
+			 - 1800;
+		main.withdrawalRegister.bills20 = 1800;
+		main.servedRegister.bills20 += diff;
+	}else{
+		//here main.withdrawalRegister.bills20 + quantity_20 <= 1800
+		//20% of 170.000 = 1700 bills of 20
+		if(main.withdrawalRegister.bills20 + quantity_20 > 1700){
+			//do nothing, we can tolerate. Just put the bills
+			//in the register
+			main.withdrawalRegister.bills20 += quantity_20;
+		}else{
+			//here main.withdrawalRegister.bills20 + quantity_20 <= 1700
+			//Let's take from the served register some bills and put
+			//them here
+			int necessary = 1700 - 
+				(main.withdrawalRegister.bills20 + quantity_20);
+			main.servedRegister.bills20 -= necessary;
+			main.withdrawalRegister.bills20 += quantity_20 + necessary;
+		}
+	}
+	withdrawal_open_2 = false;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657544889296</Id>
+					<Name><![CDATA[wednesday_17_00]]></Name>
+					<X>870</X><Y>1130</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[main.specialRegister.active = true;
+main.withdrawalRegister.active = true;
+
+//all that's left at this point is the Served register.
+
+//this is the amount of money we'd like to reach
+int to_reach = 100000;
+	
+//if it needs to be emptied, let's try to leave it in the
+//initial configuration by removing some bills.
+if(served_open_2 == 1){
+	moveToInTime(main.nodeCashiersDesks, 2);
+	//let's first remove the bills we don't need for sure
+	while(served_to_remove >= 500 && main.specialRegister.bills500 > 0){
+		served_to_remove -= 500;
+		main.specialRegister.bills500 -= 1;
+	}
+	while(served_to_remove >= 200 && main.specialRegister.bills200 > 0){
+		served_to_remove -= 200;
+		main.specialRegister.bills200 -= 1;
+	}
+	while(served_to_remove >= 100 && main.specialRegister.bills100 > 0){
+		served_to_remove -= 100;
+		main.specialRegister.bills100 -= 1;
+	}
+	//we wanted at least 100 bills of 10 euros for emergencies
+	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+		served_to_remove -= 10;
+		main.specialRegister.bills10 -= 1;
+	}
+	//we leave a bit of 5 euros bills for emergencies
+	while(served_to_remove >= 5 && main.specialRegister.bills5 > 5){
+		served_to_remove -= 5;
+		main.specialRegister.bills5 -= 1;
+	}
+	
+	//at this point, we either removed all the money, or we
+	//still need to remove some. The initial configuration
+	//was: 1580 bills of 50, 1000 of 20 and 100 of 10.
+	//let's try to reach it
+	while(served_to_remove >= 50 && main.specialRegister.bills50 > 1580){
+		served_to_remove -= 50;
+		main.specialRegister.bills50 -= 1;
+	}
+	while(served_to_remove >= 20 && main.specialRegister.bills20 > 1000){
+		served_to_remove -= 20;
+		main.specialRegister.bills20 -= 1;
+	}
+	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+		served_to_remove -= 10;
+		main.specialRegister.bills10 -= 1;
+	}
+	
+	//still, we could have to remove some more money (we promised
+	//the SG served_to_remove moeny after all). Let's not
+	//remove too many bills anyway!
+	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 500){
+		served_to_remove -= 50;
+		main.servedRegister.bills50 -= 1;
+		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 400){
+			served_to_remove -= 40;
+			main.servedRegister.bills20 -= 2;
+		}
+	}
+	while(served_to_remove >= 20 && main.servedRegister.bills20 > 0){
+		served_to_remove -= 20;
+		main.servedRegister.bills20 -= 1;
+	}
+	while(served_to_remove >= 5 && main.servedRegister.bills5 > 0){
+		served_to_remove -= 5;
+		main.servedRegister.bills5 -= 1;
+	}
+	
+}else if(served_open_2 == 2){
+	moveToInTime(main.nodeCashiersDesks, 2);
+	//If instead it needs to be refilled, let's refill it
+	//in order to have it work properly.
+	//We assume that we ordered 80% of the bills as 50 and
+	//20% as 20.
+	int b50 = ((served_to_add * 8) / 10) / 50;
+	int b20 = ((served_to_add * 2) / 10) / 20;
+	main.servedRegister.bills50 += b50;
+	main.servedRegister.bills20 += b20;
+	
+}
+served_open_2 = 0;]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657544889298</Id>
+					<Name><![CDATA[special_vs_served_2]]></Name>
+					<X>870</X><Y>770</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="170" Height="40">
+						<EntryAction><![CDATA[//the only case in which we can avoid to call the SG
+//to carry out some money is when the Special register needs
+//to be emptied even if it has less than 60.000 euros (to be
+//removed), but the Served one does not. Our cashier must
+//must understand this.
+if(special_open_2 && served_open_2 != 1){
+	if(special_to_remove <= 60.000){
+		from_special_to_served = true;
+	}
+}else{
+	from_special_to_served = false;
+}
+]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657545301452</Id>
+					<Name><![CDATA[thursday_15_40]]></Name>
+					<X>1060</X><Y>840</Y>
+					<Label><X>5</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if both the Special and the Withdrawal
+//register have to be opened, let's NOW
+//open the Special register
+
+if(special_open_3 && withdrawal_open_3){
+	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	main.specialRegister.active = false;
+
+	//opening the special register means removing
+	//the bills, by trying to leave it in the initial
+	//configuration
+	
+	int b500 = main.specialRegister.bills500;
+	main.specialRegister.bills500 = 0;
+	int b200 = main.specialRegister.bills200;
+	main.specialRegister.bills200 = 0;
+	int b100 = main.specialRegister.bills100;
+	main.specialRegister.bills100 = 0;
+	int b10 = main.specialRegister.bills10;
+	main.specialRegister.bills10 = 0;
+	int b5 = main.specialRegister.bills5;
+	main.specialRegister.bills5 = 0;
+	
+	
+	//We must give the money to remove to 
+	//either the SG or the Served register.
+	if(from_special_to_served == true){
+		//we move the ("useless") bills collected from
+		//the Special register to the Served one.
+		main.servedRegister.bills500 += b500;
+		main.servedRegister.bills200 += b200;
+		main.servedRegister.bills100 += b100;
+		main.servedRegister.bills10 += b10;
+		main.servedRegister.bills5 += b5;
+		//we would like to have this register in its
+		//initial configuration now, which is
+		//240 bills of 50 euros and 150 of 20 euros.
+		//If we have more bills than necessary, we
+		//simply move them to the Served register.
+		//In the opposite case, we move them from the
+		//Served one to this one.
+		if(main.specialRegister.bills50 > 240){
+			int b50 = main.specialRegister.bills50 - 240;
+			main.specialRegister.bills50 = 240;
+			main.servedRegister.bills50 += b50;
+		}else{
+			int b50 = 240 - main.specialRegister.bills50;
+			main.servedRegister.bills50 -= b50;
+			main.specialRegister.bills50 = 240;
+		}
+		if(main.specialRegister.bills20 > 150){
+			int b20 = main.specialRegister.bills20 - 150;
+			main.specialRegister.bills20 = 150;
+			main.servedRegister.bills20 += b20;
+		}else{
+			int b20 = 150 - main.specialRegister.bills20;
+			main.servedRegister.bills20 -= b20;
+			main.specialRegister.bills20 = 150;
+		}
+	}else{
+		//we prepare the ("useless") bills collected from
+		//the Special register for the SG (that technically
+		//would come the next day to take them. In our
+		//case, we simply remove them, as if they already
+		//came, also because no interesting events happen
+		//between the 17.00 and the 8.28 of the next day)
+		
+		//But the actual money present in the Special
+		//register could differ from special_to_remove. 
+		//First of all, let's remove the bills we can remove.
+		while(special_to_remove >= 500 && b500 > 0){
+			special_to_remove -= 500;
+			b500 -= 1;
+		}
+		while(special_to_remove >= 200 && b200 > 0){
+			special_to_remove -= 200;
+			b200 -= 1;
+		}
+		while(special_to_remove >= 100 && b100 > 0){
+			special_to_remove -= 100;
+			b100 -= 1;
+		}
+		
+		while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+			special_to_remove -= 50;
+			main.specialRegister.bills50 -= 1;
+		}
+		while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+			special_to_remove -= 20;
+			main.specialRegister.bills20 -= 1;
+		}
+		
+		while(special_to_remove >= 10 && b10 > 0){
+			special_to_remove -= 10;
+			b10 -= 1;
+		}
+		while(special_to_remove >= 5 && b5 > 0){
+			special_to_remove -= 5;
+			b5 -= 1;
+		}
+		
+		//now we have two scenarios:
+		//1) we have some bills left. In this case,
+		//we put them in the Served register.
+		//2) special_to_remove hasn't reached 0, so
+		//we'll have to take some bills from the Served
+		//register.
+		if(special_to_remove == 0){
+			main.servedRegister.bills500 += b500;
+			main.servedRegister.bills200 += b200;
+			main.servedRegister.bills100 += b100;
+			main.servedRegister.bills10 += b10;
+			main.servedRegister.bills5 += b5;
+			
+			//we don't just put the "useless" bills in the
+			//served register. We also put the ones of 50
+			//and 20 that remained in the Served register, or
+			//do the opposite if needed.
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+			
+		}else{
+			//if possible, we take some bills of 50 and 20
+			//euros from the Special register
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				while(special_to_remove >= 50 && b50 > 0){
+					special_to_remove -= 50;
+					b50 -= 1;
+				}
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				while(special_to_remove >= 20 && b20 > 0){
+					special_to_remove -= 20;
+					b20 -= 1;
+				}
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		
+		
+			//take some bills from the Served register
+			while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+				special_to_remove -= 500;
+				main.servedRegister.bills500 -= 1;
+			}
+			while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
+				special_to_remove -= 200;
+				main.servedRegister.bills200 -= 1;
+			}
+			while(special_to_remove >= 100 && b100 > 0){
+				special_to_remove -= 100;
+				b100 -= 1;
+			}
+			
+			//to reach an equilibrium, since the bills
+			//of 50 and 20 are very important, we remove 
+			//some bills of 50 and some of 20 from the 
+			//Served register
+			while(special_to_remove >= 110){
+				main.servedRegister.bills50 -= 1;
+				main.servedRegister.bills20 -= 3;
+				special_to_remove -= 110;
+			}
+			
+			while(special_to_remove >= 10 && b10 > 0){
+				special_to_remove -= 10;
+				b10 -= 1;
+			}
+			while(special_to_remove >= 5 && b5 > 0){
+				special_to_remove -= 5;
+				b5 -= 1;
+			}
+		}
+	}
+	special_open_3 = false;
+	//special_to_remove = 0;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657545301454</Id>
+					<Name><![CDATA[thursday_16_00]]></Name>
+					<X>1060</X><Y>940</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if the Special register needs to be opened but the withdrawal
+//one needs not, let's open the Special at 16.00. The way it
+//works is completely identical to the one shown in the previous
+//state
+if(special_open_3 && !withdrawal_open_3){
+	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	//opening the special register means removing
+	//the bills, by trying to leave it in the initial
+	//configuration
+	main.specialRegister.active = false;
+	
+	int b500 = main.specialRegister.bills500;
+	main.specialRegister.bills500 = 0;
+	int b200 = main.specialRegister.bills200;
+	main.specialRegister.bills200 = 0;
+	int b100 = main.specialRegister.bills100;
+	main.specialRegister.bills100 = 0;
+	int b10 = main.specialRegister.bills10;
+	main.specialRegister.bills10 = 0;
+	int b5 = main.specialRegister.bills5;
+	main.specialRegister.bills5 = 0;
+	
+	
+	//We must give the money to remove to 
+	//either the SG or the Served register.
+	if(from_special_to_served == true){
+		//we move the ("useless") bills collected from
+		//the Special register to the Served one.
+		main.servedRegister.bills500 += b500;
+		main.servedRegister.bills200 += b200;
+		main.servedRegister.bills100 += b100;
+		main.servedRegister.bills10 += b10;
+		main.servedRegister.bills5 += b5;
+		//we would like to have this register in its
+		//initial configuration now, which is
+		//240 bills of 50 euros and 150 of 20 euros.
+		//If we have more bills than necessary, we
+		//simply move them to the Served register.
+		//In the opposite case, we move them from the
+		//Served one to this one.
+		if(main.specialRegister.bills50 > 240){
+			int b50 = main.specialRegister.bills50 - 240;
+			main.specialRegister.bills50 = 240;
+			main.servedRegister.bills50 += b50;
+		}else{
+			int b50 = 240 - main.specialRegister.bills50;
+			main.servedRegister.bills50 -= b50;
+			main.specialRegister.bills50 = 240;
+		}
+		if(main.specialRegister.bills20 > 150){
+			int b20 = main.specialRegister.bills20 - 150;
+			main.specialRegister.bills20 = 150;
+			main.servedRegister.bills20 += b20;
+		}else{
+			int b20 = 150 - main.specialRegister.bills20;
+			main.servedRegister.bills20 -= b20;
+			main.specialRegister.bills20 = 150;
+		}
+	}else{
+		//we prepare the ("useless") bills collected from
+		//the Special register for the SG (that technically
+		//would come the next day to take them. In our
+		//case, we simply remove them, as if they already
+		//came, also because no interesting events happen
+		//between the 17.00 and the 8.28 of the next day)
+		
+		//But the actual money present in the Special
+		//register could differ from special_to_remove. 
+		//First of all, let's remove the bills we can remove.
+		while(special_to_remove >= 500 && b500 > 0){
+			special_to_remove -= 500;
+			b500 -= 1;
+		}
+		while(special_to_remove >= 200 && b200 > 0){
+			special_to_remove -= 200;
+			b200 -= 1;
+		}
+		while(special_to_remove >= 100 && b100 > 0){
+			special_to_remove -= 100;
+			b100 -= 1;
+		}
+		
+		while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+			special_to_remove -= 50;
+			main.specialRegister.bills50 -= 1;
+		}
+		while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+			special_to_remove -= 20;
+			main.specialRegister.bills20 -= 1;
+		}
+		
+		while(special_to_remove >= 10 && b10 > 0){
+			special_to_remove -= 10;
+			b10 -= 1;
+		}
+		while(special_to_remove >= 5 && b5 > 0){
+			special_to_remove -= 5;
+			b5 -= 1;
+		}
+		
+		//now we have two scenarios:
+		//1) we have some bills left. In this case,
+		//we put them in the Served register.
+		//2) special_to_remove hasn't reached 0, so
+		//we'll have to take some bills from the Served
+		//register.
+		if(special_to_remove == 0){
+			main.servedRegister.bills500 += b500;
+			main.servedRegister.bills200 += b200;
+			main.servedRegister.bills100 += b100;
+			main.servedRegister.bills10 += b10;
+			main.servedRegister.bills5 += b5;
+			
+			//we don't just put the "useless" bills in the
+			//served register. We also put the ones of 50
+			//and 20 that remained in the Served register, or
+			//do the opposite if needed.
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+			
+		}else{
+			//if possible, we take some bills of 50 and 20
+			//euros from the Special register
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				while(special_to_remove >= 50 && b50 > 0){
+					special_to_remove -= 50;
+					b50 -= 1;
+				}
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				while(special_to_remove >= 20 && b20 > 0){
+					special_to_remove -= 20;
+					b20 -= 1;
+				}
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		
+		
+			//take some bills from the Served register
+			while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+				special_to_remove -= 500;
+				main.servedRegister.bills500 -= 1;
+			}
+			while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
+				special_to_remove -= 200;
+				main.servedRegister.bills200 -= 1;
+			}
+			while(special_to_remove >= 100 && b100 > 0){
+				special_to_remove -= 100;
+				b100 -= 1;
+			}
+			
+			//to reach an equilibrium, since the bills
+			//of 50 and 20 are very important, we remove 
+			//some bills of 50 and some of 20 from the 
+			//Served register
+			while(special_to_remove >= 110){
+				main.servedRegister.bills50 -= 1;
+				main.servedRegister.bills20 -= 3;
+				special_to_remove -= 110;
+			}
+			
+			while(special_to_remove >= 10 && b10 > 0){
+				special_to_remove -= 10;
+				b10 -= 1;
+			}
+			while(special_to_remove >= 5 && b5 > 0){
+				special_to_remove -= 5;
+				b5 -= 1;
+			}
+		}
+	}
+	special_open_3 = false;
+	//special_to_remove = 0;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657545301456</Id>
+					<Name><![CDATA[thursday_16_40]]></Name>
+					<X>1060</X><Y>1040</Y>
+					<Label><X>5</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if the Withdrawal register needs to be opened, let's open
+//it and put the money that the SG brought us during this morning.
+//We assume that the money brought by the SG are "spawned" by the
+//cashier, and they are the amount specified by the manager
+//(rounded to be the sum of bills of 50 and 20 euros). The
+//distribution of bills of 50 and 20 euros is:
+//80% of the bills are of 50 euros
+//20% of the bills are of 20 euros
+if(withdrawal_open_3){
+	moveToInTime(main.nodeWithdrawalRegisterBack, 2);
+	main.specialRegister.active = true;
+	main.withdrawalRegister.active = false;
+
+	int quantity_50 = ((withdraw_to_add * 8) / 10) / 50;
+	int quantity_20 = ((withdraw_to_add * 2) / 10) / 20;
+	
+	//the main objective is to have the Withdrawal register
+	//in its initial distribution: 80% of the bills of
+	//50 euros (2880 bills in total), 20% of the bills
+	//of 20 euros (1800 bills in total). We have, in front
+	//of us, two possible scenarios:
+	//1) we ordered too many bills. Let's put the leftover ones
+	//in the Served register.
+	//2) we ordered too little bills. If the total amount
+	//of the withdrawal register is below 170.000, let's take
+	//some bills from the served register.
+	
+	if(main.withdrawalRegister.bills50 + quantity_50 > 2880){
+		int diff = (main.withdrawalRegister.bills50 + quantity_50)
+			 - 2880;
+		main.withdrawalRegister.bills50 = 2880;
+		main.servedRegister.bills50 += diff;
+	}else{
+		//here main.withdrawalRegister.bills50 + quantity_50 <= 2880
+		//80% of 170.000 = 2720 bills of 50
+		if(main.withdrawalRegister.bills50 + quantity_50 > 2720){
+			//do nothing, we can tolerate. Just put the bills
+			//in the register
+			main.withdrawalRegister.bills50 += quantity_50;
+		}else{
+			//here main.withdrawalRegister.bills50 + quantity_50 <= 2720
+			//Let's take from the served register some bills and put
+			//them here
+			int necessary = 2720 - 
+				(main.withdrawalRegister.bills50 + quantity_50);
+			main.servedRegister.bills50 -= necessary;
+			main.withdrawalRegister.bills50 += quantity_50 + necessary;
+		}
+	}
+	
+	//same goes for 20 euro bills
+	if(main.withdrawalRegister.bills20 + quantity_20 > 1800){
+		int diff = (main.withdrawalRegister.bills20 + quantity_20)
+			 - 1800;
+		main.withdrawalRegister.bills20 = 1800;
+		main.servedRegister.bills20 += diff;
+	}else{
+		//here main.withdrawalRegister.bills20 + quantity_20 <= 1800
+		//20% of 170.000 = 1700 bills of 20
+		if(main.withdrawalRegister.bills20 + quantity_20 > 1700){
+			//do nothing, we can tolerate. Just put the bills
+			//in the register
+			main.withdrawalRegister.bills20 += quantity_20;
+		}else{
+			//here main.withdrawalRegister.bills20 + quantity_20 <= 1700
+			//Let's take from the served register some bills and put
+			//them here
+			int necessary = 1700 - 
+				(main.withdrawalRegister.bills20 + quantity_20);
+			main.servedRegister.bills20 -= necessary;
+			main.withdrawalRegister.bills20 += quantity_20 + necessary;
+		}
+	}
+	withdrawal_open_3 = false;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657545301458</Id>
+					<Name><![CDATA[thursday_17_00]]></Name>
+					<X>1060</X><Y>1130</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[main.specialRegister.active = true;
+main.withdrawalRegister.active = true;
+
+//all that's left at this point is the Served register.
+
+//this is the amount of money we'd like to reach
+int to_reach = 100000;
+	
+//if it needs to be emptied, let's try to leave it in the
+//initial configuration by removing some bills.
+if(served_open_3 == 1){
+	moveToInTime(main.nodeCashiersDesks, 2);
+	//let's first remove the bills we don't need for sure
+	while(served_to_remove >= 500 && main.specialRegister.bills500 > 0){
+		served_to_remove -= 500;
+		main.specialRegister.bills500 -= 1;
+	}
+	while(served_to_remove >= 200 && main.specialRegister.bills200 > 0){
+		served_to_remove -= 200;
+		main.specialRegister.bills200 -= 1;
+	}
+	while(served_to_remove >= 100 && main.specialRegister.bills100 > 0){
+		served_to_remove -= 100;
+		main.specialRegister.bills100 -= 1;
+	}
+	//we wanted at least 100 bills of 10 euros for emergencies
+	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+		served_to_remove -= 10;
+		main.specialRegister.bills10 -= 1;
+	}
+	//we leave a bit of 5 euros bills for emergencies
+	while(served_to_remove >= 5 && main.specialRegister.bills5 > 5){
+		served_to_remove -= 5;
+		main.specialRegister.bills5 -= 1;
+	}
+	
+	//at this point, we either removed all the money, or we
+	//still need to remove some. The initial configuration
+	//was: 1580 bills of 50, 1000 of 20 and 100 of 10.
+	//let's try to reach it
+	while(served_to_remove >= 50 && main.specialRegister.bills50 > 1580){
+		served_to_remove -= 50;
+		main.specialRegister.bills50 -= 1;
+	}
+	while(served_to_remove >= 20 && main.specialRegister.bills20 > 1000){
+		served_to_remove -= 20;
+		main.specialRegister.bills20 -= 1;
+	}
+	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+		served_to_remove -= 10;
+		main.specialRegister.bills10 -= 1;
+	}
+	
+	//still, we could have to remove some more money (we promised
+	//the SG served_to_remove moeny after all). Let's not
+	//remove too many bills anyway!
+	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 500){
+		served_to_remove -= 50;
+		main.servedRegister.bills50 -= 1;
+		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 400){
+			served_to_remove -= 40;
+			main.servedRegister.bills20 -= 2;
+		}
+	}
+	while(served_to_remove >= 20 && main.servedRegister.bills20 > 0){
+		served_to_remove -= 20;
+		main.servedRegister.bills20 -= 1;
+	}
+	while(served_to_remove >= 5 && main.servedRegister.bills5 > 0){
+		served_to_remove -= 5;
+		main.servedRegister.bills5 -= 1;
+	}
+	
+}else if(served_open_3 == 2){
+	moveToInTime(main.nodeCashiersDesks, 2);
+	//If instead it needs to be refilled, let's refill it
+	//in order to have it work properly.
+	//We assume that we ordered 80% of the bills as 50 and
+	//20% as 20.
+	int b50 = ((served_to_add * 8) / 10) / 50;
+	int b20 = ((served_to_add * 2) / 10) / 20;
+	main.servedRegister.bills50 += b50;
+	main.servedRegister.bills20 += b20;
+	
+}
+served_open_3 = 0;]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657545301460</Id>
+					<Name><![CDATA[special_vs_served_3]]></Name>
+					<X>1060</X><Y>770</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="170" Height="40">
+						<EntryAction><![CDATA[//the only case in which we can avoid to call the SG
+//to carry out some money is when the Special register needs
+//to be emptied even if it has less than 60.000 euros (to be
+//removed), but the Served one does not. Our cashier must
+//must understand this.
+if(special_open_3 && served_open_3 != 1){
+	if(special_to_remove <= 60.000){
+		from_special_to_served = true;
+	}
+}else{
+	from_special_to_served = false;
+}
+]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657545823094</Id>
+					<Name><![CDATA[friday_15_40]]></Name>
+					<X>1250</X><Y>840</Y>
+					<Label><X>5</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if both the Special and the Withdrawal
+//register have to be opened, let's NOW
+//open the Special register
+
+if(special_open_4 && withdrawal_open_4){
+	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	main.specialRegister.active = false;
+
+	//opening the special register means removing
+	//the bills, by trying to leave it in the initial
+	//configuration
+	
+	int b500 = main.specialRegister.bills500;
+	main.specialRegister.bills500 = 0;
+	int b200 = main.specialRegister.bills200;
+	main.specialRegister.bills200 = 0;
+	int b100 = main.specialRegister.bills100;
+	main.specialRegister.bills100 = 0;
+	int b10 = main.specialRegister.bills10;
+	main.specialRegister.bills10 = 0;
+	int b5 = main.specialRegister.bills5;
+	main.specialRegister.bills5 = 0;
+	
+	
+	//We must give the money to remove to 
+	//either the SG or the Served register.
+	if(from_special_to_served == true){
+		//we move the ("useless") bills collected from
+		//the Special register to the Served one.
+		main.servedRegister.bills500 += b500;
+		main.servedRegister.bills200 += b200;
+		main.servedRegister.bills100 += b100;
+		main.servedRegister.bills10 += b10;
+		main.servedRegister.bills5 += b5;
+		//we would like to have this register in its
+		//initial configuration now, which is
+		//240 bills of 50 euros and 150 of 20 euros.
+		//If we have more bills than necessary, we
+		//simply move them to the Served register.
+		//In the opposite case, we move them from the
+		//Served one to this one.
+		if(main.specialRegister.bills50 > 240){
+			int b50 = main.specialRegister.bills50 - 240;
+			main.specialRegister.bills50 = 240;
+			main.servedRegister.bills50 += b50;
+		}else{
+			int b50 = 240 - main.specialRegister.bills50;
+			main.servedRegister.bills50 -= b50;
+			main.specialRegister.bills50 = 240;
+		}
+		if(main.specialRegister.bills20 > 150){
+			int b20 = main.specialRegister.bills20 - 150;
+			main.specialRegister.bills20 = 150;
+			main.servedRegister.bills20 += b20;
+		}else{
+			int b20 = 150 - main.specialRegister.bills20;
+			main.servedRegister.bills20 -= b20;
+			main.specialRegister.bills20 = 150;
+		}
+	}else{
+		//we prepare the ("useless") bills collected from
+		//the Special register for the SG (that technically
+		//would come the next day to take them. In our
+		//case, we simply remove them, as if they already
+		//came, also because no interesting events happen
+		//between the 17.00 and the 8.28 of the next day)
+		
+		//But the actual money present in the Special
+		//register could differ from special_to_remove. 
+		//First of all, let's remove the bills we can remove.
+		while(special_to_remove >= 500 && b500 > 0){
+			special_to_remove -= 500;
+			b500 -= 1;
+		}
+		while(special_to_remove >= 200 && b200 > 0){
+			special_to_remove -= 200;
+			b200 -= 1;
+		}
+		while(special_to_remove >= 100 && b100 > 0){
+			special_to_remove -= 100;
+			b100 -= 1;
+		}
+		
+		while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+			special_to_remove -= 50;
+			main.specialRegister.bills50 -= 1;
+		}
+		while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+			special_to_remove -= 20;
+			main.specialRegister.bills20 -= 1;
+		}
+		
+		while(special_to_remove >= 10 && b10 > 0){
+			special_to_remove -= 10;
+			b10 -= 1;
+		}
+		while(special_to_remove >= 5 && b5 > 0){
+			special_to_remove -= 5;
+			b5 -= 1;
+		}
+		
+		//now we have two scenarios:
+		//1) we have some bills left. In this case,
+		//we put them in the Served register.
+		//2) special_to_remove hasn't reached 0, so
+		//we'll have to take some bills from the Served
+		//register.
+		if(special_to_remove == 0){
+			main.servedRegister.bills500 += b500;
+			main.servedRegister.bills200 += b200;
+			main.servedRegister.bills100 += b100;
+			main.servedRegister.bills10 += b10;
+			main.servedRegister.bills5 += b5;
+			
+			//we don't just put the "useless" bills in the
+			//served register. We also put the ones of 50
+			//and 20 that remained in the Served register, or
+			//do the opposite if needed.
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+			
+		}else{
+			//if possible, we take some bills of 50 and 20
+			//euros from the Special register
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				while(special_to_remove >= 50 && b50 > 0){
+					special_to_remove -= 50;
+					b50 -= 1;
+				}
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				while(special_to_remove >= 20 && b20 > 0){
+					special_to_remove -= 20;
+					b20 -= 1;
+				}
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		
+		
+			//take some bills from the Served register
+			while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+				special_to_remove -= 500;
+				main.servedRegister.bills500 -= 1;
+			}
+			while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
+				special_to_remove -= 200;
+				main.servedRegister.bills200 -= 1;
+			}
+			while(special_to_remove >= 100 && b100 > 0){
+				special_to_remove -= 100;
+				b100 -= 1;
+			}
+			
+			//to reach an equilibrium, since the bills
+			//of 50 and 20 are very important, we remove 
+			//some bills of 50 and some of 20 from the 
+			//Served register
+			while(special_to_remove >= 110){
+				main.servedRegister.bills50 -= 1;
+				main.servedRegister.bills20 -= 3;
+				special_to_remove -= 110;
+			}
+			
+			while(special_to_remove >= 10 && b10 > 0){
+				special_to_remove -= 10;
+				b10 -= 1;
+			}
+			while(special_to_remove >= 5 && b5 > 0){
+				special_to_remove -= 5;
+				b5 -= 1;
+			}
+		}
+	}
+	special_open_4 = false;
+	//special_to_remove = 0;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657545823098</Id>
+					<Name><![CDATA[friday_16_00]]></Name>
+					<X>1250</X><Y>940</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if the Special register needs to be opened but the withdrawal
+//one needs not, let's open the Special at 16.00. The way it
+//works is completely identical to the one shown in the previous
+//state
+if(special_open_4 && !withdrawal_open_4){
+	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	//opening the special register means removing
+	//the bills, by trying to leave it in the initial
+	//configuration
+	main.specialRegister.active = false;
+	
+	int b500 = main.specialRegister.bills500;
+	main.specialRegister.bills500 = 0;
+	int b200 = main.specialRegister.bills200;
+	main.specialRegister.bills200 = 0;
+	int b100 = main.specialRegister.bills100;
+	main.specialRegister.bills100 = 0;
+	int b10 = main.specialRegister.bills10;
+	main.specialRegister.bills10 = 0;
+	int b5 = main.specialRegister.bills5;
+	main.specialRegister.bills5 = 0;
+	
+	
+	//We must give the money to remove to 
+	//either the SG or the Served register.
+	if(from_special_to_served == true){
+		//we move the ("useless") bills collected from
+		//the Special register to the Served one.
+		main.servedRegister.bills500 += b500;
+		main.servedRegister.bills200 += b200;
+		main.servedRegister.bills100 += b100;
+		main.servedRegister.bills10 += b10;
+		main.servedRegister.bills5 += b5;
+		//we would like to have this register in its
+		//initial configuration now, which is
+		//240 bills of 50 euros and 150 of 20 euros.
+		//If we have more bills than necessary, we
+		//simply move them to the Served register.
+		//In the opposite case, we move them from the
+		//Served one to this one.
+		if(main.specialRegister.bills50 > 240){
+			int b50 = main.specialRegister.bills50 - 240;
+			main.specialRegister.bills50 = 240;
+			main.servedRegister.bills50 += b50;
+		}else{
+			int b50 = 240 - main.specialRegister.bills50;
+			main.servedRegister.bills50 -= b50;
+			main.specialRegister.bills50 = 240;
+		}
+		if(main.specialRegister.bills20 > 150){
+			int b20 = main.specialRegister.bills20 - 150;
+			main.specialRegister.bills20 = 150;
+			main.servedRegister.bills20 += b20;
+		}else{
+			int b20 = 150 - main.specialRegister.bills20;
+			main.servedRegister.bills20 -= b20;
+			main.specialRegister.bills20 = 150;
+		}
+	}else{
+		//we prepare the ("useless") bills collected from
+		//the Special register for the SG (that technically
+		//would come the next day to take them. In our
+		//case, we simply remove them, as if they already
+		//came, also because no interesting events happen
+		//between the 17.00 and the 8.28 of the next day)
+		
+		//But the actual money present in the Special
+		//register could differ from special_to_remove. 
+		//First of all, let's remove the bills we can remove.
+		while(special_to_remove >= 500 && b500 > 0){
+			special_to_remove -= 500;
+			b500 -= 1;
+		}
+		while(special_to_remove >= 200 && b200 > 0){
+			special_to_remove -= 200;
+			b200 -= 1;
+		}
+		while(special_to_remove >= 100 && b100 > 0){
+			special_to_remove -= 100;
+			b100 -= 1;
+		}
+		
+		while(special_to_remove >= 50 && main.specialRegister.bills50 > 240){
+			special_to_remove -= 50;
+			main.specialRegister.bills50 -= 1;
+		}
+		while(special_to_remove >= 20 && main.specialRegister.bills20 > 150){
+			special_to_remove -= 20;
+			main.specialRegister.bills20 -= 1;
+		}
+		
+		while(special_to_remove >= 10 && b10 > 0){
+			special_to_remove -= 10;
+			b10 -= 1;
+		}
+		while(special_to_remove >= 5 && b5 > 0){
+			special_to_remove -= 5;
+			b5 -= 1;
+		}
+		
+		//now we have two scenarios:
+		//1) we have some bills left. In this case,
+		//we put them in the Served register.
+		//2) special_to_remove hasn't reached 0, so
+		//we'll have to take some bills from the Served
+		//register.
+		if(special_to_remove == 0){
+			main.servedRegister.bills500 += b500;
+			main.servedRegister.bills200 += b200;
+			main.servedRegister.bills100 += b100;
+			main.servedRegister.bills10 += b10;
+			main.servedRegister.bills5 += b5;
+			
+			//we don't just put the "useless" bills in the
+			//served register. We also put the ones of 50
+			//and 20 that remained in the Served register, or
+			//do the opposite if needed.
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+			
+		}else{
+			//if possible, we take some bills of 50 and 20
+			//euros from the Special register
+			if(main.specialRegister.bills50 > 240){
+				int b50 = main.specialRegister.bills50 - 240;
+				while(special_to_remove >= 50 && b50 > 0){
+					special_to_remove -= 50;
+					b50 -= 1;
+				}
+				main.specialRegister.bills50 = 240;
+				main.servedRegister.bills50 += b50;
+			}else{
+				int b50 = 240 - main.specialRegister.bills50;
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
+			if(main.specialRegister.bills20 > 150){
+				int b20 = main.specialRegister.bills20 - 150;
+				while(special_to_remove >= 20 && b20 > 0){
+					special_to_remove -= 20;
+					b20 -= 1;
+				}
+				main.specialRegister.bills20 = 150;
+				main.servedRegister.bills20 += b20;
+			}else{
+				int b20 = 150 - main.specialRegister.bills20;
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
+		
+		
+			//take some bills from the Served register
+			while(special_to_remove >= 500 && main.servedRegister.bills500 > 0){
+				special_to_remove -= 500;
+				main.servedRegister.bills500 -= 1;
+			}
+			while(special_to_remove >= 200 && main.servedRegister.bills200 > 0){
+				special_to_remove -= 200;
+				main.servedRegister.bills200 -= 1;
+			}
+			while(special_to_remove >= 100 && b100 > 0){
+				special_to_remove -= 100;
+				b100 -= 1;
+			}
+			
+			//to reach an equilibrium, since the bills
+			//of 50 and 20 are very important, we remove 
+			//some bills of 50 and some of 20 from the 
+			//Served register
+			while(special_to_remove >= 110){
+				main.servedRegister.bills50 -= 1;
+				main.servedRegister.bills20 -= 3;
+				special_to_remove -= 110;
+			}
+			
+			while(special_to_remove >= 10 && b10 > 0){
+				special_to_remove -= 10;
+				b10 -= 1;
+			}
+			while(special_to_remove >= 5 && b5 > 0){
+				special_to_remove -= 5;
+				b5 -= 1;
+			}
+		}
+	}
+	special_open_4 = false;
+	//special_to_remove = 0;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657545823100</Id>
+					<Name><![CDATA[friday_16_40]]></Name>
+					<X>1250</X><Y>1040</Y>
+					<Label><X>5</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[//if the Withdrawal register needs to be opened, let's open
+//it and put the money that the SG brought us during this morning.
+//We assume that the money brought by the SG are "spawned" by the
+//cashier, and they are the amount specified by the manager
+//(rounded to be the sum of bills of 50 and 20 euros). The
+//distribution of bills of 50 and 20 euros is:
+//80% of the bills are of 50 euros
+//20% of the bills are of 20 euros
+if(withdrawal_open_4){
+	moveToInTime(main.nodeWithdrawalRegisterBack, 2);
+	main.specialRegister.active = true;
+	main.withdrawalRegister.active = false;
+
+	int quantity_50 = ((withdraw_to_add * 8) / 10) / 50;
+	int quantity_20 = ((withdraw_to_add * 2) / 10) / 20;
+	
+	//the main objective is to have the Withdrawal register
+	//in its initial distribution: 80% of the bills of
+	//50 euros (2880 bills in total), 20% of the bills
+	//of 20 euros (1800 bills in total). We have, in front
+	//of us, two possible scenarios:
+	//1) we ordered too many bills. Let's put the leftover ones
+	//in the Served register.
+	//2) we ordered too little bills. If the total amount
+	//of the withdrawal register is below 170.000, let's take
+	//some bills from the served register.
+	
+	if(main.withdrawalRegister.bills50 + quantity_50 > 2880){
+		int diff = (main.withdrawalRegister.bills50 + quantity_50)
+			 - 2880;
+		main.withdrawalRegister.bills50 = 2880;
+		main.servedRegister.bills50 += diff;
+	}else{
+		//here main.withdrawalRegister.bills50 + quantity_50 <= 2880
+		//80% of 170.000 = 2720 bills of 50
+		if(main.withdrawalRegister.bills50 + quantity_50 > 2720){
+			//do nothing, we can tolerate. Just put the bills
+			//in the register
+			main.withdrawalRegister.bills50 += quantity_50;
+		}else{
+			//here main.withdrawalRegister.bills50 + quantity_50 <= 2720
+			//Let's take from the served register some bills and put
+			//them here
+			int necessary = 2720 - 
+				(main.withdrawalRegister.bills50 + quantity_50);
+			main.servedRegister.bills50 -= necessary;
+			main.withdrawalRegister.bills50 += quantity_50 + necessary;
+		}
+	}
+	
+	//same goes for 20 euro bills
+	if(main.withdrawalRegister.bills20 + quantity_20 > 1800){
+		int diff = (main.withdrawalRegister.bills20 + quantity_20)
+			 - 1800;
+		main.withdrawalRegister.bills20 = 1800;
+		main.servedRegister.bills20 += diff;
+	}else{
+		//here main.withdrawalRegister.bills20 + quantity_20 <= 1800
+		//20% of 170.000 = 1700 bills of 20
+		if(main.withdrawalRegister.bills20 + quantity_20 > 1700){
+			//do nothing, we can tolerate. Just put the bills
+			//in the register
+			main.withdrawalRegister.bills20 += quantity_20;
+		}else{
+			//here main.withdrawalRegister.bills20 + quantity_20 <= 1700
+			//Let's take from the served register some bills and put
+			//them here
+			int necessary = 1700 - 
+				(main.withdrawalRegister.bills20 + quantity_20);
+			main.servedRegister.bills20 -= necessary;
+			main.withdrawalRegister.bills20 += quantity_20 + necessary;
+		}
+	}
+	withdrawal_open_4 = false;
+}]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657545823102</Id>
+					<Name><![CDATA[friday_17_00]]></Name>
+					<X>1250</X><Y>1130</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="160" Height="40">
+						<EntryAction><![CDATA[main.specialRegister.active = true;
+main.withdrawalRegister.active = true;
+
+//all that's left at this point is the Served register.
+
+//this is the amount of money we'd like to reach
+int to_reach = 100000;
+	
+//if it needs to be emptied, let's try to leave it in the
+//initial configuration by removing some bills.
+if(served_open_4 == 1){
+	moveToInTime(main.nodeCashiersDesks, 2);
+	//let's first remove the bills we don't need for sure
+	while(served_to_remove >= 500 && main.specialRegister.bills500 > 0){
+		served_to_remove -= 500;
+		main.specialRegister.bills500 -= 1;
+	}
+	while(served_to_remove >= 200 && main.specialRegister.bills200 > 0){
+		served_to_remove -= 200;
+		main.specialRegister.bills200 -= 1;
+	}
+	while(served_to_remove >= 100 && main.specialRegister.bills100 > 0){
+		served_to_remove -= 100;
+		main.specialRegister.bills100 -= 1;
+	}
+	//we wanted at least 100 bills of 10 euros for emergencies
+	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+		served_to_remove -= 10;
+		main.specialRegister.bills10 -= 1;
+	}
+	//we leave a bit of 5 euros bills for emergencies
+	while(served_to_remove >= 5 && main.specialRegister.bills5 > 5){
+		served_to_remove -= 5;
+		main.specialRegister.bills5 -= 1;
+	}
+	
+	//at this point, we either removed all the money, or we
+	//still need to remove some. The initial configuration
+	//was: 1580 bills of 50, 1000 of 20 and 100 of 10.
+	//let's try to reach it
+	while(served_to_remove >= 50 && main.specialRegister.bills50 > 1580){
+		served_to_remove -= 50;
+		main.specialRegister.bills50 -= 1;
+	}
+	while(served_to_remove >= 20 && main.specialRegister.bills20 > 1000){
+		served_to_remove -= 20;
+		main.specialRegister.bills20 -= 1;
+	}
+	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+		served_to_remove -= 10;
+		main.specialRegister.bills10 -= 1;
+	}
+	
+	//still, we could have to remove some more money (we promised
+	//the SG served_to_remove moeny after all). Let's not
+	//remove too many bills anyway!
+	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 500){
+		served_to_remove -= 50;
+		main.servedRegister.bills50 -= 1;
+		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 400){
+			served_to_remove -= 40;
+			main.servedRegister.bills20 -= 2;
+		}
+	}
+	while(served_to_remove >= 20 && main.servedRegister.bills20 > 0){
+		served_to_remove -= 20;
+		main.servedRegister.bills20 -= 1;
+	}
+	while(served_to_remove >= 5 && main.servedRegister.bills5 > 0){
+		served_to_remove -= 5;
+		main.servedRegister.bills5 -= 1;
+	}
+	
+}else if(served_open_4 == 2){
+	moveToInTime(main.nodeCashiersDesks, 2);
+	//If instead it needs to be refilled, let's refill it
+	//in order to have it work properly.
+	//We assume that we ordered 80% of the bills as 50 and
+	//20% as 20.
+	int b50 = ((served_to_add * 8) / 10) / 50;
+	int b20 = ((served_to_add * 2) / 10) / 20;
+	main.servedRegister.bills50 += b50;
+	main.servedRegister.bills20 += b20;
+	
+}
+served_open_4 = 0;]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657545823104</Id>
+					<Name><![CDATA[special_vs_served_4]]></Name>
+					<X>1250</X><Y>770</Y>
+					<Label><X>10</X><Y>20</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="170" Height="40">
+						<EntryAction><![CDATA[//the only case in which we can avoid to call the SG
+//to carry out some money is when the Special register needs
+//to be emptied even if it has less than 60.000 euros (to be
+//removed), but the Served one does not. Our cashier must
+//must understand this.
+if(special_open_4 && served_open_4 != 1){
+	if(special_to_remove <= 60.000){
+		from_special_to_served = true;
+	}
+}else{
+	from_special_to_served = false;
+}
+]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="Branch" ParentState="ROOT_NODE">
+					<Id>1657546790100</Id>
+					<Name><![CDATA[branch2]]></Name>
+					<X>300</X><Y>-60</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Properties>	
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657546833876</Id>
+					<Name><![CDATA[idle1]]></Name>
+					<X>500</X><Y>-180</Y>
+					<Label><X>25</X><Y>15</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="100" Height="30">
+						<EntryAction><![CDATA[shapeBody.setFillColor(lime);]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
+				<StatechartElement Class="State" ParentState="ROOT_NODE">
+					<Id>1657546895346</Id>
+					<Name><![CDATA[sendRequestToServedRegister1]]></Name>
+					<X>480</X><Y>-90</Y>
+					<Label><X>10</X><Y>25</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties Width="270" Height="50">
+						<EntryAction><![CDATA[RegisterGeneralRequest req = pendingCashierRequests.get(0);
+pendingCashierRequests.remove(0);
+send(req, main.servedRegister);]]></EntryAction>
+						<FillColor>-16711936</FillColor>
+					</Properties>
+				</StatechartElement>
 				<StatechartElement Class="EntryPoint" ParentState="ROOT_NODE">
 					<Id>1657122920363</Id>
 					<Name><![CDATA[statechart]]></Name>
-					<X>300</X><Y>-30</Y>
+					<X>300</X><Y>-110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7678,7 +10655,7 @@ if(special_open_0 && served_open_0 != 1){
 						<Point><X>0</X><Y>0</Y></Point>
 						<Point><X>0</X><Y>40</Y></Point>
 					</Points>
-					<Properties Target="1657468747462">
+					<Properties Target="1657546790100">
 					</Properties>	
 				</StatechartElement>
 				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
@@ -7789,7 +10766,7 @@ if(special_open_0 && served_open_0 != 1){
 					<IconOffset>20.0</IconOffset>
 					<Properties Source="1657462863056" Target="1657467468621" Trigger="timeout">
 						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
+							<Code><![CDATA[0]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</Timeout>
 						<Condition><![CDATA[true]]></Condition>
@@ -8360,6 +11337,919 @@ if(special_open_0 && served_open_0 != 1){
 						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
 					</Properties>	
 				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657534304050</Id>
+					<Name><![CDATA[transition22]]></Name>
+					<X>550</X><Y>1170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>140</Y></Point>
+						<Point><X>170</X><Y>140</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657470333079" Target="1657534294935" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[420]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657534391722</Id>
+					<Name><![CDATA[transition23]]></Name>
+					<X>820</X><Y>1310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>677</X><Y>0</Y></Point>
+						<Point><X>680</X><Y>-1260</Y></Point>
+						<Point><X>-470</X><Y>-1280</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657534294935" Target="1657468747462" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657537574042</Id>
+					<Name><![CDATA[transition24]]></Name>
+					<X>750</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657537574019" Target="1657537574034" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[20]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657537574044</Id>
+					<Name><![CDATA[transition25]]></Name>
+					<X>750</X><Y>980</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657537574034" Target="1657537574036" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[40]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657537574046</Id>
+					<Name><![CDATA[transition26]]></Name>
+					<X>750</X><Y>1080</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657537574036" Target="1657537574038" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[20]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657537574048</Id>
+					<Name><![CDATA[transition27]]></Name>
+					<X>750</X><Y>810</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>30</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657537574040" Target="1657537574019" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657544712515</Id>
+					<Name><![CDATA[transition28]]></Name>
+					<X>888</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>-138</X><Y>30</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657468681231" Target="1657537574040" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[day_week() == 1]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>false</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657544735529</Id>
+					<Name><![CDATA[transition29]]></Name>
+					<X>750</X><Y>1170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>130</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657537574038" Target="1657534294935" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[420]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657544889300</Id>
+					<Name><![CDATA[transition30]]></Name>
+					<X>940</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657544889283" Target="1657544889292" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[20]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657544889302</Id>
+					<Name><![CDATA[transition31]]></Name>
+					<X>940</X><Y>980</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657544889292" Target="1657544889294" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[40]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657544889304</Id>
+					<Name><![CDATA[transition32]]></Name>
+					<X>940</X><Y>1080</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657544889294" Target="1657544889296" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[20]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657544889306</Id>
+					<Name><![CDATA[transition33]]></Name>
+					<X>940</X><Y>810</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>30</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657544889298" Target="1657544889283" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545110167</Id>
+					<Name><![CDATA[transition34]]></Name>
+					<X>940</X><Y>1170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>30</Y></Point>
+						<Point><X>-160</X><Y>30</Y></Point>
+						<Point><X>-160</X><Y>130</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657544889296" Target="1657534294935" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[420]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545129623</Id>
+					<Name><![CDATA[transition35]]></Name>
+					<X>912</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>28</X><Y>30</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657468681231" Target="1657544889298" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[day_week() == 2]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>false</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545301462</Id>
+					<Name><![CDATA[transition36]]></Name>
+					<X>1130</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657545301452" Target="1657545301454" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[20]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545301464</Id>
+					<Name><![CDATA[transition37]]></Name>
+					<X>1130</X><Y>980</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657545301454" Target="1657545301456" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[40]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545301466</Id>
+					<Name><![CDATA[transition38]]></Name>
+					<X>1130</X><Y>1080</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657545301456" Target="1657545301458" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[20]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545301468</Id>
+					<Name><![CDATA[transition39]]></Name>
+					<X>1130</X><Y>810</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>30</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657545301460" Target="1657545301452" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545777069</Id>
+					<Name><![CDATA[transition40]]></Name>
+					<X>1130</X><Y>1170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>40</Y></Point>
+						<Point><X>-340</X><Y>40</Y></Point>
+						<Point><X>-340</X><Y>130</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657545301458" Target="1657534294935" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[420]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545800864</Id>
+					<Name><![CDATA[transition41]]></Name>
+					<X>912</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>218</X><Y>30</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657468681231" Target="1657545301460" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[day_week() == 3]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>false</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545823106</Id>
+					<Name><![CDATA[transition42]]></Name>
+					<X>1320</X><Y>880</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657545823094" Target="1657545823098" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[20]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545823108</Id>
+					<Name><![CDATA[transition43]]></Name>
+					<X>1320</X><Y>980</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657545823098" Target="1657545823100" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[40]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545823110</Id>
+					<Name><![CDATA[transition44]]></Name>
+					<X>1320</X><Y>1080</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657545823100" Target="1657545823102" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[20]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657545823112</Id>
+					<Name><![CDATA[transition45]]></Name>
+					<X>1320</X><Y>810</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>30</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657545823104" Target="1657545823094" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657546004859</Id>
+					<Name><![CDATA[transition46]]></Name>
+					<X>1320</X><Y>1170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>50</Y></Point>
+						<Point><X>-520</X><Y>50</Y></Point>
+						<Point><X>-520</X><Y>130</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657545823102" Target="1657534294935" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[420]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657546031045</Id>
+					<Name><![CDATA[transition47]]></Name>
+					<X>912</X><Y>740</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>408</X><Y>0</Y></Point>
+						<Point><X>408</X><Y>30</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657468681231" Target="1657545823104" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[day_week() == 4]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>false</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657546795236</Id>
+					<Name><![CDATA[transition48]]></Name>
+					<X>300</X><Y>-50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657546790100" Target="1657468747462" Trigger="condition">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[this.getName().equals("cashier1")]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>false</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657546817965</Id>
+					<Name><![CDATA[transition49]]></Name>
+					<X>312</X><Y>-60</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>113</X><Y>0</Y></Point>
+						<Point><X>113</X><Y>-100</Y></Point>
+						<Point><X>188</X><Y>-100</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657546790100" Target="1657546833876" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657546914253</Id>
+					<Name><![CDATA[transition50]]></Name>
+					<X>530</X><Y>-150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>60</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657546833876" Target="1657546895346" Trigger="condition">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[pendingCashierRequests.size() > 0]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
+				<StatechartElement Class="Transition" ParentState="ROOT_NODE">
+					<Id>1657546928717</Id>
+					<Name><![CDATA[transition51]]></Name>
+					<X>640</X><Y>-90</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Points>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>0</X><Y>-70</Y></Point>
+						<Point><X>-40</X><Y>-70</Y></Point>
+					</Points>
+					<IconOffset>20.0</IconOffset>
+					<Properties Source="1657546895346" Target="1657546833876" Trigger="timeout">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[0]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Condition><![CDATA[true]]></Condition>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<MessageType><![CDATA[Object]]></MessageType>
+						<DefaultTransition>true</DefaultTransition>
+						<FilterType><![CDATA[unconditionally]]></FilterType>
+						<EqualsExpression><![CDATA["text"]]></EqualsExpression>
+						<SatisfiesExpression><![CDATA[true]]></SatisfiesExpression>
+					</Properties>	
+				</StatechartElement>
 			</StatechartElements>
 			<Events>
 				<Event>
@@ -8391,7 +12281,9 @@ if(special_open_0 && served_open_0 != 1){
 						</RecurrenceCode>
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
-					<Action><![CDATA[arrived_15_40 = true;]]></Action>
+					<Action><![CDATA[if(day_week() <= 4){
+	arrived_15_40 = true;
+}]]></Action>
 				</Event>
 			</Events>
 			<Functions>
@@ -8400,7 +12292,7 @@ if(special_open_0 && served_open_0 != 1){
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1657467457947</Id>
 					<Name><![CDATA[day_week]]></Name>
-					<X>670</X><Y>30</Y>
+					<X>700</X><Y>20</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9307,14 +13199,22 @@ bills5 += b5;]]></Body>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[int currBill = convert(withdrawDistribution());
-while(currBill == 10 && bills10 <= min_bills10){
-	currBill = convert(withdrawDistribution());
+
+//choose a bill that is present
+boolean reroll = true;
+while(reroll){
+	switch(currBill){
+		case 5: if(bills5 > 0){reroll = false;} break;
+		case 10: if(bills10 > min_bills10){reroll = false;} break;
+		case 20: if(bills20 > 0){reroll = false;} break;
+		case 50: if(bills50 > 0){reroll = false;} break;
+		case 100: if(bills100 > 0){reroll = false;} break;
+		case 200: if(bills200 > 0){reroll = false;} break;
+		case 500: if(bills500 > 0){reroll = false;} break;
+		
+	}
 }
-//if there are 0 bills of type 100, give instead
-//a bill of 50.
-if(currBill == 100 && bills100 == 0){
-	currBill = 50;
-}
+
 return currBill;]]></Body>
 				</Function>
 			</Functions>
