@@ -5334,7 +5334,6 @@ if(must_open_special_today){
 		mean_special() * (0.3125) * (0.1) * 100 +
 		mean_special() * (0.3125) * (0.1) * 10 +
 		mean_special() * (0.3125) * (0.05) * 5;
-		System.out.println("Special to remove = " + special_to_remove);	
 }else{
 	special_to_remove = 0;
 }
@@ -5427,7 +5426,6 @@ if(must_open_special_today){
 		mean_special() * (0.3125) * (0.1) * 100 +
 		mean_special() * (0.3125) * (0.1) * 10 +
 		mean_special() * (0.3125) * (0.05) * 5;
-		System.out.println("Special to remove = " + special_to_remove);	
 }else{
 	special_to_remove = 0;
 }
@@ -5505,10 +5503,10 @@ if(main.servedRegister.bills50 > 1580){
 }
 if(main.servedRegister.bills20 > 1000){
 	served_to_remove += 
-		(main.servedRegister.bills50 - 1000) * 20;
+		(main.servedRegister.bills20 - 1000) * 20;
 }else{
 	served_to_add += 
-		(1000 - main.servedRegister.bills50) * 20;
+		(1000 - main.servedRegister.bills20) * 20;
 }
 
 
@@ -5538,7 +5536,7 @@ if(main.servedRegister.bills20 > 1000){
 
 if(must_open_special_today && 
 	!must_open_served_today_to_remove &&
-	special_to_remove <= 60.000){
+	special_to_remove <= 60000){
 		//we could move this money to the Served
 		//register. But, do we risk to have too much
 		//money in the Server register, in this way?
@@ -7375,6 +7373,7 @@ if(special_open_0 && withdrawal_open_0){
 	//We must give the money to remove to 
 	//either the SG or the Served register.
 	if(from_special_to_served == true){
+		int tmp = main.servedRegister.balance();
 		//we move the ("useless") bills collected from
 		//the Special register to the Served one.
 		main.servedRegister.bills500 += b500;
@@ -7388,15 +7387,18 @@ if(special_open_0 && withdrawal_open_0){
 		//If we have more bills than necessary, we
 		//simply move them to the Served register.
 		//In the opposite case, we move them from the
-		//Served one to this one.
+		//Served one to this one (if the served has them
+		//in the first place)
 		if(main.specialRegister.bills50 > 240){
 			int b50 = main.specialRegister.bills50 - 240;
 			main.specialRegister.bills50 = 240;
 			main.servedRegister.bills50 += b50;
 		}else{
 			int b50 = 240 - main.specialRegister.bills50;
-			main.servedRegister.bills50 -= b50;
-			main.specialRegister.bills50 = 240;
+			if(main.servedRegister.bills50 >= b50){
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
 		}
 		if(main.specialRegister.bills20 > 150){
 			int b20 = main.specialRegister.bills20 - 150;
@@ -7404,9 +7406,12 @@ if(special_open_0 && withdrawal_open_0){
 			main.servedRegister.bills20 += b20;
 		}else{
 			int b20 = 150 - main.specialRegister.bills20;
-			main.servedRegister.bills20 -= b20;
-			main.specialRegister.bills20 = 150;
+			if(main.servedRegister.bills20 >= b20){
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
 		}
+		System.out.println("Special --> Served: " + (main.servedRegister.balance() - tmp));
 	}else{
 		//we prepare the ("useless") bills collected from
 		//the Special register for the SG (that technically
@@ -7455,7 +7460,7 @@ if(special_open_0 && withdrawal_open_0){
 		//2) special_to_remove hasn't reached 0, so
 		//we'll have to take some bills from the Served
 		//register.
-		if(special_to_remove == 0){
+		if(special_to_remove <= 500){	//&& special_to_remove >= 0
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
@@ -7465,15 +7470,17 @@ if(special_open_0 && withdrawal_open_0){
 			//we don't just put the "useless" bills in the
 			//served register. We also put the ones of 50
 			//and 20 that remained in the Served register, or
-			//do the opposite if needed.
+			//do the opposite if needed (and if possible)
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -7481,8 +7488,10 @@ if(special_open_0 && withdrawal_open_0){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 			
 		}else{
@@ -7498,8 +7507,10 @@ if(special_open_0 && withdrawal_open_0){
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -7511,8 +7522,10 @@ if(special_open_0 && withdrawal_open_0){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 		
 		
@@ -7525,28 +7538,30 @@ if(special_open_0 && withdrawal_open_0){
 				special_to_remove -= 200;
 				main.servedRegister.bills200 -= 1;
 			}
-			while(special_to_remove >= 100 && b100 > 0){
+			while(special_to_remove >= 100 && main.servedRegister.bills100 > 0){
 				special_to_remove -= 100;
-				b100 -= 1;
+				main.servedRegister.bills100 -= 1;
 			}
 			
 			//to reach an equilibrium, since the bills
 			//of 50 and 20 are very important, we remove 
 			//some bills of 50 and some of 20 from the 
-			//Served register
-			while(special_to_remove >= 110){
-				main.servedRegister.bills50 -= 1;
-				main.servedRegister.bills20 -= 3;
-				special_to_remove -= 110;
+			//Served register (if there is any)
+			while(special_to_remove >= 110 &&
+				main.servedRegister.bills50 >= 1 &&
+				main.servedRegister.bills20 >= 3){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
 			}
 			
-			while(special_to_remove >= 10 && b10 > 0){
+			while(special_to_remove >= 10 && main.servedRegister.bills10 > 0){
 				special_to_remove -= 10;
-				b10 -= 1;
+				main.servedRegister.bills10 -= 1;
 			}
-			while(special_to_remove >= 5 && b5 > 0){
+			while(special_to_remove >= 5 && main.servedRegister.bills5 > 0){
 				special_to_remove -= 5;
-				b5 -= 1;
+				main.servedRegister.bills5 -= 1;
 			}
 		}
 	}
@@ -7608,10 +7623,11 @@ if(special_open_0 && withdrawal_open_0){
 //state
 if(special_open_0 && !withdrawal_open_0){
 	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	main.specialRegister.active = false;
+
 	//opening the special register means removing
 	//the bills, by trying to leave it in the initial
 	//configuration
-	main.specialRegister.active = false;
 	
 	int b500 = main.specialRegister.bills500;
 	main.specialRegister.bills500 = 0;
@@ -7641,15 +7657,18 @@ if(special_open_0 && !withdrawal_open_0){
 		//If we have more bills than necessary, we
 		//simply move them to the Served register.
 		//In the opposite case, we move them from the
-		//Served one to this one.
+		//Served one to this one (if the served has them
+		//in the first place)
 		if(main.specialRegister.bills50 > 240){
 			int b50 = main.specialRegister.bills50 - 240;
 			main.specialRegister.bills50 = 240;
 			main.servedRegister.bills50 += b50;
 		}else{
 			int b50 = 240 - main.specialRegister.bills50;
-			main.servedRegister.bills50 -= b50;
-			main.specialRegister.bills50 = 240;
+			if(main.servedRegister.bills50 >= b50){
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
 		}
 		if(main.specialRegister.bills20 > 150){
 			int b20 = main.specialRegister.bills20 - 150;
@@ -7657,8 +7676,10 @@ if(special_open_0 && !withdrawal_open_0){
 			main.servedRegister.bills20 += b20;
 		}else{
 			int b20 = 150 - main.specialRegister.bills20;
-			main.servedRegister.bills20 -= b20;
-			main.specialRegister.bills20 = 150;
+			if(main.servedRegister.bills20 >= b20){
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
 		}
 	}else{
 		//we prepare the ("useless") bills collected from
@@ -7708,7 +7729,7 @@ if(special_open_0 && !withdrawal_open_0){
 		//2) special_to_remove hasn't reached 0, so
 		//we'll have to take some bills from the Served
 		//register.
-		if(special_to_remove == 0){
+		if(special_to_remove <= 500){	//&& special_to_remove >= 0
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
@@ -7718,15 +7739,17 @@ if(special_open_0 && !withdrawal_open_0){
 			//we don't just put the "useless" bills in the
 			//served register. We also put the ones of 50
 			//and 20 that remained in the Served register, or
-			//do the opposite if needed.
+			//do the opposite if needed (and if possible)
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -7734,8 +7757,10 @@ if(special_open_0 && !withdrawal_open_0){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 			
 		}else{
@@ -7751,8 +7776,10 @@ if(special_open_0 && !withdrawal_open_0){
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -7764,8 +7791,10 @@ if(special_open_0 && !withdrawal_open_0){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 		
 		
@@ -7778,28 +7807,30 @@ if(special_open_0 && !withdrawal_open_0){
 				special_to_remove -= 200;
 				main.servedRegister.bills200 -= 1;
 			}
-			while(special_to_remove >= 100 && b100 > 0){
+			while(special_to_remove >= 100 && main.servedRegister.bills100 > 0){
 				special_to_remove -= 100;
-				b100 -= 1;
+				main.servedRegister.bills100 -= 1;
 			}
 			
 			//to reach an equilibrium, since the bills
 			//of 50 and 20 are very important, we remove 
 			//some bills of 50 and some of 20 from the 
-			//Served register
-			while(special_to_remove >= 110){
-				main.servedRegister.bills50 -= 1;
-				main.servedRegister.bills20 -= 3;
-				special_to_remove -= 110;
+			//Served register (if there is any)
+			while(special_to_remove >= 110 &&
+				main.servedRegister.bills50 >= 1 &&
+				main.servedRegister.bills20 >= 3){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
 			}
 			
-			while(special_to_remove >= 10 && b10 > 0){
+			while(special_to_remove >= 10 && main.servedRegister.bills10 > 0){
 				special_to_remove -= 10;
-				b10 -= 1;
+				main.servedRegister.bills10 -= 1;
 			}
-			while(special_to_remove >= 5 && b5 > 0){
+			while(special_to_remove >= 5 && main.servedRegister.bills5 > 0){
 				special_to_remove -= 5;
-				b5 -= 1;
+				main.servedRegister.bills5 -= 1;
 			}
 		}
 	}
@@ -7843,7 +7874,7 @@ if(withdrawal_open_0){
 	//in the Served register.
 	//2) we ordered too little bills. If the total amount
 	//of the withdrawal register is below 170.000, let's take
-	//some bills from the served register.
+	//some bills from the served register (if possible).
 	
 	if(main.withdrawalRegister.bills50 + quantity_50 > 2880){
 		int diff = (main.withdrawalRegister.bills50 + quantity_50)
@@ -7860,11 +7891,14 @@ if(withdrawal_open_0){
 		}else{
 			//here main.withdrawalRegister.bills50 + quantity_50 <= 2720
 			//Let's take from the served register some bills and put
-			//them here
+			//them here (if possible).
 			int necessary = 2720 - 
 				(main.withdrawalRegister.bills50 + quantity_50);
-			main.servedRegister.bills50 -= necessary;
-			main.withdrawalRegister.bills50 += quantity_50 + necessary;
+			if(main.servedRegister.bills50 >= necessary){
+				main.servedRegister.bills50 -= necessary;
+				main.withdrawalRegister.bills50 += necessary;
+			}
+			main.withdrawalRegister.bills50 += quantity_50;
 		}
 	}
 	
@@ -7884,11 +7918,14 @@ if(withdrawal_open_0){
 		}else{
 			//here main.withdrawalRegister.bills20 + quantity_20 <= 1700
 			//Let's take from the served register some bills and put
-			//them here
+			//them here (if possible)
 			int necessary = 1700 - 
 				(main.withdrawalRegister.bills20 + quantity_20);
-			main.servedRegister.bills20 -= necessary;
-			main.withdrawalRegister.bills20 += quantity_20 + necessary;
+			if(main.servedRegister.bills20 >= necessary){
+				main.servedRegister.bills20 -= necessary;
+				main.withdrawalRegister.bills20 += necessary;
+			}
+			main.withdrawalRegister.bills20 += quantity_20;
 		}
 	}
 	withdrawal_open_0 = false;
@@ -7918,53 +7955,53 @@ int to_reach = 100000;
 if(served_open_0 == 1){
 	moveToInTime(main.nodeCashiersDesks, 2);
 	//let's first remove the bills we don't need for sure
-	while(served_to_remove >= 500 && main.specialRegister.bills500 > 0){
+	while(served_to_remove >= 500 && main.servedRegister.bills500 > 0){
 		served_to_remove -= 500;
-		main.specialRegister.bills500 -= 1;
+		main.servedRegister.bills500 -= 1;
 	}
-	while(served_to_remove >= 200 && main.specialRegister.bills200 > 0){
+	while(served_to_remove >= 200 && main.servedRegister.bills200 > 0){
 		served_to_remove -= 200;
-		main.specialRegister.bills200 -= 1;
+		main.servedRegister.bills200 -= 1;
 	}
-	while(served_to_remove >= 100 && main.specialRegister.bills100 > 0){
+	while(served_to_remove >= 100 && main.servedRegister.bills100 > 0){
 		served_to_remove -= 100;
-		main.specialRegister.bills100 -= 1;
+		main.servedRegister.bills100 -= 1;
 	}
 	//we wanted at least 100 bills of 10 euros for emergencies
-	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+	while(served_to_remove >= 10 && main.servedRegister.bills10 > main.servedRegister.min_bills10){
 		served_to_remove -= 10;
-		main.specialRegister.bills10 -= 1;
+		main.servedRegister.bills10 -= 1;
 	}
 	//we leave a bit of 5 euros bills for emergencies
-	while(served_to_remove >= 5 && main.specialRegister.bills5 > 5){
+	while(served_to_remove >= 5 && main.servedRegister.bills5 > 5){
 		served_to_remove -= 5;
-		main.specialRegister.bills5 -= 1;
+		main.servedRegister.bills5 -= 1;
 	}
 	
 	//at this point, we either removed all the money, or we
 	//still need to remove some. The initial configuration
 	//was: 1580 bills of 50, 1000 of 20 and 100 of 10.
 	//let's try to reach it
-	while(served_to_remove >= 50 && main.specialRegister.bills50 > 1580){
+	while(served_to_remove >= 50 && main.servedRegister.bills50 > 1580){
 		served_to_remove -= 50;
-		main.specialRegister.bills50 -= 1;
+		main.servedRegister.bills50 -= 1;
 	}
-	while(served_to_remove >= 20 && main.specialRegister.bills20 > 1000){
+	while(served_to_remove >= 20 && main.servedRegister.bills20 > 1000){
 		served_to_remove -= 20;
-		main.specialRegister.bills20 -= 1;
+		main.servedRegister.bills20 -= 1;
 	}
-	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+	while(served_to_remove >= 10 && main.servedRegister.bills10 > main.servedRegister.min_bills10){
 		served_to_remove -= 10;
-		main.specialRegister.bills10 -= 1;
+		main.servedRegister.bills10 -= 1;
 	}
 	
 	//still, we could have to remove some more money (we promised
 	//the SG served_to_remove moeny after all). Let's not
 	//remove too many bills anyway!
-	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 500){
+	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 300){
 		served_to_remove -= 50;
 		main.servedRegister.bills50 -= 1;
-		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 400){
+		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 200){
 			served_to_remove -= 40;
 			main.servedRegister.bills20 -= 2;
 		}
@@ -8009,7 +8046,8 @@ served_open_0 = 0;]]></EntryAction>
 //removed), but the Served one does not. Our cashier must
 //must understand this.
 if(special_open_0 && served_open_0 != 1){
-	if(special_to_remove <= 60.000){
+	System.out.println("Special to remove = " + special_to_remove);
+	if(special_to_remove <= 60000){
 		from_special_to_served = true;
 	}
 }else{
@@ -8068,6 +8106,7 @@ if(special_open_1 && withdrawal_open_1){
 	//We must give the money to remove to 
 	//either the SG or the Served register.
 	if(from_special_to_served == true){
+		int tmp = main.servedRegister.balance();
 		//we move the ("useless") bills collected from
 		//the Special register to the Served one.
 		main.servedRegister.bills500 += b500;
@@ -8081,15 +8120,18 @@ if(special_open_1 && withdrawal_open_1){
 		//If we have more bills than necessary, we
 		//simply move them to the Served register.
 		//In the opposite case, we move them from the
-		//Served one to this one.
+		//Served one to this one (if the served has them
+		//in the first place)
 		if(main.specialRegister.bills50 > 240){
 			int b50 = main.specialRegister.bills50 - 240;
 			main.specialRegister.bills50 = 240;
 			main.servedRegister.bills50 += b50;
 		}else{
 			int b50 = 240 - main.specialRegister.bills50;
-			main.servedRegister.bills50 -= b50;
-			main.specialRegister.bills50 = 240;
+			if(main.servedRegister.bills50 >= b50){
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
 		}
 		if(main.specialRegister.bills20 > 150){
 			int b20 = main.specialRegister.bills20 - 150;
@@ -8097,9 +8139,12 @@ if(special_open_1 && withdrawal_open_1){
 			main.servedRegister.bills20 += b20;
 		}else{
 			int b20 = 150 - main.specialRegister.bills20;
-			main.servedRegister.bills20 -= b20;
-			main.specialRegister.bills20 = 150;
+			if(main.servedRegister.bills20 >= b20){
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
 		}
+		System.out.println("Special --> Served: " + (main.servedRegister.balance() - tmp));
 	}else{
 		//we prepare the ("useless") bills collected from
 		//the Special register for the SG (that technically
@@ -8148,7 +8193,7 @@ if(special_open_1 && withdrawal_open_1){
 		//2) special_to_remove hasn't reached 0, so
 		//we'll have to take some bills from the Served
 		//register.
-		if(special_to_remove == 0){
+		if(special_to_remove <= 500){	//&& special_to_remove >= 0
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
@@ -8158,15 +8203,17 @@ if(special_open_1 && withdrawal_open_1){
 			//we don't just put the "useless" bills in the
 			//served register. We also put the ones of 50
 			//and 20 that remained in the Served register, or
-			//do the opposite if needed.
+			//do the opposite if needed (and if possible)
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -8174,8 +8221,10 @@ if(special_open_1 && withdrawal_open_1){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 			
 		}else{
@@ -8191,8 +8240,10 @@ if(special_open_1 && withdrawal_open_1){
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -8204,8 +8255,10 @@ if(special_open_1 && withdrawal_open_1){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 		
 		
@@ -8218,28 +8271,30 @@ if(special_open_1 && withdrawal_open_1){
 				special_to_remove -= 200;
 				main.servedRegister.bills200 -= 1;
 			}
-			while(special_to_remove >= 100 && b100 > 0){
+			while(special_to_remove >= 100 && main.servedRegister.bills100 > 0){
 				special_to_remove -= 100;
-				b100 -= 1;
+				main.servedRegister.bills100 -= 1;
 			}
 			
 			//to reach an equilibrium, since the bills
 			//of 50 and 20 are very important, we remove 
 			//some bills of 50 and some of 20 from the 
-			//Served register
-			while(special_to_remove >= 110){
-				main.servedRegister.bills50 -= 1;
-				main.servedRegister.bills20 -= 3;
-				special_to_remove -= 110;
+			//Served register (if there is any)
+			while(special_to_remove >= 110 &&
+				main.servedRegister.bills50 >= 1 &&
+				main.servedRegister.bills20 >= 3){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
 			}
 			
-			while(special_to_remove >= 10 && b10 > 0){
+			while(special_to_remove >= 10 && main.servedRegister.bills10 > 0){
 				special_to_remove -= 10;
-				b10 -= 1;
+				main.servedRegister.bills10 -= 1;
 			}
-			while(special_to_remove >= 5 && b5 > 0){
+			while(special_to_remove >= 5 && main.servedRegister.bills5 > 0){
 				special_to_remove -= 5;
-				b5 -= 1;
+				main.servedRegister.bills5 -= 1;
 			}
 		}
 	}
@@ -8264,10 +8319,11 @@ if(special_open_1 && withdrawal_open_1){
 //state
 if(special_open_1 && !withdrawal_open_1){
 	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	main.specialRegister.active = false;
+
 	//opening the special register means removing
 	//the bills, by trying to leave it in the initial
 	//configuration
-	main.specialRegister.active = false;
 	
 	int b500 = main.specialRegister.bills500;
 	main.specialRegister.bills500 = 0;
@@ -8297,15 +8353,18 @@ if(special_open_1 && !withdrawal_open_1){
 		//If we have more bills than necessary, we
 		//simply move them to the Served register.
 		//In the opposite case, we move them from the
-		//Served one to this one.
+		//Served one to this one (if the served has them
+		//in the first place)
 		if(main.specialRegister.bills50 > 240){
 			int b50 = main.specialRegister.bills50 - 240;
 			main.specialRegister.bills50 = 240;
 			main.servedRegister.bills50 += b50;
 		}else{
 			int b50 = 240 - main.specialRegister.bills50;
-			main.servedRegister.bills50 -= b50;
-			main.specialRegister.bills50 = 240;
+			if(main.servedRegister.bills50 >= b50){
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
 		}
 		if(main.specialRegister.bills20 > 150){
 			int b20 = main.specialRegister.bills20 - 150;
@@ -8313,8 +8372,10 @@ if(special_open_1 && !withdrawal_open_1){
 			main.servedRegister.bills20 += b20;
 		}else{
 			int b20 = 150 - main.specialRegister.bills20;
-			main.servedRegister.bills20 -= b20;
-			main.specialRegister.bills20 = 150;
+			if(main.servedRegister.bills20 >= b20){
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
 		}
 	}else{
 		//we prepare the ("useless") bills collected from
@@ -8364,7 +8425,7 @@ if(special_open_1 && !withdrawal_open_1){
 		//2) special_to_remove hasn't reached 0, so
 		//we'll have to take some bills from the Served
 		//register.
-		if(special_to_remove == 0){
+		if(special_to_remove <= 500){	//&& special_to_remove >= 0
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
@@ -8374,15 +8435,17 @@ if(special_open_1 && !withdrawal_open_1){
 			//we don't just put the "useless" bills in the
 			//served register. We also put the ones of 50
 			//and 20 that remained in the Served register, or
-			//do the opposite if needed.
+			//do the opposite if needed (and if possible)
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -8390,8 +8453,10 @@ if(special_open_1 && !withdrawal_open_1){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 			
 		}else{
@@ -8407,8 +8472,10 @@ if(special_open_1 && !withdrawal_open_1){
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -8420,8 +8487,10 @@ if(special_open_1 && !withdrawal_open_1){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 		
 		
@@ -8434,28 +8503,30 @@ if(special_open_1 && !withdrawal_open_1){
 				special_to_remove -= 200;
 				main.servedRegister.bills200 -= 1;
 			}
-			while(special_to_remove >= 100 && b100 > 0){
+			while(special_to_remove >= 100 && main.servedRegister.bills100 > 0){
 				special_to_remove -= 100;
-				b100 -= 1;
+				main.servedRegister.bills100 -= 1;
 			}
 			
 			//to reach an equilibrium, since the bills
 			//of 50 and 20 are very important, we remove 
 			//some bills of 50 and some of 20 from the 
-			//Served register
-			while(special_to_remove >= 110){
-				main.servedRegister.bills50 -= 1;
-				main.servedRegister.bills20 -= 3;
-				special_to_remove -= 110;
+			//Served register (if there is any)
+			while(special_to_remove >= 110 &&
+				main.servedRegister.bills50 >= 1 &&
+				main.servedRegister.bills20 >= 3){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
 			}
 			
-			while(special_to_remove >= 10 && b10 > 0){
+			while(special_to_remove >= 10 && main.servedRegister.bills10 > 0){
 				special_to_remove -= 10;
-				b10 -= 1;
+				main.servedRegister.bills10 -= 1;
 			}
-			while(special_to_remove >= 5 && b5 > 0){
+			while(special_to_remove >= 5 && main.servedRegister.bills5 > 0){
 				special_to_remove -= 5;
-				b5 -= 1;
+				main.servedRegister.bills5 -= 1;
 			}
 		}
 	}
@@ -8499,7 +8570,7 @@ if(withdrawal_open_1){
 	//in the Served register.
 	//2) we ordered too little bills. If the total amount
 	//of the withdrawal register is below 170.000, let's take
-	//some bills from the served register.
+	//some bills from the served register (if possible).
 	
 	if(main.withdrawalRegister.bills50 + quantity_50 > 2880){
 		int diff = (main.withdrawalRegister.bills50 + quantity_50)
@@ -8516,11 +8587,14 @@ if(withdrawal_open_1){
 		}else{
 			//here main.withdrawalRegister.bills50 + quantity_50 <= 2720
 			//Let's take from the served register some bills and put
-			//them here
+			//them here (if possible).
 			int necessary = 2720 - 
 				(main.withdrawalRegister.bills50 + quantity_50);
-			main.servedRegister.bills50 -= necessary;
-			main.withdrawalRegister.bills50 += quantity_50 + necessary;
+			if(main.servedRegister.bills50 >= necessary){
+				main.servedRegister.bills50 -= necessary;
+				main.withdrawalRegister.bills50 += necessary;
+			}
+			main.withdrawalRegister.bills50 += quantity_50;
 		}
 	}
 	
@@ -8540,11 +8614,14 @@ if(withdrawal_open_1){
 		}else{
 			//here main.withdrawalRegister.bills20 + quantity_20 <= 1700
 			//Let's take from the served register some bills and put
-			//them here
+			//them here (if possible)
 			int necessary = 1700 - 
 				(main.withdrawalRegister.bills20 + quantity_20);
-			main.servedRegister.bills20 -= necessary;
-			main.withdrawalRegister.bills20 += quantity_20 + necessary;
+			if(main.servedRegister.bills20 >= necessary){
+				main.servedRegister.bills20 -= necessary;
+				main.withdrawalRegister.bills20 += necessary;
+			}
+			main.withdrawalRegister.bills20 += quantity_20;
 		}
 	}
 	withdrawal_open_1 = false;
@@ -8574,53 +8651,53 @@ int to_reach = 100000;
 if(served_open_1 == 1){
 	moveToInTime(main.nodeCashiersDesks, 2);
 	//let's first remove the bills we don't need for sure
-	while(served_to_remove >= 500 && main.specialRegister.bills500 > 0){
+	while(served_to_remove >= 500 && main.servedRegister.bills500 > 0){
 		served_to_remove -= 500;
-		main.specialRegister.bills500 -= 1;
+		main.servedRegister.bills500 -= 1;
 	}
-	while(served_to_remove >= 200 && main.specialRegister.bills200 > 0){
+	while(served_to_remove >= 200 && main.servedRegister.bills200 > 0){
 		served_to_remove -= 200;
-		main.specialRegister.bills200 -= 1;
+		main.servedRegister.bills200 -= 1;
 	}
-	while(served_to_remove >= 100 && main.specialRegister.bills100 > 0){
+	while(served_to_remove >= 100 && main.servedRegister.bills100 > 0){
 		served_to_remove -= 100;
-		main.specialRegister.bills100 -= 1;
+		main.servedRegister.bills100 -= 1;
 	}
 	//we wanted at least 100 bills of 10 euros for emergencies
-	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+	while(served_to_remove >= 10 && main.servedRegister.bills10 > main.servedRegister.min_bills10){
 		served_to_remove -= 10;
-		main.specialRegister.bills10 -= 1;
+		main.servedRegister.bills10 -= 1;
 	}
 	//we leave a bit of 5 euros bills for emergencies
-	while(served_to_remove >= 5 && main.specialRegister.bills5 > 5){
+	while(served_to_remove >= 5 && main.servedRegister.bills5 > 5){
 		served_to_remove -= 5;
-		main.specialRegister.bills5 -= 1;
+		main.servedRegister.bills5 -= 1;
 	}
 	
 	//at this point, we either removed all the money, or we
 	//still need to remove some. The initial configuration
 	//was: 1580 bills of 50, 1000 of 20 and 100 of 10.
 	//let's try to reach it
-	while(served_to_remove >= 50 && main.specialRegister.bills50 > 1580){
+	while(served_to_remove >= 50 && main.servedRegister.bills50 > 1580){
 		served_to_remove -= 50;
-		main.specialRegister.bills50 -= 1;
+		main.servedRegister.bills50 -= 1;
 	}
-	while(served_to_remove >= 20 && main.specialRegister.bills20 > 1000){
+	while(served_to_remove >= 20 && main.servedRegister.bills20 > 1000){
 		served_to_remove -= 20;
-		main.specialRegister.bills20 -= 1;
+		main.servedRegister.bills20 -= 1;
 	}
-	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+	while(served_to_remove >= 10 && main.servedRegister.bills10 > main.servedRegister.min_bills10){
 		served_to_remove -= 10;
-		main.specialRegister.bills10 -= 1;
+		main.servedRegister.bills10 -= 1;
 	}
 	
 	//still, we could have to remove some more money (we promised
 	//the SG served_to_remove moeny after all). Let's not
 	//remove too many bills anyway!
-	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 500){
+	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 300){
 		served_to_remove -= 50;
 		main.servedRegister.bills50 -= 1;
-		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 400){
+		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 200){
 			served_to_remove -= 40;
 			main.servedRegister.bills20 -= 2;
 		}
@@ -8665,7 +8742,7 @@ served_open_1 = 0;]]></EntryAction>
 //removed), but the Served one does not. Our cashier must
 //must understand this.
 if(special_open_1 && served_open_1 != 1){
-	if(special_to_remove <= 60.000){
+	if(special_to_remove <= 60000){
 		from_special_to_served = true;
 	}
 }else{
@@ -8711,6 +8788,7 @@ if(special_open_2 && withdrawal_open_2){
 	//We must give the money to remove to 
 	//either the SG or the Served register.
 	if(from_special_to_served == true){
+		int tmp = main.servedRegister.balance();
 		//we move the ("useless") bills collected from
 		//the Special register to the Served one.
 		main.servedRegister.bills500 += b500;
@@ -8724,15 +8802,18 @@ if(special_open_2 && withdrawal_open_2){
 		//If we have more bills than necessary, we
 		//simply move them to the Served register.
 		//In the opposite case, we move them from the
-		//Served one to this one.
+		//Served one to this one (if the served has them
+		//in the first place)
 		if(main.specialRegister.bills50 > 240){
 			int b50 = main.specialRegister.bills50 - 240;
 			main.specialRegister.bills50 = 240;
 			main.servedRegister.bills50 += b50;
 		}else{
 			int b50 = 240 - main.specialRegister.bills50;
-			main.servedRegister.bills50 -= b50;
-			main.specialRegister.bills50 = 240;
+			if(main.servedRegister.bills50 >= b50){
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
 		}
 		if(main.specialRegister.bills20 > 150){
 			int b20 = main.specialRegister.bills20 - 150;
@@ -8740,9 +8821,12 @@ if(special_open_2 && withdrawal_open_2){
 			main.servedRegister.bills20 += b20;
 		}else{
 			int b20 = 150 - main.specialRegister.bills20;
-			main.servedRegister.bills20 -= b20;
-			main.specialRegister.bills20 = 150;
+			if(main.servedRegister.bills20 >= b20){
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
 		}
+		System.out.println("Special --> Served: " + (main.servedRegister.balance() - tmp));
 	}else{
 		//we prepare the ("useless") bills collected from
 		//the Special register for the SG (that technically
@@ -8791,7 +8875,7 @@ if(special_open_2 && withdrawal_open_2){
 		//2) special_to_remove hasn't reached 0, so
 		//we'll have to take some bills from the Served
 		//register.
-		if(special_to_remove == 0){
+		if(special_to_remove <= 500){	//&& special_to_remove >= 0
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
@@ -8801,15 +8885,17 @@ if(special_open_2 && withdrawal_open_2){
 			//we don't just put the "useless" bills in the
 			//served register. We also put the ones of 50
 			//and 20 that remained in the Served register, or
-			//do the opposite if needed.
+			//do the opposite if needed (and if possible)
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -8817,8 +8903,10 @@ if(special_open_2 && withdrawal_open_2){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 			
 		}else{
@@ -8834,8 +8922,10 @@ if(special_open_2 && withdrawal_open_2){
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -8847,8 +8937,10 @@ if(special_open_2 && withdrawal_open_2){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 		
 		
@@ -8861,28 +8953,30 @@ if(special_open_2 && withdrawal_open_2){
 				special_to_remove -= 200;
 				main.servedRegister.bills200 -= 1;
 			}
-			while(special_to_remove >= 100 && b100 > 0){
+			while(special_to_remove >= 100 && main.servedRegister.bills100 > 0){
 				special_to_remove -= 100;
-				b100 -= 1;
+				main.servedRegister.bills100 -= 1;
 			}
 			
 			//to reach an equilibrium, since the bills
 			//of 50 and 20 are very important, we remove 
 			//some bills of 50 and some of 20 from the 
-			//Served register
-			while(special_to_remove >= 110){
-				main.servedRegister.bills50 -= 1;
-				main.servedRegister.bills20 -= 3;
-				special_to_remove -= 110;
+			//Served register (if there is any)
+			while(special_to_remove >= 110 &&
+				main.servedRegister.bills50 >= 1 &&
+				main.servedRegister.bills20 >= 3){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
 			}
 			
-			while(special_to_remove >= 10 && b10 > 0){
+			while(special_to_remove >= 10 && main.servedRegister.bills10 > 0){
 				special_to_remove -= 10;
-				b10 -= 1;
+				main.servedRegister.bills10 -= 1;
 			}
-			while(special_to_remove >= 5 && b5 > 0){
+			while(special_to_remove >= 5 && main.servedRegister.bills5 > 0){
 				special_to_remove -= 5;
-				b5 -= 1;
+				main.servedRegister.bills5 -= 1;
 			}
 		}
 	}
@@ -8907,10 +9001,11 @@ if(special_open_2 && withdrawal_open_2){
 //state
 if(special_open_2 && !withdrawal_open_2){
 	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	main.specialRegister.active = false;
+
 	//opening the special register means removing
 	//the bills, by trying to leave it in the initial
 	//configuration
-	main.specialRegister.active = false;
 	
 	int b500 = main.specialRegister.bills500;
 	main.specialRegister.bills500 = 0;
@@ -8940,15 +9035,18 @@ if(special_open_2 && !withdrawal_open_2){
 		//If we have more bills than necessary, we
 		//simply move them to the Served register.
 		//In the opposite case, we move them from the
-		//Served one to this one.
+		//Served one to this one (if the served has them
+		//in the first place)
 		if(main.specialRegister.bills50 > 240){
 			int b50 = main.specialRegister.bills50 - 240;
 			main.specialRegister.bills50 = 240;
 			main.servedRegister.bills50 += b50;
 		}else{
 			int b50 = 240 - main.specialRegister.bills50;
-			main.servedRegister.bills50 -= b50;
-			main.specialRegister.bills50 = 240;
+			if(main.servedRegister.bills50 >= b50){
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
 		}
 		if(main.specialRegister.bills20 > 150){
 			int b20 = main.specialRegister.bills20 - 150;
@@ -8956,8 +9054,10 @@ if(special_open_2 && !withdrawal_open_2){
 			main.servedRegister.bills20 += b20;
 		}else{
 			int b20 = 150 - main.specialRegister.bills20;
-			main.servedRegister.bills20 -= b20;
-			main.specialRegister.bills20 = 150;
+			if(main.servedRegister.bills20 >= b20){
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
 		}
 	}else{
 		//we prepare the ("useless") bills collected from
@@ -9007,7 +9107,7 @@ if(special_open_2 && !withdrawal_open_2){
 		//2) special_to_remove hasn't reached 0, so
 		//we'll have to take some bills from the Served
 		//register.
-		if(special_to_remove == 0){
+		if(special_to_remove <= 500){	//&& special_to_remove >= 0
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
@@ -9017,15 +9117,17 @@ if(special_open_2 && !withdrawal_open_2){
 			//we don't just put the "useless" bills in the
 			//served register. We also put the ones of 50
 			//and 20 that remained in the Served register, or
-			//do the opposite if needed.
+			//do the opposite if needed (and if possible)
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -9033,8 +9135,10 @@ if(special_open_2 && !withdrawal_open_2){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 			
 		}else{
@@ -9050,8 +9154,10 @@ if(special_open_2 && !withdrawal_open_2){
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -9063,8 +9169,10 @@ if(special_open_2 && !withdrawal_open_2){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 		
 		
@@ -9077,28 +9185,30 @@ if(special_open_2 && !withdrawal_open_2){
 				special_to_remove -= 200;
 				main.servedRegister.bills200 -= 1;
 			}
-			while(special_to_remove >= 100 && b100 > 0){
+			while(special_to_remove >= 100 && main.servedRegister.bills100 > 0){
 				special_to_remove -= 100;
-				b100 -= 1;
+				main.servedRegister.bills100 -= 1;
 			}
 			
 			//to reach an equilibrium, since the bills
 			//of 50 and 20 are very important, we remove 
 			//some bills of 50 and some of 20 from the 
-			//Served register
-			while(special_to_remove >= 110){
-				main.servedRegister.bills50 -= 1;
-				main.servedRegister.bills20 -= 3;
-				special_to_remove -= 110;
+			//Served register (if there is any)
+			while(special_to_remove >= 110 &&
+				main.servedRegister.bills50 >= 1 &&
+				main.servedRegister.bills20 >= 3){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
 			}
 			
-			while(special_to_remove >= 10 && b10 > 0){
+			while(special_to_remove >= 10 && main.servedRegister.bills10 > 0){
 				special_to_remove -= 10;
-				b10 -= 1;
+				main.servedRegister.bills10 -= 1;
 			}
-			while(special_to_remove >= 5 && b5 > 0){
+			while(special_to_remove >= 5 && main.servedRegister.bills5 > 0){
 				special_to_remove -= 5;
-				b5 -= 1;
+				main.servedRegister.bills5 -= 1;
 			}
 		}
 	}
@@ -9142,7 +9252,7 @@ if(withdrawal_open_2){
 	//in the Served register.
 	//2) we ordered too little bills. If the total amount
 	//of the withdrawal register is below 170.000, let's take
-	//some bills from the served register.
+	//some bills from the served register (if possible).
 	
 	if(main.withdrawalRegister.bills50 + quantity_50 > 2880){
 		int diff = (main.withdrawalRegister.bills50 + quantity_50)
@@ -9159,11 +9269,14 @@ if(withdrawal_open_2){
 		}else{
 			//here main.withdrawalRegister.bills50 + quantity_50 <= 2720
 			//Let's take from the served register some bills and put
-			//them here
+			//them here (if possible).
 			int necessary = 2720 - 
 				(main.withdrawalRegister.bills50 + quantity_50);
-			main.servedRegister.bills50 -= necessary;
-			main.withdrawalRegister.bills50 += quantity_50 + necessary;
+			if(main.servedRegister.bills50 >= necessary){
+				main.servedRegister.bills50 -= necessary;
+				main.withdrawalRegister.bills50 += necessary;
+			}
+			main.withdrawalRegister.bills50 += quantity_50;
 		}
 	}
 	
@@ -9183,11 +9296,14 @@ if(withdrawal_open_2){
 		}else{
 			//here main.withdrawalRegister.bills20 + quantity_20 <= 1700
 			//Let's take from the served register some bills and put
-			//them here
+			//them here (if possible)
 			int necessary = 1700 - 
 				(main.withdrawalRegister.bills20 + quantity_20);
-			main.servedRegister.bills20 -= necessary;
-			main.withdrawalRegister.bills20 += quantity_20 + necessary;
+			if(main.servedRegister.bills20 >= necessary){
+				main.servedRegister.bills20 -= necessary;
+				main.withdrawalRegister.bills20 += necessary;
+			}
+			main.withdrawalRegister.bills20 += quantity_20;
 		}
 	}
 	withdrawal_open_2 = false;
@@ -9217,53 +9333,53 @@ int to_reach = 100000;
 if(served_open_2 == 1){
 	moveToInTime(main.nodeCashiersDesks, 2);
 	//let's first remove the bills we don't need for sure
-	while(served_to_remove >= 500 && main.specialRegister.bills500 > 0){
+	while(served_to_remove >= 500 && main.servedRegister.bills500 > 0){
 		served_to_remove -= 500;
-		main.specialRegister.bills500 -= 1;
+		main.servedRegister.bills500 -= 1;
 	}
-	while(served_to_remove >= 200 && main.specialRegister.bills200 > 0){
+	while(served_to_remove >= 200 && main.servedRegister.bills200 > 0){
 		served_to_remove -= 200;
-		main.specialRegister.bills200 -= 1;
+		main.servedRegister.bills200 -= 1;
 	}
-	while(served_to_remove >= 100 && main.specialRegister.bills100 > 0){
+	while(served_to_remove >= 100 && main.servedRegister.bills100 > 0){
 		served_to_remove -= 100;
-		main.specialRegister.bills100 -= 1;
+		main.servedRegister.bills100 -= 1;
 	}
 	//we wanted at least 100 bills of 10 euros for emergencies
-	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+	while(served_to_remove >= 10 && main.servedRegister.bills10 > main.servedRegister.min_bills10){
 		served_to_remove -= 10;
-		main.specialRegister.bills10 -= 1;
+		main.servedRegister.bills10 -= 1;
 	}
 	//we leave a bit of 5 euros bills for emergencies
-	while(served_to_remove >= 5 && main.specialRegister.bills5 > 5){
+	while(served_to_remove >= 5 && main.servedRegister.bills5 > 5){
 		served_to_remove -= 5;
-		main.specialRegister.bills5 -= 1;
+		main.servedRegister.bills5 -= 1;
 	}
 	
 	//at this point, we either removed all the money, or we
 	//still need to remove some. The initial configuration
 	//was: 1580 bills of 50, 1000 of 20 and 100 of 10.
 	//let's try to reach it
-	while(served_to_remove >= 50 && main.specialRegister.bills50 > 1580){
+	while(served_to_remove >= 50 && main.servedRegister.bills50 > 1580){
 		served_to_remove -= 50;
-		main.specialRegister.bills50 -= 1;
+		main.servedRegister.bills50 -= 1;
 	}
-	while(served_to_remove >= 20 && main.specialRegister.bills20 > 1000){
+	while(served_to_remove >= 20 && main.servedRegister.bills20 > 1000){
 		served_to_remove -= 20;
-		main.specialRegister.bills20 -= 1;
+		main.servedRegister.bills20 -= 1;
 	}
-	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+	while(served_to_remove >= 10 && main.servedRegister.bills10 > main.servedRegister.min_bills10){
 		served_to_remove -= 10;
-		main.specialRegister.bills10 -= 1;
+		main.servedRegister.bills10 -= 1;
 	}
 	
 	//still, we could have to remove some more money (we promised
 	//the SG served_to_remove moeny after all). Let's not
 	//remove too many bills anyway!
-	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 500){
+	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 300){
 		served_to_remove -= 50;
 		main.servedRegister.bills50 -= 1;
-		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 400){
+		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 200){
 			served_to_remove -= 40;
 			main.servedRegister.bills20 -= 2;
 		}
@@ -9308,7 +9424,7 @@ served_open_2 = 0;]]></EntryAction>
 //removed), but the Served one does not. Our cashier must
 //must understand this.
 if(special_open_2 && served_open_2 != 1){
-	if(special_to_remove <= 60.000){
+	if(special_to_remove <= 60000){
 		from_special_to_served = true;
 	}
 }else{
@@ -9354,6 +9470,7 @@ if(special_open_3 && withdrawal_open_3){
 	//We must give the money to remove to 
 	//either the SG or the Served register.
 	if(from_special_to_served == true){
+		int tmp = main.servedRegister.balance();
 		//we move the ("useless") bills collected from
 		//the Special register to the Served one.
 		main.servedRegister.bills500 += b500;
@@ -9367,15 +9484,18 @@ if(special_open_3 && withdrawal_open_3){
 		//If we have more bills than necessary, we
 		//simply move them to the Served register.
 		//In the opposite case, we move them from the
-		//Served one to this one.
+		//Served one to this one (if the served has them
+		//in the first place)
 		if(main.specialRegister.bills50 > 240){
 			int b50 = main.specialRegister.bills50 - 240;
 			main.specialRegister.bills50 = 240;
 			main.servedRegister.bills50 += b50;
 		}else{
 			int b50 = 240 - main.specialRegister.bills50;
-			main.servedRegister.bills50 -= b50;
-			main.specialRegister.bills50 = 240;
+			if(main.servedRegister.bills50 >= b50){
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
 		}
 		if(main.specialRegister.bills20 > 150){
 			int b20 = main.specialRegister.bills20 - 150;
@@ -9383,9 +9503,12 @@ if(special_open_3 && withdrawal_open_3){
 			main.servedRegister.bills20 += b20;
 		}else{
 			int b20 = 150 - main.specialRegister.bills20;
-			main.servedRegister.bills20 -= b20;
-			main.specialRegister.bills20 = 150;
+			if(main.servedRegister.bills20 >= b20){
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
 		}
+		System.out.println("Special --> Served: " + (main.servedRegister.balance() - tmp));
 	}else{
 		//we prepare the ("useless") bills collected from
 		//the Special register for the SG (that technically
@@ -9434,7 +9557,7 @@ if(special_open_3 && withdrawal_open_3){
 		//2) special_to_remove hasn't reached 0, so
 		//we'll have to take some bills from the Served
 		//register.
-		if(special_to_remove == 0){
+		if(special_to_remove <= 500){	//&& special_to_remove >= 0
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
@@ -9444,15 +9567,17 @@ if(special_open_3 && withdrawal_open_3){
 			//we don't just put the "useless" bills in the
 			//served register. We also put the ones of 50
 			//and 20 that remained in the Served register, or
-			//do the opposite if needed.
+			//do the opposite if needed (and if possible)
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -9460,8 +9585,10 @@ if(special_open_3 && withdrawal_open_3){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 			
 		}else{
@@ -9477,8 +9604,10 @@ if(special_open_3 && withdrawal_open_3){
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -9490,8 +9619,10 @@ if(special_open_3 && withdrawal_open_3){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 		
 		
@@ -9504,28 +9635,30 @@ if(special_open_3 && withdrawal_open_3){
 				special_to_remove -= 200;
 				main.servedRegister.bills200 -= 1;
 			}
-			while(special_to_remove >= 100 && b100 > 0){
+			while(special_to_remove >= 100 && main.servedRegister.bills100 > 0){
 				special_to_remove -= 100;
-				b100 -= 1;
+				main.servedRegister.bills100 -= 1;
 			}
 			
 			//to reach an equilibrium, since the bills
 			//of 50 and 20 are very important, we remove 
 			//some bills of 50 and some of 20 from the 
-			//Served register
-			while(special_to_remove >= 110){
-				main.servedRegister.bills50 -= 1;
-				main.servedRegister.bills20 -= 3;
-				special_to_remove -= 110;
+			//Served register (if there is any)
+			while(special_to_remove >= 110 &&
+				main.servedRegister.bills50 >= 1 &&
+				main.servedRegister.bills20 >= 3){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
 			}
 			
-			while(special_to_remove >= 10 && b10 > 0){
+			while(special_to_remove >= 10 && main.servedRegister.bills10 > 0){
 				special_to_remove -= 10;
-				b10 -= 1;
+				main.servedRegister.bills10 -= 1;
 			}
-			while(special_to_remove >= 5 && b5 > 0){
+			while(special_to_remove >= 5 && main.servedRegister.bills5 > 0){
 				special_to_remove -= 5;
-				b5 -= 1;
+				main.servedRegister.bills5 -= 1;
 			}
 		}
 	}
@@ -9550,10 +9683,11 @@ if(special_open_3 && withdrawal_open_3){
 //state
 if(special_open_3 && !withdrawal_open_3){
 	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	main.specialRegister.active = false;
+
 	//opening the special register means removing
 	//the bills, by trying to leave it in the initial
 	//configuration
-	main.specialRegister.active = false;
 	
 	int b500 = main.specialRegister.bills500;
 	main.specialRegister.bills500 = 0;
@@ -9583,15 +9717,18 @@ if(special_open_3 && !withdrawal_open_3){
 		//If we have more bills than necessary, we
 		//simply move them to the Served register.
 		//In the opposite case, we move them from the
-		//Served one to this one.
+		//Served one to this one (if the served has them
+		//in the first place)
 		if(main.specialRegister.bills50 > 240){
 			int b50 = main.specialRegister.bills50 - 240;
 			main.specialRegister.bills50 = 240;
 			main.servedRegister.bills50 += b50;
 		}else{
 			int b50 = 240 - main.specialRegister.bills50;
-			main.servedRegister.bills50 -= b50;
-			main.specialRegister.bills50 = 240;
+			if(main.servedRegister.bills50 >= b50){
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
 		}
 		if(main.specialRegister.bills20 > 150){
 			int b20 = main.specialRegister.bills20 - 150;
@@ -9599,8 +9736,10 @@ if(special_open_3 && !withdrawal_open_3){
 			main.servedRegister.bills20 += b20;
 		}else{
 			int b20 = 150 - main.specialRegister.bills20;
-			main.servedRegister.bills20 -= b20;
-			main.specialRegister.bills20 = 150;
+			if(main.servedRegister.bills20 >= b20){
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
 		}
 	}else{
 		//we prepare the ("useless") bills collected from
@@ -9650,7 +9789,7 @@ if(special_open_3 && !withdrawal_open_3){
 		//2) special_to_remove hasn't reached 0, so
 		//we'll have to take some bills from the Served
 		//register.
-		if(special_to_remove == 0){
+		if(special_to_remove <= 500){	//&& special_to_remove >= 0
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
@@ -9660,15 +9799,17 @@ if(special_open_3 && !withdrawal_open_3){
 			//we don't just put the "useless" bills in the
 			//served register. We also put the ones of 50
 			//and 20 that remained in the Served register, or
-			//do the opposite if needed.
+			//do the opposite if needed (and if possible)
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -9676,8 +9817,10 @@ if(special_open_3 && !withdrawal_open_3){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 			
 		}else{
@@ -9693,8 +9836,10 @@ if(special_open_3 && !withdrawal_open_3){
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -9706,8 +9851,10 @@ if(special_open_3 && !withdrawal_open_3){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 		
 		
@@ -9720,28 +9867,30 @@ if(special_open_3 && !withdrawal_open_3){
 				special_to_remove -= 200;
 				main.servedRegister.bills200 -= 1;
 			}
-			while(special_to_remove >= 100 && b100 > 0){
+			while(special_to_remove >= 100 && main.servedRegister.bills100 > 0){
 				special_to_remove -= 100;
-				b100 -= 1;
+				main.servedRegister.bills100 -= 1;
 			}
 			
 			//to reach an equilibrium, since the bills
 			//of 50 and 20 are very important, we remove 
 			//some bills of 50 and some of 20 from the 
-			//Served register
-			while(special_to_remove >= 110){
-				main.servedRegister.bills50 -= 1;
-				main.servedRegister.bills20 -= 3;
-				special_to_remove -= 110;
+			//Served register (if there is any)
+			while(special_to_remove >= 110 &&
+				main.servedRegister.bills50 >= 1 &&
+				main.servedRegister.bills20 >= 3){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
 			}
 			
-			while(special_to_remove >= 10 && b10 > 0){
+			while(special_to_remove >= 10 && main.servedRegister.bills10 > 0){
 				special_to_remove -= 10;
-				b10 -= 1;
+				main.servedRegister.bills10 -= 1;
 			}
-			while(special_to_remove >= 5 && b5 > 0){
+			while(special_to_remove >= 5 && main.servedRegister.bills5 > 0){
 				special_to_remove -= 5;
-				b5 -= 1;
+				main.servedRegister.bills5 -= 1;
 			}
 		}
 	}
@@ -9785,7 +9934,7 @@ if(withdrawal_open_3){
 	//in the Served register.
 	//2) we ordered too little bills. If the total amount
 	//of the withdrawal register is below 170.000, let's take
-	//some bills from the served register.
+	//some bills from the served register (if possible).
 	
 	if(main.withdrawalRegister.bills50 + quantity_50 > 2880){
 		int diff = (main.withdrawalRegister.bills50 + quantity_50)
@@ -9802,11 +9951,14 @@ if(withdrawal_open_3){
 		}else{
 			//here main.withdrawalRegister.bills50 + quantity_50 <= 2720
 			//Let's take from the served register some bills and put
-			//them here
+			//them here (if possible).
 			int necessary = 2720 - 
 				(main.withdrawalRegister.bills50 + quantity_50);
-			main.servedRegister.bills50 -= necessary;
-			main.withdrawalRegister.bills50 += quantity_50 + necessary;
+			if(main.servedRegister.bills50 >= necessary){
+				main.servedRegister.bills50 -= necessary;
+				main.withdrawalRegister.bills50 += necessary;
+			}
+			main.withdrawalRegister.bills50 += quantity_50;
 		}
 	}
 	
@@ -9826,11 +9978,14 @@ if(withdrawal_open_3){
 		}else{
 			//here main.withdrawalRegister.bills20 + quantity_20 <= 1700
 			//Let's take from the served register some bills and put
-			//them here
+			//them here (if possible)
 			int necessary = 1700 - 
 				(main.withdrawalRegister.bills20 + quantity_20);
-			main.servedRegister.bills20 -= necessary;
-			main.withdrawalRegister.bills20 += quantity_20 + necessary;
+			if(main.servedRegister.bills20 >= necessary){
+				main.servedRegister.bills20 -= necessary;
+				main.withdrawalRegister.bills20 += necessary;
+			}
+			main.withdrawalRegister.bills20 += quantity_20;
 		}
 	}
 	withdrawal_open_3 = false;
@@ -9860,53 +10015,53 @@ int to_reach = 100000;
 if(served_open_3 == 1){
 	moveToInTime(main.nodeCashiersDesks, 2);
 	//let's first remove the bills we don't need for sure
-	while(served_to_remove >= 500 && main.specialRegister.bills500 > 0){
+	while(served_to_remove >= 500 && main.servedRegister.bills500 > 0){
 		served_to_remove -= 500;
-		main.specialRegister.bills500 -= 1;
+		main.servedRegister.bills500 -= 1;
 	}
-	while(served_to_remove >= 200 && main.specialRegister.bills200 > 0){
+	while(served_to_remove >= 200 && main.servedRegister.bills200 > 0){
 		served_to_remove -= 200;
-		main.specialRegister.bills200 -= 1;
+		main.servedRegister.bills200 -= 1;
 	}
-	while(served_to_remove >= 100 && main.specialRegister.bills100 > 0){
+	while(served_to_remove >= 100 && main.servedRegister.bills100 > 0){
 		served_to_remove -= 100;
-		main.specialRegister.bills100 -= 1;
+		main.servedRegister.bills100 -= 1;
 	}
 	//we wanted at least 100 bills of 10 euros for emergencies
-	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+	while(served_to_remove >= 10 && main.servedRegister.bills10 > main.servedRegister.min_bills10){
 		served_to_remove -= 10;
-		main.specialRegister.bills10 -= 1;
+		main.servedRegister.bills10 -= 1;
 	}
 	//we leave a bit of 5 euros bills for emergencies
-	while(served_to_remove >= 5 && main.specialRegister.bills5 > 5){
+	while(served_to_remove >= 5 && main.servedRegister.bills5 > 5){
 		served_to_remove -= 5;
-		main.specialRegister.bills5 -= 1;
+		main.servedRegister.bills5 -= 1;
 	}
 	
 	//at this point, we either removed all the money, or we
 	//still need to remove some. The initial configuration
 	//was: 1580 bills of 50, 1000 of 20 and 100 of 10.
 	//let's try to reach it
-	while(served_to_remove >= 50 && main.specialRegister.bills50 > 1580){
+	while(served_to_remove >= 50 && main.servedRegister.bills50 > 1580){
 		served_to_remove -= 50;
-		main.specialRegister.bills50 -= 1;
+		main.servedRegister.bills50 -= 1;
 	}
-	while(served_to_remove >= 20 && main.specialRegister.bills20 > 1000){
+	while(served_to_remove >= 20 && main.servedRegister.bills20 > 1000){
 		served_to_remove -= 20;
-		main.specialRegister.bills20 -= 1;
+		main.servedRegister.bills20 -= 1;
 	}
-	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+	while(served_to_remove >= 10 && main.servedRegister.bills10 > main.servedRegister.min_bills10){
 		served_to_remove -= 10;
-		main.specialRegister.bills10 -= 1;
+		main.servedRegister.bills10 -= 1;
 	}
 	
 	//still, we could have to remove some more money (we promised
 	//the SG served_to_remove moeny after all). Let's not
 	//remove too many bills anyway!
-	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 500){
+	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 300){
 		served_to_remove -= 50;
 		main.servedRegister.bills50 -= 1;
-		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 400){
+		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 200){
 			served_to_remove -= 40;
 			main.servedRegister.bills20 -= 2;
 		}
@@ -9951,7 +10106,7 @@ served_open_3 = 0;]]></EntryAction>
 //removed), but the Served one does not. Our cashier must
 //must understand this.
 if(special_open_3 && served_open_3 != 1){
-	if(special_to_remove <= 60.000){
+	if(special_to_remove <= 60000){
 		from_special_to_served = true;
 	}
 }else{
@@ -9997,6 +10152,7 @@ if(special_open_4 && withdrawal_open_4){
 	//We must give the money to remove to 
 	//either the SG or the Served register.
 	if(from_special_to_served == true){
+		int tmp = main.servedRegister.balance();
 		//we move the ("useless") bills collected from
 		//the Special register to the Served one.
 		main.servedRegister.bills500 += b500;
@@ -10010,15 +10166,18 @@ if(special_open_4 && withdrawal_open_4){
 		//If we have more bills than necessary, we
 		//simply move them to the Served register.
 		//In the opposite case, we move them from the
-		//Served one to this one.
+		//Served one to this one (if the served has them
+		//in the first place)
 		if(main.specialRegister.bills50 > 240){
 			int b50 = main.specialRegister.bills50 - 240;
 			main.specialRegister.bills50 = 240;
 			main.servedRegister.bills50 += b50;
 		}else{
 			int b50 = 240 - main.specialRegister.bills50;
-			main.servedRegister.bills50 -= b50;
-			main.specialRegister.bills50 = 240;
+			if(main.servedRegister.bills50 >= b50){
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
 		}
 		if(main.specialRegister.bills20 > 150){
 			int b20 = main.specialRegister.bills20 - 150;
@@ -10026,9 +10185,12 @@ if(special_open_4 && withdrawal_open_4){
 			main.servedRegister.bills20 += b20;
 		}else{
 			int b20 = 150 - main.specialRegister.bills20;
-			main.servedRegister.bills20 -= b20;
-			main.specialRegister.bills20 = 150;
+			if(main.servedRegister.bills20 >= b20){
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
 		}
+		System.out.println("Special --> Served: " + (main.servedRegister.balance() - tmp));
 	}else{
 		//we prepare the ("useless") bills collected from
 		//the Special register for the SG (that technically
@@ -10077,7 +10239,7 @@ if(special_open_4 && withdrawal_open_4){
 		//2) special_to_remove hasn't reached 0, so
 		//we'll have to take some bills from the Served
 		//register.
-		if(special_to_remove == 0){
+		if(special_to_remove <= 500){	//&& special_to_remove >= 0
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
@@ -10087,15 +10249,17 @@ if(special_open_4 && withdrawal_open_4){
 			//we don't just put the "useless" bills in the
 			//served register. We also put the ones of 50
 			//and 20 that remained in the Served register, or
-			//do the opposite if needed.
+			//do the opposite if needed (and if possible)
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -10103,8 +10267,10 @@ if(special_open_4 && withdrawal_open_4){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 			
 		}else{
@@ -10120,8 +10286,10 @@ if(special_open_4 && withdrawal_open_4){
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -10133,8 +10301,10 @@ if(special_open_4 && withdrawal_open_4){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 		
 		
@@ -10147,28 +10317,30 @@ if(special_open_4 && withdrawal_open_4){
 				special_to_remove -= 200;
 				main.servedRegister.bills200 -= 1;
 			}
-			while(special_to_remove >= 100 && b100 > 0){
+			while(special_to_remove >= 100 && main.servedRegister.bills100 > 0){
 				special_to_remove -= 100;
-				b100 -= 1;
+				main.servedRegister.bills100 -= 1;
 			}
 			
 			//to reach an equilibrium, since the bills
 			//of 50 and 20 are very important, we remove 
 			//some bills of 50 and some of 20 from the 
-			//Served register
-			while(special_to_remove >= 110){
-				main.servedRegister.bills50 -= 1;
-				main.servedRegister.bills20 -= 3;
-				special_to_remove -= 110;
+			//Served register (if there is any)
+			while(special_to_remove >= 110 &&
+				main.servedRegister.bills50 >= 1 &&
+				main.servedRegister.bills20 >= 3){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
 			}
 			
-			while(special_to_remove >= 10 && b10 > 0){
+			while(special_to_remove >= 10 && main.servedRegister.bills10 > 0){
 				special_to_remove -= 10;
-				b10 -= 1;
+				main.servedRegister.bills10 -= 1;
 			}
-			while(special_to_remove >= 5 && b5 > 0){
+			while(special_to_remove >= 5 && main.servedRegister.bills5 > 0){
 				special_to_remove -= 5;
-				b5 -= 1;
+				main.servedRegister.bills5 -= 1;
 			}
 		}
 	}
@@ -10193,10 +10365,11 @@ if(special_open_4 && withdrawal_open_4){
 //state
 if(special_open_4 && !withdrawal_open_4){
 	moveToInTime(main.nodeSpecialRegisterBack, 2);
+	main.specialRegister.active = false;
+
 	//opening the special register means removing
 	//the bills, by trying to leave it in the initial
 	//configuration
-	main.specialRegister.active = false;
 	
 	int b500 = main.specialRegister.bills500;
 	main.specialRegister.bills500 = 0;
@@ -10226,15 +10399,18 @@ if(special_open_4 && !withdrawal_open_4){
 		//If we have more bills than necessary, we
 		//simply move them to the Served register.
 		//In the opposite case, we move them from the
-		//Served one to this one.
+		//Served one to this one (if the served has them
+		//in the first place)
 		if(main.specialRegister.bills50 > 240){
 			int b50 = main.specialRegister.bills50 - 240;
 			main.specialRegister.bills50 = 240;
 			main.servedRegister.bills50 += b50;
 		}else{
 			int b50 = 240 - main.specialRegister.bills50;
-			main.servedRegister.bills50 -= b50;
-			main.specialRegister.bills50 = 240;
+			if(main.servedRegister.bills50 >= b50){
+				main.servedRegister.bills50 -= b50;
+				main.specialRegister.bills50 = 240;
+			}
 		}
 		if(main.specialRegister.bills20 > 150){
 			int b20 = main.specialRegister.bills20 - 150;
@@ -10242,8 +10418,10 @@ if(special_open_4 && !withdrawal_open_4){
 			main.servedRegister.bills20 += b20;
 		}else{
 			int b20 = 150 - main.specialRegister.bills20;
-			main.servedRegister.bills20 -= b20;
-			main.specialRegister.bills20 = 150;
+			if(main.servedRegister.bills20 >= b20){
+				main.servedRegister.bills20 -= b20;
+				main.specialRegister.bills20 = 150;
+			}
 		}
 	}else{
 		//we prepare the ("useless") bills collected from
@@ -10293,7 +10471,7 @@ if(special_open_4 && !withdrawal_open_4){
 		//2) special_to_remove hasn't reached 0, so
 		//we'll have to take some bills from the Served
 		//register.
-		if(special_to_remove == 0){
+		if(special_to_remove <= 500){	//&& special_to_remove >= 0
 			main.servedRegister.bills500 += b500;
 			main.servedRegister.bills200 += b200;
 			main.servedRegister.bills100 += b100;
@@ -10303,15 +10481,17 @@ if(special_open_4 && !withdrawal_open_4){
 			//we don't just put the "useless" bills in the
 			//served register. We also put the ones of 50
 			//and 20 that remained in the Served register, or
-			//do the opposite if needed.
+			//do the opposite if needed (and if possible)
 			if(main.specialRegister.bills50 > 240){
 				int b50 = main.specialRegister.bills50 - 240;
 				main.specialRegister.bills50 = 240;
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -10319,8 +10499,10 @@ if(special_open_4 && !withdrawal_open_4){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 			
 		}else{
@@ -10336,8 +10518,10 @@ if(special_open_4 && !withdrawal_open_4){
 				main.servedRegister.bills50 += b50;
 			}else{
 				int b50 = 240 - main.specialRegister.bills50;
-				main.servedRegister.bills50 -= b50;
-				main.specialRegister.bills50 = 240;
+				if(main.servedRegister.bills50 >= b50){
+					main.servedRegister.bills50 -= b50;
+					main.specialRegister.bills50 = 240;
+				}
 			}
 			if(main.specialRegister.bills20 > 150){
 				int b20 = main.specialRegister.bills20 - 150;
@@ -10349,8 +10533,10 @@ if(special_open_4 && !withdrawal_open_4){
 				main.servedRegister.bills20 += b20;
 			}else{
 				int b20 = 150 - main.specialRegister.bills20;
-				main.servedRegister.bills20 -= b20;
-				main.specialRegister.bills20 = 150;
+				if(main.servedRegister.bills20 >= b20){
+					main.servedRegister.bills20 -= b20;
+					main.specialRegister.bills20 = 150;
+				}
 			}
 		
 		
@@ -10363,28 +10549,30 @@ if(special_open_4 && !withdrawal_open_4){
 				special_to_remove -= 200;
 				main.servedRegister.bills200 -= 1;
 			}
-			while(special_to_remove >= 100 && b100 > 0){
+			while(special_to_remove >= 100 && main.servedRegister.bills100 > 0){
 				special_to_remove -= 100;
-				b100 -= 1;
+				main.servedRegister.bills100 -= 1;
 			}
 			
 			//to reach an equilibrium, since the bills
 			//of 50 and 20 are very important, we remove 
 			//some bills of 50 and some of 20 from the 
-			//Served register
-			while(special_to_remove >= 110){
-				main.servedRegister.bills50 -= 1;
-				main.servedRegister.bills20 -= 3;
-				special_to_remove -= 110;
+			//Served register (if there is any)
+			while(special_to_remove >= 110 &&
+				main.servedRegister.bills50 >= 1 &&
+				main.servedRegister.bills20 >= 3){
+					main.servedRegister.bills50 -= 1;
+					main.servedRegister.bills20 -= 3;
+					special_to_remove -= 110;
 			}
 			
-			while(special_to_remove >= 10 && b10 > 0){
+			while(special_to_remove >= 10 && main.servedRegister.bills10 > 0){
 				special_to_remove -= 10;
-				b10 -= 1;
+				main.servedRegister.bills10 -= 1;
 			}
-			while(special_to_remove >= 5 && b5 > 0){
+			while(special_to_remove >= 5 && main.servedRegister.bills5 > 0){
 				special_to_remove -= 5;
-				b5 -= 1;
+				main.servedRegister.bills5 -= 1;
 			}
 		}
 	}
@@ -10428,7 +10616,7 @@ if(withdrawal_open_4){
 	//in the Served register.
 	//2) we ordered too little bills. If the total amount
 	//of the withdrawal register is below 170.000, let's take
-	//some bills from the served register.
+	//some bills from the served register (if possible).
 	
 	if(main.withdrawalRegister.bills50 + quantity_50 > 2880){
 		int diff = (main.withdrawalRegister.bills50 + quantity_50)
@@ -10445,11 +10633,14 @@ if(withdrawal_open_4){
 		}else{
 			//here main.withdrawalRegister.bills50 + quantity_50 <= 2720
 			//Let's take from the served register some bills and put
-			//them here
+			//them here (if possible).
 			int necessary = 2720 - 
 				(main.withdrawalRegister.bills50 + quantity_50);
-			main.servedRegister.bills50 -= necessary;
-			main.withdrawalRegister.bills50 += quantity_50 + necessary;
+			if(main.servedRegister.bills50 >= necessary){
+				main.servedRegister.bills50 -= necessary;
+				main.withdrawalRegister.bills50 += necessary;
+			}
+			main.withdrawalRegister.bills50 += quantity_50;
 		}
 	}
 	
@@ -10469,11 +10660,14 @@ if(withdrawal_open_4){
 		}else{
 			//here main.withdrawalRegister.bills20 + quantity_20 <= 1700
 			//Let's take from the served register some bills and put
-			//them here
+			//them here (if possible)
 			int necessary = 1700 - 
 				(main.withdrawalRegister.bills20 + quantity_20);
-			main.servedRegister.bills20 -= necessary;
-			main.withdrawalRegister.bills20 += quantity_20 + necessary;
+			if(main.servedRegister.bills20 >= necessary){
+				main.servedRegister.bills20 -= necessary;
+				main.withdrawalRegister.bills20 += necessary;
+			}
+			main.withdrawalRegister.bills20 += quantity_20;
 		}
 	}
 	withdrawal_open_4 = false;
@@ -10503,53 +10697,53 @@ int to_reach = 100000;
 if(served_open_4 == 1){
 	moveToInTime(main.nodeCashiersDesks, 2);
 	//let's first remove the bills we don't need for sure
-	while(served_to_remove >= 500 && main.specialRegister.bills500 > 0){
+	while(served_to_remove >= 500 && main.servedRegister.bills500 > 0){
 		served_to_remove -= 500;
-		main.specialRegister.bills500 -= 1;
+		main.servedRegister.bills500 -= 1;
 	}
-	while(served_to_remove >= 200 && main.specialRegister.bills200 > 0){
+	while(served_to_remove >= 200 && main.servedRegister.bills200 > 0){
 		served_to_remove -= 200;
-		main.specialRegister.bills200 -= 1;
+		main.servedRegister.bills200 -= 1;
 	}
-	while(served_to_remove >= 100 && main.specialRegister.bills100 > 0){
+	while(served_to_remove >= 100 && main.servedRegister.bills100 > 0){
 		served_to_remove -= 100;
-		main.specialRegister.bills100 -= 1;
+		main.servedRegister.bills100 -= 1;
 	}
 	//we wanted at least 100 bills of 10 euros for emergencies
-	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+	while(served_to_remove >= 10 && main.servedRegister.bills10 > main.servedRegister.min_bills10){
 		served_to_remove -= 10;
-		main.specialRegister.bills10 -= 1;
+		main.servedRegister.bills10 -= 1;
 	}
 	//we leave a bit of 5 euros bills for emergencies
-	while(served_to_remove >= 5 && main.specialRegister.bills5 > 5){
+	while(served_to_remove >= 5 && main.servedRegister.bills5 > 5){
 		served_to_remove -= 5;
-		main.specialRegister.bills5 -= 1;
+		main.servedRegister.bills5 -= 1;
 	}
 	
 	//at this point, we either removed all the money, or we
 	//still need to remove some. The initial configuration
 	//was: 1580 bills of 50, 1000 of 20 and 100 of 10.
 	//let's try to reach it
-	while(served_to_remove >= 50 && main.specialRegister.bills50 > 1580){
+	while(served_to_remove >= 50 && main.servedRegister.bills50 > 1580){
 		served_to_remove -= 50;
-		main.specialRegister.bills50 -= 1;
+		main.servedRegister.bills50 -= 1;
 	}
-	while(served_to_remove >= 20 && main.specialRegister.bills20 > 1000){
+	while(served_to_remove >= 20 && main.servedRegister.bills20 > 1000){
 		served_to_remove -= 20;
-		main.specialRegister.bills20 -= 1;
+		main.servedRegister.bills20 -= 1;
 	}
-	while(served_to_remove >= 10 && main.specialRegister.bills10 > 100){
+	while(served_to_remove >= 10 && main.servedRegister.bills10 > main.servedRegister.min_bills10){
 		served_to_remove -= 10;
-		main.specialRegister.bills10 -= 1;
+		main.servedRegister.bills10 -= 1;
 	}
 	
 	//still, we could have to remove some more money (we promised
 	//the SG served_to_remove moeny after all). Let's not
 	//remove too many bills anyway!
-	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 500){
+	while(served_to_remove >= 50 && main.servedRegister.bills50 >= 300){
 		served_to_remove -= 50;
 		main.servedRegister.bills50 -= 1;
-		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 400){
+		if(served_to_remove >= 40 && main.servedRegister.bills20 >= 200){
 			served_to_remove -= 40;
 			main.servedRegister.bills20 -= 2;
 		}
@@ -10594,7 +10788,7 @@ served_open_4 = 0;]]></EntryAction>
 //removed), but the Served one does not. Our cashier must
 //must understand this.
 if(special_open_4 && served_open_4 != 1){
-	if(special_to_remove <= 60.000){
+	if(special_to_remove <= 60000){
 		from_special_to_served = true;
 	}
 }else{
@@ -12775,7 +12969,8 @@ currentRequest = req;]]></EntryAction>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="190" Height="60">
 						<EntryAction><![CDATA[int toWithdraw = currentRequest.amountToWithdraw;
-withdraw(toWithdraw);]]></EntryAction>
+withdraw(toWithdraw);
+if(time() >= 144510)System.out.println("withdraw = " + toWithdraw);]]></EntryAction>
 						<FillColor>-16777216</FillColor>
 					</Properties>
 				</StatechartElement>
@@ -13082,8 +13277,19 @@ int w_bills20 = 0;
 int w_bills100 = 0;
 int w_bills10 = 0;
 int x = 0;
+int amount_copy = amount;
+//if there are no bills for withdrawing, or if the customer
+//asked us more money than what we can give to him,
+//we can't satisfy the request of the customer
+if((amount > bills100*100 + bills50*50 + bills20*20 + bills10*10) ||
+	(bills10 < min_bills10 && bills20 == 0 && bills50 == 0 && 
+		bills100 == 0)){
+			return;
+}
+
 while(amount >= 100){
 	x = selectBill();
+	//if(time() >= 144510 && x == 50)System.out.println("chosen = " + x + ", quantity = " + bills50);
 	switch(x){
 		case 100: w_bills100++; break;
 		case 50: w_bills50++; break;
@@ -13097,6 +13303,7 @@ while(amount >= 50){
 	while(x>50){
 		x = selectBill();
 	}
+	//if(time() >= 144510 && x == 50)System.out.println("chosen = " + x + ", quantity = " + bills50);
 	switch(x){
 		case 50: w_bills50++; break;
 		case 20: w_bills20++; break;
@@ -13112,10 +13319,42 @@ switch(amount){
 	case 20: w_bills20++; break;
 	case 10: w_bills10++; break;
 }
-bills50 -= w_bills50;
-bills20 -= w_bills20;
-bills100 -= w_bills100;
-bills10 -= w_bills10;]]></Body>
+
+//if the random bills we've chosen are ok, let's subtract them
+if(bills50 >= w_bills50 && bills20 >= w_bills20 && 
+	bills100 >= w_bills100 && bills10 >= w_bills10){
+		bills50 -= w_bills50;
+		bills20 -= w_bills20;
+		bills100 -= w_bills100;
+		bills10 -= w_bills10;
+}else{
+	//otherwise, we can still satisfy the request, we just need
+	//to give different bills to the customer.
+	while(amount_copy >= 100 && bills100 > 0){
+		amount_copy -= 100;
+		bills100 -= 1;
+	}
+	while(amount_copy > 50 && bills20 > 0){
+		amount_copy -= 20;
+		bills20 -= 1;
+	}
+	if(amount_copy == 40 && bills20 > 0){
+		amount_copy -= 20;
+		bills20 -= 1;
+	}
+	if(amount_copy == 20 && bills20 > 0){
+		amount_copy -= 20;
+		bills20 -= 1;
+	}
+	while(amount_copy >= 50 && bills50 > 0){
+		amount_copy -= 50;
+		bills50 -= 1;
+	}
+	while(amount_copy >= 10 && bills10 > 0){
+		amount_copy -= 10;
+		bills10 -= 1;
+	}
+}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -13198,23 +13437,21 @@ bills5 += b5;]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int currBill = convert(withdrawDistribution());
+					<Body><![CDATA[int currBill = 0;
 
 //choose a bill that is present
 boolean reroll = true;
 while(reroll){
+	currBill = convert(withdrawDistribution());
+	if(time() >= 144510)System.out.println("tmp = " + currBill);
 	switch(currBill){
-		case 5: if(bills5 > 0){reroll = false;} break;
 		case 10: if(bills10 > min_bills10){reroll = false;} break;
 		case 20: if(bills20 > 0){reroll = false;} break;
 		case 50: if(bills50 > 0){reroll = false;} break;
 		case 100: if(bills100 > 0){reroll = false;} break;
-		case 200: if(bills200 > 0){reroll = false;} break;
-		case 500: if(bills500 > 0){reroll = false;} break;
-		
 	}
 }
-
+if(time() >= 144510)System.out.println("final = " + currBill);
 return currBill;]]></Body>
 				</Function>
 			</Functions>
@@ -14311,8 +14548,9 @@ active == false]]></Condition>
 					<Body><![CDATA[int w_bills50 = 0;
 int w_bills20 = 0;
 int x = 0;
+int amount_else = amount;
 while(amount > 80){
-	int b = bernoulli(0.6);
+	int b = bernoulli(0.8);
 	if(b==1){
 		x = 50;
 		w_bills50 += 1;
@@ -14328,9 +14566,64 @@ switch(amount){
 	case 60: w_bills20 += 3; break;
 	case 50: w_bills50 += 1; break;
 	case 40: w_bills20 += 2; break;
+	case 20: w_bills20 += 1; break;
+	default: break;
 }
-bills50 -= w_bills50;
-bills20 -= w_bills20;]]></Body>
+//at this point, we either have the bills to satisfy
+//the request or we don't
+if(bills50 >= w_bills50 && bills20 >= w_bills20){
+	bills50 -= w_bills50;
+	bills20 -= w_bills20;
+}else{
+	//if we have reached this point of the code, it means
+	//that the random choice of the bills couldn't satisfy
+	//the request. But, we MIGHT still be able to satisfy it.
+	//First of all, let's see. The sum of all the bills (of
+	//50 and 20) that we have, is greater than the sum requested?
+	//if so, we MAYBE can satisfy it
+	if(bills50 * 50 + bills20 * 20 >= amount_else){
+		//let's see if we can satisfy the request
+		int w_50 = 0;
+		int w_20 = 0;
+		int bills50_copy = bills50;
+		int bills20_copy = bills20;
+		while(amount_else > 60 && bills50_copy > 0){
+			w_50++;
+			bills50_copy -= 1;
+			amount_else -= 50;
+		}
+		//if the number is even, MAYBE we can satisfy the
+		//request with the bills of 20 euros.
+		if(amount_else % 2 == 0){
+			while(amount_else >= 20 && bills20_copy > 0){
+				w_20++;
+				bills20_copy -= 1;
+				amount_else -= 20;
+			}
+		}else{
+			//let's use a simple trick: if at this point
+			//amount_else is odd, let' put away one bill
+			//of 50 euros. The remaining value is even. 
+			w_50--;
+			bills50_copy += 1;
+			amount_else += 50;
+			while(amount_else >= 20 && bills20_copy > 0){
+				w_20++;
+				bills20_copy -= 1;
+				amount_else -= 20;
+			}
+		}
+		//if at this point the request can be fully satisfied,
+		//we satisfy it. Otherwise, we don't. Sorry customer!
+		if(amount_else == 0){
+			bills50 -= w_50;
+			bills20 -= w_20;
+		}
+		
+	}
+	
+}
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -14370,13 +14663,18 @@ bills20 -= w_bills20;]]></Body>
 						<Name><![CDATA[b5]]></Name>
 						<Type><![CDATA[int]]></Type>
 					</Parameter>
-					<Body><![CDATA[bills500 += b500;
-bills200 += b200;
-bills100 += b100;
-bills50 += b50;
-bills20 += b20;
-bills10 += b10;
-bills5 += b5;]]></Body>
+					<Body><![CDATA[//the request can be satisfied only if it wouldn't exceen
+//the limit of max_special bills
+if(totalBills() + b500 + b200 + b100 + b50 + b20 + b10 + b5
+	<= max_special){
+		bills500 += b500;
+		bills200 += b200;
+		bills100 += b100;
+		bills50 += b50;
+		bills20 += b20;
+		bills10 += b10;
+		bills5 += b5;
+}]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -15081,8 +15379,9 @@ active = true;]]></EntryAction>
 					<Body><![CDATA[int w_bills50 = 0;
 int w_bills20 = 0;
 int x = 0;
+int amount_copy = amount;
 while(amount > 80){
-	int b = bernoulli(0.6);
+	int b = bernoulli(0.8);
 	if(b==1){
 		x = 50;
 		w_bills50 += 1;
@@ -15098,9 +15397,23 @@ switch(amount){
 	case 60: w_bills20 += 3; break;
 	case 50: w_bills50 += 1; break;
 	case 40: w_bills20 += 2; break;
+	case 20: w_bills20 += 1; break;
+	default: break;
+	
 }
-bills50 -= w_bills50;
-bills20 -= w_bills20;]]></Body>
+//the request can be satisfied only if:
+//1°) there are the bills requested
+//2°) satisfying this request won't take the balance
+//below min_withdrawal
+if(bills50 >= w_bills50 && bills20 >= w_bills20 &&
+	balance() - amount_copy >= min_withdrawal){
+		bills50 -= w_bills50;
+		bills20 -= w_bills20;
+}
+
+
+
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -16324,9 +16637,9 @@ ones).]]></Description>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
-			<RandomNumberGenerationType>randomSeed</RandomNumberGenerationType>
+			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
-			<SeedValue>1</SeedValue>
+			<SeedValue>123</SeedValue>
 			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
 			<VmArgs><![CDATA[]]></VmArgs>
 			<LoadRootFromSnapshot>false</LoadRootFromSnapshot>
