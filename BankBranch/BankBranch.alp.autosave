@@ -7205,6 +7205,13 @@ if(r.open_served == 1){
 }else if(r.open_served == 2){
 	served_open_1 = 2;
 	served_to_add = r.money_to_add_served;
+}else if(r.open_served == 3){
+	//in this case, today we remove the money, tomorrow we
+	//add the bills.
+	served_open_0 = 1;
+	served_to_remove = r.money_to_remove_served;
+	served_open_1 = 2;
+	served_to_add = r.money_to_add_served;
 }
 ]]></EntryAction>
 						<FillColor>-16711936</FillColor>
@@ -7247,6 +7254,13 @@ if(r.open_served == 1){
 }else if(r.open_served == 2){
 	served_open_2 = 2;
 	served_to_add = r.money_to_add_served;
+}else if(r.open_served == 3){
+	//in this case, today we remove the money, tomorrow we
+	//add the bills.
+	served_open_1 = 1;
+	served_to_remove = r.money_to_remove_served;
+	served_open_2 = 2;
+	served_to_add = r.money_to_add_served;
 }
 ]]></EntryAction>
 						<FillColor>-16711936</FillColor>
@@ -7276,6 +7290,13 @@ if(r.open_served == 1){
 	served_open_2 = 1;
 	served_to_remove = r.money_to_remove_served;
 }else if(r.open_served == 2){
+	served_open_3 = 2;
+	served_to_add = r.money_to_add_served;
+}else if(r.open_served == 3){
+	//in this case, today we remove the money, tomorrow we
+	//add the bills.
+	served_open_2 = 1;
+	served_to_remove = r.money_to_remove_served;
 	served_open_3 = 2;
 	served_to_add = r.money_to_add_served;
 }
@@ -7309,6 +7330,13 @@ if(r.open_served == 1){
 }else if(r.open_served == 2){
 	served_open_4 = 2;
 	served_to_add = r.money_to_add_served;
+}else if(r.open_served == 3){
+	//in this case, today we remove the money, tomorrow we
+	//add the bills.
+	served_open_3 = 1;
+	served_to_remove = r.money_to_remove_served;
+	served_open_4 = 2;
+	served_to_add = r.money_to_add_served;
 }
 ]]></EntryAction>
 						<FillColor>-16711936</FillColor>
@@ -7338,6 +7366,13 @@ if(r.open_served == 1){
 	served_open_4 = 1;
 	served_to_remove = r.money_to_remove_served;
 }else if(r.open_served == 2){
+	served_open_0 = 2;
+	served_to_add = r.money_to_add_served;
+}else if(r.open_served == 3){
+	//in this case, today we remove the money, tomorrow we
+	//add the bills.
+	served_open_4 = 1;
+	served_to_remove = r.money_to_remove_served;
 	served_open_0 = 2;
 	served_to_add = r.money_to_add_served;
 }
