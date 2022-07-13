@@ -1,0 +1,35 @@
+max_withdrawal = 150000
+in: 116.0, out: 103.0, total: 118.0
+in: 110.0, out: 100.0, total: 119.0
+in: 114.0, out: 111.0, total: 119.0
+in: 114.0, out: 103.0, total: 119.0
+in: 110.0, out: 104.0, total: 119.0
+in: 109.0, out: 107.0, total: 118.0
+in: 117.0, out: 101.0, total: 117.0
+in: 115.0, out: 103.0, total: 119.0
+in: 117.0, out: 96.0, total: 118.0
+in: 113.0, out: 97.0, total: 119.0
+
+max_withdrawal = 200000
+in: 117.0, out: 96.0, total: 117.0
+in: 113.0, out: 92.0, total: 119.0
+in: 113.0, out: 96.0, total: 117.0
+in: 117.0, out: 90.0, total: 117.0
+in: 115.0, out: 96.0, total: 118.0
+in: 117.0, out: 98.0, total: 118.0
+in: 117.0, out: 88.0, total: 119.0
+in: 116.0, out: 92.0, total: 118.0
+in: 114.0, out: 98.0, total: 117.0
+in: 117.0, out: 95.0, total: 118.0
+
+max_withdrawal = 300000
+in: 116.0, out: 78.0, total: 118.0
+in: 115.0, out: 80.0, total: 118.0
+in: 114.0, out: 78.0, total: 118.0
+in: 117.0, out: 79.0, total: 118.0
+in: 116.0, out: 81.0, total: 117.0
+in: 117.0, out: 78.0, total: 118.0
+in: 117.0, out: 85.0, total: 118.0
+in: 116.0, out: 82.0, total: 118.0
+in: 115.0, out: 81.0, total: 119.0
+in: 115.0, out: 79.0, total: 117.0

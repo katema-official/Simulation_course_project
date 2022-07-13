@@ -264,6 +264,46 @@
 					</ComputationTimeCode>
 					<ComputationDate>1657612800000</ComputationDate>
 				</Output>
+				<Output>
+					<Id>1657696129839</Id>
+					<Name><![CDATA[bills_50]]></Name>
+					<X>800</X><Y>730</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Type><![CDATA[int]]></Type>
+					<UnitType><![CDATA[NONE]]></UnitType>
+					<Value Class="CodeValue">
+						<Code><![CDATA[servedRegister.bills50]]></Code>
+					</Value>
+					<ComputationMoment>AT_MODEL_TIME</ComputationMoment>
+					<ComputationTimeCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+					</ComputationTimeCode>
+					<ComputationDate>1657699200000</ComputationDate>
+				</Output>
+				<Output>
+					<Id>1657696137714</Id>
+					<Name><![CDATA[bills_20]]></Name>
+					<X>900</X><Y>730</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Type><![CDATA[int]]></Type>
+					<UnitType><![CDATA[NONE]]></UnitType>
+					<Value Class="CodeValue">
+						<Code><![CDATA[servedRegister.bills20]]></Code>
+					</Value>
+					<ComputationMoment>AT_MODEL_TIME</ComputationMoment>
+					<ComputationTimeCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+					</ComputationTimeCode>
+					<ComputationDate>1657699200000</ComputationDate>
+				</Output>
 			</Outputs>
 			<Variables>
 				<Variable Class="PlainVariable">
@@ -414,7 +454,10 @@ update_served_balance();
 update_special_balance();
 
 update_day();
-update_hour_minute();]]></Action>
+update_hour_minute();
+
+update_bills_50();
+update_bills_20();]]></Action>
 				</Event>
 				<Event>
 					<Id>1657302483089</Id>
@@ -454,6 +497,38 @@ if(day>=5 && day<=6){
 	add_aTMCustomers();
 	ATMCustomersCount++;
 }]]></Action>
+				</Event>
+				<Event>
+					<Id>1657703237095</Id>
+					<Name><![CDATA[writeResults]]></Name>
+					<X>100</X><Y>1180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties TriggerType="timeout" Mode="occuresOnce">
+						<Timeout Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</Timeout>
+						<Rate Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
+						</Rate>
+						<OccurrenceAtTime>true</OccurrenceAtTime>
+						<OccurrenceDate>1657785600000</OccurrenceDate>
+						<OccurrenceTime Class="CodeUnitValue">
+							<Code><![CDATA[241920]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</OccurrenceTime>
+						<RecurrenceCode Class="CodeUnitValue">
+							<Code><![CDATA[1]]></Code>
+							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+						</RecurrenceCode>
+						<Condition><![CDATA[false]]></Condition>
+					</Properties>
+					<Action><![CDATA[results_150000.println("in: " + manager.sg_called_to_carry_in +
+	", out: " + manager.sg_called_to_carry_out + ", total: " + manager.sg_called);]]></Action>
 				</Event>
 			</Events>
 			<Functions>
@@ -500,6 +575,26 @@ if(m <= 9){mm = "0" + m;}else{mm = "" + m;}
 return hh + "." + mm;]]></Body>
 				</Function>
 			</Functions>
+			<Connectivity>
+				<TextFile>
+					<Id>1657703103543</Id>
+					<Name><![CDATA[results_150000]]></Name>
+					<X>100</X><Y>1150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<FileType>FILE</FileType>
+					<Url><![CDATA[]]></Url>
+					<ResourceReference>
+						<PackageName><![CDATA[bankbranch]]></PackageName>
+						<ClassName><![CDATA[C:/Users/aless/Desktop/Simulation_course_project/results_150000]]></ClassName>
+					</ResourceReference>
+					<FileMode>WRITE_APPEND</FileMode>
+					<CharsetName>null</CharsetName>
+					<Separators></Separators>
+				</TextFile>
+			</Connectivity>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1657029304696</Id>
@@ -2460,6 +2555,75 @@ return hh + "." + mm;]]></Body>
 					<Expression2><![CDATA[specialRegister.balance()]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>  
 							<Title><![CDATA[Special Register balance]]></Title>
+					</DatasetExpression>
+					<SamplesToKeep>1440</SamplesToKeep>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimeStackChart>
+    			<TimeStackChart>
+					<Id>1657695968401</Id>
+					<Name><![CDATA[chart4]]></Name>
+					<X>740</X><Y>510</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1657699200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>260</Width>
+					<Height>210</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>180</Width>
+						<Height>120</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<TimeWindowExpression><![CDATA[1440]]></TimeWindowExpression>
+					<DatasetExpression>
+					<Id>0</Id>
+					<Expression><![CDATA[my_dataset]]></Expression>
+					<Color>-3308225</Color>
+					<Expression2><![CDATA[servedRegister.bills50]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>  
+							<Title><![CDATA[bills_50]]></Title>
+					</DatasetExpression>
+					<DatasetExpression>
+					<Id>0</Id>
+					<Expression><![CDATA[my_dataset]]></Expression>
+					<Color>-16711936</Color>
+					<Expression2><![CDATA[servedRegister.bills20]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>  
+							<Title><![CDATA[bills_20]]></Title>
 					</DatasetExpression>
 					<SamplesToKeep>1440</SamplesToKeep>
 					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
@@ -5283,13 +5447,13 @@ if(money_count_served + mean_gain() >
 if(told_cashier_to_add_served == false){
 	int c1 = ((8 * mean_loss())/10)/50;
 	if(main.servedRegister.bills50 +
-		c1*2 <= (3*mean_loss())/2){
+		c1*2 <= -(3*c1)/2){
 			must_open_served_tomorrow_to_add = true;
 			told_cashier_to_add_served = true;
 	}
 	int c2 = (mean_loss()/10)/20;
 	if(main.servedRegister.bills20 + 
-		c2*2 <= (3*mean_loss())/2){
+		c2*2 <= -(3*c2)/2){
 			must_open_served_tomorrow_to_add = true;
 			told_cashier_to_add_served = true;
 	}
@@ -5571,11 +5735,11 @@ if(must_open_withdrawal_tomorrow){
 }
 
 if(must_open_served_today_to_remove){
-	if(!called_out){sg_called_to_carry_out++;}
+	if(!called_out){called = true; sg_called_to_carry_out++;}
 }
 
 if(must_open_served_tomorrow_to_add){
-	if(!called_in){sg_called_to_carry_in++;}
+	if(!called_in){called = true; sg_called_to_carry_in++;}
 }
 
 if(called){sg_called++;}
@@ -7205,6 +7369,13 @@ if(r.open_served == 1){
 }else if(r.open_served == 2){
 	served_open_1 = 2;
 	served_to_add = r.money_to_add_served;
+}else if(r.open_served == 3){
+	//in this case, today we remove the money, tomorrow we
+	//add the bills.
+	served_open_0 = 1;
+	served_to_remove = r.money_to_remove_served;
+	served_open_1 = 2;
+	served_to_add = r.money_to_add_served;
 }
 ]]></EntryAction>
 						<FillColor>-16711936</FillColor>
@@ -7247,6 +7418,13 @@ if(r.open_served == 1){
 }else if(r.open_served == 2){
 	served_open_2 = 2;
 	served_to_add = r.money_to_add_served;
+}else if(r.open_served == 3){
+	//in this case, today we remove the money, tomorrow we
+	//add the bills.
+	served_open_1 = 1;
+	served_to_remove = r.money_to_remove_served;
+	served_open_2 = 2;
+	served_to_add = r.money_to_add_served;
 }
 ]]></EntryAction>
 						<FillColor>-16711936</FillColor>
@@ -7276,6 +7454,13 @@ if(r.open_served == 1){
 	served_open_2 = 1;
 	served_to_remove = r.money_to_remove_served;
 }else if(r.open_served == 2){
+	served_open_3 = 2;
+	served_to_add = r.money_to_add_served;
+}else if(r.open_served == 3){
+	//in this case, today we remove the money, tomorrow we
+	//add the bills.
+	served_open_2 = 1;
+	served_to_remove = r.money_to_remove_served;
 	served_open_3 = 2;
 	served_to_add = r.money_to_add_served;
 }
@@ -7309,6 +7494,13 @@ if(r.open_served == 1){
 }else if(r.open_served == 2){
 	served_open_4 = 2;
 	served_to_add = r.money_to_add_served;
+}else if(r.open_served == 3){
+	//in this case, today we remove the money, tomorrow we
+	//add the bills.
+	served_open_3 = 1;
+	served_to_remove = r.money_to_remove_served;
+	served_open_4 = 2;
+	served_to_add = r.money_to_add_served;
 }
 ]]></EntryAction>
 						<FillColor>-16711936</FillColor>
@@ -7338,6 +7530,13 @@ if(r.open_served == 1){
 	served_open_4 = 1;
 	served_to_remove = r.money_to_remove_served;
 }else if(r.open_served == 2){
+	served_open_0 = 2;
+	served_to_add = r.money_to_add_served;
+}else if(r.open_served == 3){
+	//in this case, today we remove the money, tomorrow we
+	//add the bills.
+	served_open_4 = 1;
+	served_to_remove = r.money_to_remove_served;
 	served_open_0 = 2;
 	served_to_add = r.money_to_add_served;
 }
@@ -7419,7 +7618,6 @@ if(special_open_0 && withdrawal_open_0){
 				main.specialRegister.bills20 = 150;
 			}
 		}
-		System.out.println("Special --> Served: " + (main.servedRegister.balance() - tmp));
 	}else{
 		//we prepare the ("useless") bills collected from
 		//the Special register for the SG (that technically
@@ -8054,7 +8252,6 @@ served_open_0 = 0;]]></EntryAction>
 //removed), but the Served one does not. Our cashier must
 //must understand this.
 if(special_open_0 && served_open_0 != 1){
-	System.out.println("Special to remove = " + special_to_remove);
 	if(special_to_remove <= 60000){
 		from_special_to_served = true;
 	}
@@ -8152,7 +8349,6 @@ if(special_open_1 && withdrawal_open_1){
 				main.specialRegister.bills20 = 150;
 			}
 		}
-		System.out.println("Special --> Served: " + (main.servedRegister.balance() - tmp));
 	}else{
 		//we prepare the ("useless") bills collected from
 		//the Special register for the SG (that technically
@@ -8834,7 +9030,6 @@ if(special_open_2 && withdrawal_open_2){
 				main.specialRegister.bills20 = 150;
 			}
 		}
-		System.out.println("Special --> Served: " + (main.servedRegister.balance() - tmp));
 	}else{
 		//we prepare the ("useless") bills collected from
 		//the Special register for the SG (that technically
@@ -9516,7 +9711,6 @@ if(special_open_3 && withdrawal_open_3){
 				main.specialRegister.bills20 = 150;
 			}
 		}
-		System.out.println("Special --> Served: " + (main.servedRegister.balance() - tmp));
 	}else{
 		//we prepare the ("useless") bills collected from
 		//the Special register for the SG (that technically
@@ -10198,7 +10392,6 @@ if(special_open_4 && withdrawal_open_4){
 				main.specialRegister.bills20 = 150;
 			}
 		}
-		System.out.println("Special --> Served: " + (main.servedRegister.balance() - tmp));
 	}else{
 		//we prepare the ("useless") bills collected from
 		//the Special register for the SG (that technically
@@ -12977,8 +13170,7 @@ currentRequest = req;]]></EntryAction>
 					<ShowLabel>true</ShowLabel>
 					<Properties Width="190" Height="60">
 						<EntryAction><![CDATA[int toWithdraw = currentRequest.amountToWithdraw;
-withdraw(toWithdraw);
-if(time() >= 144510)System.out.println("withdraw = " + toWithdraw);]]></EntryAction>
+withdraw(toWithdraw);]]></EntryAction>
 						<FillColor>-16777216</FillColor>
 					</Properties>
 				</StatechartElement>
@@ -13451,7 +13643,6 @@ bills5 += b5;]]></Body>
 boolean reroll = true;
 while(reroll){
 	currBill = convert(withdrawDistribution());
-	if(time() >= 144510)System.out.println("tmp = " + currBill);
 	switch(currBill){
 		case 10: if(bills10 > min_bills10){reroll = false;} break;
 		case 20: if(bills20 > 0){reroll = false;} break;
@@ -13459,7 +13650,6 @@ while(reroll){
 		case 100: if(bills100 > 0){reroll = false;} break;
 	}
 }
-if(time() >= 144510)System.out.println("final = " + currBill);
 return currBill;]]></Body>
 				</Function>
 			</Functions>
@@ -16645,7 +16835,7 @@ ones).]]></Description>
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
-			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
+			<RandomNumberGenerationType>randomSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
 			<SeedValue>123</SeedValue>
 			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
@@ -16699,6 +16889,10 @@ ones).]]></Description>
 	<ModelResources>
 		<Resource>
 			<Path><![CDATA[BancBranchMap.png]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[C:/Users/aless/Desktop/Simulation_course_project/results_150000]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
