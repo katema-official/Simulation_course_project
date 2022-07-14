@@ -264,46 +264,6 @@
 					</ComputationTimeCode>
 					<ComputationDate>1657612800000</ComputationDate>
 				</Output>
-				<Output>
-					<Id>1657696129839</Id>
-					<Name><![CDATA[bills_50]]></Name>
-					<X>800</X><Y>730</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Type><![CDATA[int]]></Type>
-					<UnitType><![CDATA[NONE]]></UnitType>
-					<Value Class="CodeValue">
-						<Code><![CDATA[servedRegister.bills50]]></Code>
-					</Value>
-					<ComputationMoment>AT_MODEL_TIME</ComputationMoment>
-					<ComputationTimeCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-					</ComputationTimeCode>
-					<ComputationDate>1657699200000</ComputationDate>
-				</Output>
-				<Output>
-					<Id>1657696137714</Id>
-					<Name><![CDATA[bills_20]]></Name>
-					<X>900</X><Y>730</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Type><![CDATA[int]]></Type>
-					<UnitType><![CDATA[NONE]]></UnitType>
-					<Value Class="CodeValue">
-						<Code><![CDATA[servedRegister.bills20]]></Code>
-					</Value>
-					<ComputationMoment>AT_MODEL_TIME</ComputationMoment>
-					<ComputationTimeCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-					</ComputationTimeCode>
-					<ComputationDate>1657699200000</ComputationDate>
-				</Output>
 			</Outputs>
 			<Variables>
 				<Variable Class="PlainVariable">
@@ -454,10 +414,7 @@ update_served_balance();
 update_special_balance();
 
 update_day();
-update_hour_minute();
-
-update_bills_50();
-update_bills_20();]]></Action>
+update_hour_minute();]]></Action>
 				</Event>
 				<Event>
 					<Id>1657302483089</Id>
@@ -2555,75 +2512,6 @@ return hh + "." + mm;]]></Body>
 					<Expression2><![CDATA[specialRegister.balance()]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>  
 							<Title><![CDATA[Special Register balance]]></Title>
-					</DatasetExpression>
-					<SamplesToKeep>1440</SamplesToKeep>
-					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
-					<VerScaleType>AUTO</VerScaleType>
-					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
-    			</TimeStackChart>
-    			<TimeStackChart>
-					<Id>1657695968401</Id>
-					<Name><![CDATA[chart4]]></Name>
-					<X>740</X><Y>510</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<AutoUpdate>true</AutoUpdate>
-					<OccurrenceAtTime>true</OccurrenceAtTime>
-					<OccurrenceDate>1657699200000</OccurrenceDate>
-					<OccurrenceTime Class="CodeUnitValue">
-						<Code><![CDATA[0]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-					</OccurrenceTime>
-					<RecurrenceCode Class="CodeUnitValue">
-						<Code><![CDATA[1]]></Code>
-						<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-					</RecurrenceCode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>260</Width>
-					<Height>210</Height>
-					<BackgroundColor/>
-					<BorderColor/>
-					<ChartArea>
-						<XOffset>50</XOffset>
-						<YOffset>30</YOffset>
-						<Width>180</Width>
-						<Height>120</Height>
-						<BackgroundColor>-1</BackgroundColor>
-						<BorderColor>-16777216</BorderColor>
-						<GridColor>-12566464</GridColor>
-					</ChartArea>
-					<Legend>
-						<Place>SOUTH</Place>
-						<TextColor>-16777216</TextColor>
-						<Size>30</Size>
-					</Legend>
-					<Labels>
-						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
-						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
-						<TextColor>-12566464</TextColor>
-					</Labels>
-					<ShowLegend>true</ShowLegend>
-					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
-					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<TimeWindowExpression><![CDATA[1440]]></TimeWindowExpression>
-					<DatasetExpression>
-					<Id>0</Id>
-					<Expression><![CDATA[my_dataset]]></Expression>
-					<Color>-3308225</Color>
-					<Expression2><![CDATA[servedRegister.bills50]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>  
-							<Title><![CDATA[bills_50]]></Title>
-					</DatasetExpression>
-					<DatasetExpression>
-					<Id>0</Id>
-					<Expression><![CDATA[my_dataset]]></Expression>
-					<Color>-16711936</Color>
-					<Expression2><![CDATA[servedRegister.bills20]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>  
-							<Title><![CDATA[bills_20]]></Title>
 					</DatasetExpression>
 					<SamplesToKeep>1440</SamplesToKeep>
 					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
